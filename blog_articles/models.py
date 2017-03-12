@@ -9,18 +9,21 @@ class Aritcle(models.Model):
 
     # Field.choices
     # 选择器，可以选择
+    DRAFT = 'd'
+    PUBLISHED = 'p'
     PUBLISH_STATUS_CHOICES = (
-        ('d', '草稿'),
-        ('p', '发布'),
+        (DRAFT, '草稿'),
+        (PUBLISHED, '发布'),
     )
 
     # 文章标题，max_length为标题最大长度
     # '标题'是一个位置参数，admin后台管理提示符
-    title = models.CharField('文章标题', max_length=70)
+    title = models.CharField('文章标题', max_length=70, help_text='标题')
 
     # 文章主体
     # '正文'的作用同上，都只是用于admin管理界面
-    body = models.TextField('正文')
+    # help_text是在admin界面文本框中显示的提示文字
+    body = models.TextField('正文', help_text='请编写你的文章')
 
     # 创建时间
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
@@ -28,14 +31,26 @@ class Aritcle(models.Model):
     # 修改时间
     modified_time = models.DateTimeField('修改时间', auto_now=True)
 
-    # 文章发布状态
-    status = models.CharField('发布状态', max_length=1, choices=PUBLISH_STATUS_CHOICES)
+    # 文章发布状态，默认值为草稿
+    status = models.CharField('发布状态', max_length=1,
+                              choices=PUBLISH_STATUS_CHOICES,
+                              default=DRAFT)
 
-    # todo:文章摘要
+    # 文章摘要,长度50个字符
+    # null 是针对数据库的，当null=True, 表示数据库的该字段可以为空。
+    # blank 是针对表单的，当blank=True，表示你的表单填写该字段的时候可以不填
+    abstract = models.CharField('文章摘要', max_length=50, blank=True, null=True,
+                                help_text='摘要，可填选项')
+    # 文章被浏览次数
+    # PositiveIntegerField，指定这个数必须为0以上的正整数，范围from 0 to 2147483647
+    reading = models.PositiveIntegerField('阅读量', default=0)
 
-    # todo:文章被浏览次数
-    # TODO：文章点赞数
-    # TODO：文章被置顶状态
+    # 文章点赞次数
+    likes = models.PositiveIntegerField('赞', default=0)
+
+    # 文章被置顶状态
+    # BooleanField : A true/false field.不设定值的话默认是null，故设置默认值
+    top = models.BooleanField('置顶', default=False)
 
 
 class Category(models.Model):

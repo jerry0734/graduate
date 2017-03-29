@@ -52,6 +52,20 @@ class Aritcle(models.Model):
     # BooleanField : A true/false field.不设定值的话默认是null，故设置默认值
     top = models.BooleanField('置顶', default=False)
 
+    # 文章分类
+    # verbose_name:A human-readable name for the field. 人类可读的名字
+    # on_delete有四种选项，这里选择SET_NULL。当删除分类后使相关文章的外键变为空
+    category = models.ForeignKey('Category', verbose_name='分类', null=True,
+                                 on_delete=models.SET_NULL)
+
+    def __str__(self):
+        # 显示文章的标题
+        return self.title
+
+    class Meta:
+        # 告诉Django模型对象返回的记录结果集是依照哪个字段排序的
+        # 下面的意思是按照修改日期降序排列，没有-号的话，就是按照升序排列
+        ordering = ['-modified_time']
 
 class Category(models.Model):
     """文章分类"""

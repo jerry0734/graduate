@@ -64,9 +64,18 @@ class Aritcle(models.Model):
 
     class Meta:
         # 告诉Django模型对象返回的记录结果集是依照哪个字段排序的
-        # 下面的意思是按照修改日期降序排列，没有-号的话，就是按照升序排列
+        # 下面的意思是按照修改日期降序排列
+        # modified_time前面没有-号的话，就是按照升序排列
         ordering = ['-modified_time']
+
 
 class Category(models.Model):
     """文章分类"""
-    pass
+
+    # 分类名称
+    name = models.CharField('分类名', max_length=20)
+    create_time = models.DateTimeField('创建时间',auto_now_add=True)
+    modefied_time = models.DateTimeField('修改时间', auto_now=True)
+
+    def __str__(self):
+        return self.name

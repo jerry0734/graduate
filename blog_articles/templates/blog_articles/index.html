@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>主页</title>
 </head>
 <body>
-
+<h1>Jerry's Blog</h1>
+{% block content %}
+{% for article in article_list %}
+    {{ article.title }}
+{% endfor %}
+{% endblock content %}
 </body>
 </html>

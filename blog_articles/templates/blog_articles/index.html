@@ -1,16 +1,20 @@
+{% extends 'blog_articles/base.html' %}
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <title>主页</title>
-    {% extends 'blog_articles/base.html' %}
+    {% load markdown_deux_tags %}
+    <link rel="stylesheet" href="/static/">
+
 </head>
 <body>
-<h1>Jerry's Blog</h1>
 {% block content %}
-{% for article in article_list %}
-    {{ article.title }}
-{% endfor %}
+    <h1>Jerry's Blog</h1>
+    {% for article in article_list %}
+        {{ article.title }}
+        <p>{{ article.body|markdown|safe }}</p>
+    {% endfor %}
 {% endblock content %}
 </body>
 </html>

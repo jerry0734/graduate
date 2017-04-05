@@ -10,13 +10,10 @@ class IndexView(ListView):
 
     context_object_name = "article_list"
 
+    # 返回文章
     def get_queryset(self):
         article_list = Aritcle.objects.filter(status='p')
-
-        for article in article_list:
-            article.body = markdown_deux.markdown(article.body, )
-            # article.body = markdown2.markdown(article.body,)
-            return article_list
+        return article_list
 
     def get_context_data(self, **kwargs):
         kwargs['category_list'] = Category.objects.all().order_by('name')

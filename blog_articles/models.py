@@ -62,11 +62,15 @@ class Aritcle(models.Model):
         # 显示文章的标题
         return self.title
 
+
     class Meta:
         # 告诉Django模型对象返回的记录结果集是依照哪个字段排序的
         # 下面的意思是按照修改日期降序排列
         # modified_time前面没有-号的话，就是按照升序排列
         ordering = ['-modified_time']
+        # 在admin主页中显示的名字从Articles变为文章
+        verbose_name_plural = '文章'
+
 
 
 class Category(models.Model):
@@ -79,3 +83,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = '分类'

@@ -62,7 +62,6 @@ class Aritcle(models.Model):
         # 显示文章的标题
         return self.title
 
-
     class Meta:
         # 告诉Django模型对象返回的记录结果集是依照哪个字段排序的
         # 下面的意思是按照修改日期降序排列
@@ -72,13 +71,12 @@ class Aritcle(models.Model):
         verbose_name_plural = '文章'
 
 
-
 class Category(models.Model):
     """文章分类"""
 
     # 分类名称
     name = models.CharField('分类名', max_length=20)
-    create_time = models.DateTimeField('创建时间',auto_now_add=True)
+    create_time = models.DateTimeField('创建时间', auto_now_add=True)
     modefied_time = models.DateTimeField('修改时间', auto_now=True)
 
     def __str__(self):
@@ -86,3 +84,20 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = '分类'
+
+
+class Tag(models.Model):
+    pass
+
+
+# 关于博客页面
+class Aboutme(models.Model):
+    blog_name = models.CharField('博客名称', max_length=50)
+    admin_email = models.EmailField()
+    other = models.TextField()
+
+    class Meta:
+        verbose_name_plural = '关于博客'
+
+    def __str__(self):
+        return self.blog_name

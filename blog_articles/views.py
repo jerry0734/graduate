@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from .models import Aritcle, Category
+from .models import Aritcle, Category, Aboutme, Tag
 import markdown_deux
 import markdown2
 
@@ -18,3 +18,9 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
         kwargs['category_list'] = Category.objects.all().order_by('name')
         return super(IndexView, self).get_context_data(**kwargs)
+
+
+def aboutme(request):
+    about = Aboutme.objects.get()
+    context = {'about': about}
+    return render(request, 'blog_articles/aboutme.html', context)

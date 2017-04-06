@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Aritcle, Category
+from .models import Aritcle, Category, Aboutme
 from pagedown.widgets import AdminPagedownWidget
 
 
@@ -15,3 +15,4 @@ class ArticleAdmin(admin.ModelAdmin):
 
 admin.site.register(Aritcle, ArticleAdmin)
 admin.site.register(Category)
+admin.site.register(Aboutme)

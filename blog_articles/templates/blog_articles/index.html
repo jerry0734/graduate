@@ -3,7 +3,7 @@
 <html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
-    <title>主页</title>
+    <title>{% block title %}主页{% endblock %}</title>
     {% load markdown_deux_tags %}
     <link rel="stylesheet" href="/static/">
 
@@ -12,8 +12,10 @@
 {% block content %}
     <h1>Jerry's Blog</h1>
     {% for article in article_list %}
-        {{ article.title }}
-        <p>{{ article.body|markdown|safe }}</p>
+        <div class="ui segment">
+            <h3 class="ui dividing header">{{ article.title }}</h3>
+            <p class="ui inverted">{{ article.body|markdown|safe }}</p>
+        </div>
     {% endfor %}
 {% endblock content %}
 </body>

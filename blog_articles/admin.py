@@ -6,22 +6,11 @@ from pagedown.widgets import AdminPagedownWidget
 
 # Register your models here.
 class ArticleAdmin(admin.ModelAdmin):
-    # formfield_overrides = {
-    # models.TextField: {'widget': AdminPagedownWidget },
-    # }
+    formfield_overrides = {
+        models.TextField: {'widget': AdminPagedownWidget},
+    }
     fields = ['category', 'title', 'abstract', 'status', 'top', 'body', 'reading', 'likes']
     list_display = ['title', 'category', 'create_time', 'modified_time', 'status', 'top']
-
-    class Media:
-        js = (
-            'js/jquery-3.2.0.min.js',
-            'editormd/editormd.min.js',
-            'editormd/editormd.amd.min.js',
-            'editormd/config.js',
-        )
-        css = {
-            'all': ('editormd/css/editormd.css',),
-        }
 
 
 admin.site.register(Aritcle, ArticleAdmin)

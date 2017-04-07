@@ -21,6 +21,6 @@ class IndexView(ListView):
 
 
 def aboutme(request):
-    about = Aboutme.objects.get()
+    about = Aboutme.objects.get(id=1)
     context = {'about': about}
     return render(request, 'blog_articles/aboutme.html', context)

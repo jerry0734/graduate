@@ -1,4 +1,6 @@
 from django.db import models
+# 导入自带的User，为文章作者显示正确的用户名
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -48,15 +50,25 @@ class Aritcle(models.Model):
     # 文章点赞次数
     likes = models.PositiveIntegerField('赞', default=0)
 
-    # 文章被置顶状态
+    # 文章被置顶状态（废弃）
     # BooleanField : A true/false field.不设定值的话默认是null，故设置默认值
-    top = models.BooleanField('置顶', default=False)
+    # top = models.BooleanField('置顶', default=False)
 
     # 文章分类
     # verbose_name:A human-readable name for the field. 人类可读的名字
     # on_delete有四种选项，这里选择SET_NULL。当删除分类后使相关文章的外键变为空
     category = models.ForeignKey('Category', verbose_name='分类', null=True,
                                  on_delete=models.SET_NULL)
+
+    # 20170408添加
+    # 文章标签（从Tag类获取）
+    # blank=True 即表示没有标签也可以
+    tag = models.ManyToManyField(Tag, blank=True)
+
+    # 文章作者
+    # User是django内置的用户模型，
+    # 通过 ForeignKey 把文章和User关联起来，
+    author = models.ForeignKey(User)
 
     def __str__(self):
         # 显示文章的标题
@@ -76,7 +88,9 @@ class Category(models.Model):
 
     # 分类名称
     name = models.CharField('分类名', max_length=20)
+    # 分类创建时间
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
+    # 分类修改时间
     modefied_time = models.DateTimeField('修改时间', auto_now=True)
 
     def __str__(self):
@@ -86,8 +100,15 @@ class Category(models.Model):
         verbose_name_plural = '分类'
 
 
+# 标签
 class Tag(models.Model):
-    pass
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = '标签'
 
 
 # 关于博客页面

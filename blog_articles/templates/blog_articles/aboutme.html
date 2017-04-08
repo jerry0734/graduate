@@ -7,12 +7,25 @@
     {% block extrastyle %}
         <link href='http://cdn.webfont.youziku.com/webfonts/nomal/100983/47031/58e64502f629da0654e3e968.css'
               rel='stylesheet' type='text/css'/>
+        <!--设置信息的div宽度-->
+        <style>
+            div.owidth {
+                width: 75%;
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            div.rb {
+                border: 20px hidden;
+                border-radius: 15px 0;
+            }
+        </style>
     {% endblock %}
 </head>
 <body>
 {% block content %}
     <div style="text-align: center;">
-        <h1 style="font-family:'COCOGOOSE9e8a6d86b18a77'; font-size: 36px">About Me</h1>
+        <h1 style="font-family:'COCOGOOSE9e8a6d86b18a77'; font-size: 300%">About Me</h1>
 
         <div>
             <figure data-am-widget="figure" class="am am-figure am-figure-default "
@@ -23,8 +36,8 @@
             </figure>
         </div>
 
-        <div class="am-panel-group" id="accordion">
-            <div class="am-panel am-panel-default am-panel-warning">
+        <div class="am-panel-group owidth" id="accordion">
+            <div class="am-panel am-panel-default am-panel-warning rb">
                 <header class="am-panel-hd">
                     <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-name-1'}">
                         Blog name
@@ -37,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="am-panel am-panel-default am-panel-primary">
+            <div class="am-panel am-panel-default am-panel-primary rb">
                 <header class="am-panel-hd">
                     <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-email-2'}">
                         Email
@@ -50,9 +63,9 @@
                 </div>
             </div>
 
-            <div class="am-panel am-panel-default am-panel-secondary">
+            <div class="am-panel am-panel-default am-panel-secondary rb">
                 <header class="am-panel-hd">
-                    <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-email-2'}">
+                    <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-other-3'}">
                         Description
                     </h3>
                 </header>

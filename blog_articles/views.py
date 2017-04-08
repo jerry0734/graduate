@@ -6,6 +6,7 @@ import markdown2
 
 
 class IndexView(ListView):
+    """博客主页文章列表"""
     template_name = "blog_articles/index.html"
 
     context_object_name = "article_list"
@@ -21,6 +22,9 @@ class IndexView(ListView):
 
 
 def aboutme(request):
+    """显示关于博客的页面"""
+
+    # 只取第一条数据
     about = Aboutme.objects.get(id=1)
     context = {'about': about}
     return render(request, 'blog_articles/aboutme.html', context)

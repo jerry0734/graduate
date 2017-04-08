@@ -63,7 +63,7 @@ class Aritcle(models.Model):
     # 20170408添加
     # 文章标签（从Tag类获取）
     # blank=True 即表示没有标签也可以
-    tag = models.ManyToManyField(Tag, blank=True)
+    tag = models.ManyToManyField('Tag', blank=True)
 
     # 文章作者
     # User是django内置的用户模型，
@@ -85,7 +85,6 @@ class Aritcle(models.Model):
 
 class Category(models.Model):
     """文章分类"""
-
     # 分类名称
     name = models.CharField('分类名', max_length=20)
     # 分类创建时间
@@ -100,8 +99,8 @@ class Category(models.Model):
         verbose_name_plural = '分类'
 
 
-# 标签
 class Tag(models.Model):
+    """文章标签"""
     name = models.CharField(max_length=50)
 
     def __str__(self):

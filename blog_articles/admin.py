@@ -10,8 +10,8 @@ class ArticleAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': AdminPagedownWidget},
     }
-    fields = ['category', 'Tag', 'title', 'abstract', 'status', 'body', 'reading', 'likes']
-    list_display = ['title', 'category', 'create_time', 'modified_time', 'status', 'top']
+    fields = ['category', 'tag', 'title', 'abstract', 'status', 'body', 'reading', 'likes']
+    list_display = ['title', 'category', 'create_time', 'modified_time', 'status', ]
 
 
 admin.site.register(Aritcle, ArticleAdmin)

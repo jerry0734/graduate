@@ -5,16 +5,18 @@
     <meta charset="UTF-8">
     <title>{% block title %}主页{% endblock %}</title>
     {% load markdown_deux_tags %}
-    <link rel="stylesheet" href="/static/">
+    {% block extrastyle %}
 
+    {% endblock %}
 </head>
 <body>
 {% block content %}
-    <h1>Jerry's Blog</h1>
     {% for article in article_list %}
-        <div class="ui segment">
-            <h3 class="ui dividing header">{{ article.title }}</h3>
-            <p class="ui inverted">{{ article.body|markdown|safe }}</p>
+        <div class="">
+            <h3 class="">{{ article.title }}</h3>
+            <div class="">
+                {{ article.body|markdown|safe }}
+            </div>
         </div>
     {% endfor %}
 {% endblock content %}

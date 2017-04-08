@@ -11,10 +11,59 @@
 </head>
 <body>
 {% block content %}
-    <h1 style="font-family:'COCOGOOSE9e8a6d86b18a77';">About Me</h1>
-    <p>{{ about.blog_name }}</p>
-    <p>{{ about.admin_email }}</p>
-    <p>{{ about.other }}</p>
+    <div style="text-align: center;">
+        <h1 style="font-family:'COCOGOOSE9e8a6d86b18a77'; font-size: 36px">About Me</h1>
+
+        <div>
+            <figure data-am-widget="figure" class="am am-figure am-figure-default "
+                    data-am-figure="{  pureview: 'true' }">
+                <img src="//upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg"
+                     data-rel="https://upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg"
+                     alt="Tom & Jerry"/>
+            </figure>
+        </div>
+
+        <div class="am-panel-group" id="accordion">
+            <div class="am-panel am-panel-default am-panel-warning">
+                <header class="am-panel-hd">
+                    <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-name-1'}">
+                        Blog name
+                    </h3>
+                </header>
+                <div id="blog-name-1" class="am-panel-collapse am-collapse am-in">
+                    <div class="am-panel-bd">
+                        <p>{{ about.blog_name }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="am-panel am-panel-default am-panel-primary">
+                <header class="am-panel-hd">
+                    <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-email-2'}">
+                        Email
+                    </h3>
+                </header>
+                <div id="blog-email-2" class="am-panel-collapse am-collapse">
+                    <div class="am-panel-bd">
+                        <p>{{ about.admin_email }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="am-panel am-panel-default am-panel-secondary">
+                <header class="am-panel-hd">
+                    <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-email-2'}">
+                        Description
+                    </h3>
+                </header>
+                <div id="blog-other-3" class="am-panel-collapse am-collapse">
+                    <div class="am-panel-bd">
+                        <p>{{ about.other }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
 </body>
 </html>

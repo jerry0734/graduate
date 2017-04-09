@@ -6,27 +6,82 @@
     <title>{% block title %}主页{% endblock %}</title>
     {% load markdown_deux_tags %}
     {% block extrastyle %}
-    {% endblock extrastyle%}
+        <style>
+            h6#bigger {
+                font-weight: bold;
+                font-size: 13px;
+                color: rgba(35, 51, 51, 0.73);
+            }
+
+            .abstractbak {
+                background-color: #ccffcc;
+            }
+
+            .bodybak {
+                background-color: rgba(210, 251, 255, 0.46);
+            }
+
+            .catebak {
+                background-color: transparent;
+            }
+        </style>
+    {% endblock extrastyle %}
     {% block extrahead %}
-    {% endblock extrahead%}
+    {% endblock extrahead %}
 </head>
 <body>
 {% block content %}
 
-{% for article in article_list %}
-<div class="">
-    <h3 class="">{{ article.title }}</h3>
-    <div class="">
-        {{ article.body|markdown|safe }}
+    {% for article in article_list %}
+        <article class="am-article">
+            <div class="am-article-hd">
+                <h1 class="am-article-title" style="background-color: rgba(0,255,255,0.06)"><a
+                        href="#"> {{ article.title }}</a></h1>
+                <div class="am-article-meta" style="background-color: rgba(155,165,204,0.27)">
+                    <h6 id="bigger">
+                        由作者&nbsp;{{ article.author }}&nbsp;<br>
+                        创建于:&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
+                        最后修改于:&nbsp;{{ article.modified_time }}
+                    </h6>
+                </div>
+            </div>
+
+            <div class="am-article-bd">
+                {% if article.abstract == '' %}
+                    <p></p>
+                {% else %}
+                    <div class="am-article-lead abstractbak">
+                        <h5>文章摘要:</h5>
+                        {{ article.abstract }}
+                    </div>
+                {% endif %}
+                <div class="am-panel am-panel-default" style="border: hidden">
+                    <main class="am-panel-bd bodybak">
+                        {{ article.body| markdown | safe }}
+                    </main>
+                    <footer class="am-panel-footer catebak">
+                        <p>分类:&nbsp;<a href="#">{{ article.category }}</a></p>
+                        <p>
+                            标签:&nbsp;
+                            <!--使用for循环才能显示出标签，否则获取不了数据-->
+                            {% for tag in article.tag.all %}
+                                {{ tag }}&nbsp;&nbsp;
+                            {% endfor %}
+                        </p>
+                    </footer>
+                </div>
+            </div>
+        </article>
+        <hr class="am-article-divider">
+    {% endfor %}
+
+    <!--回到顶部按钮，浮动的-->
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+        <a href="#top" title="回到顶部">
+            <span class="am-gotop-title">回到顶部</span>
+            <i class="am-gotop-icon am-icon-chevron-up"></i>
+        </a>
     </div>
-</div>
-{% endfor %}
-<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
-    <a href="#top" title="回到顶部">
-        <span class="am-gotop-title">回到顶部</span>
-        <i class="am-gotop-icon am-icon-chevron-up"></i>
-    </a>
-</div>
 {% endblock content %}
 </body>
 </html>

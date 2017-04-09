@@ -6,19 +6,27 @@
     <title>{% block title %}主页{% endblock %}</title>
     {% load markdown_deux_tags %}
     {% block extrastyle %}
-
-    {% endblock %}
+    {% endblock extrastyle%}
+    {% block extrahead %}
+    {% endblock extrahead%}
 </head>
 <body>
 {% block content %}
-    {% for article in article_list %}
-        <div class="">
-            <h3 class="">{{ article.title }}</h3>
-            <div class="">
-                {{ article.body|markdown|safe }}
-            </div>
-        </div>
-    {% endfor %}
+
+{% for article in article_list %}
+<div class="">
+    <h3 class="">{{ article.title }}</h3>
+    <div class="">
+        {{ article.body|markdown|safe }}
+    </div>
+</div>
+{% endfor %}
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+    <a href="#top" title="回到顶部">
+        <span class="am-gotop-title">回到顶部</span>
+        <i class="am-gotop-icon am-icon-chevron-up"></i>
+    </a>
+</div>
 {% endblock content %}
 </body>
 </html>

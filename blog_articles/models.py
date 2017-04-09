@@ -90,7 +90,7 @@ class Category(models.Model):
     # 分类创建时间
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     # 分类修改时间
-    modefied_time = models.DateTimeField('修改时间', auto_now=True)
+    modified_time = models.DateTimeField('修改时间', auto_now=True)
 
     def __str__(self):
         return self.name

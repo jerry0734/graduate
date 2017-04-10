@@ -29,9 +29,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    # django-material
-    # 'material',
-    # 'material.admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +41,8 @@ INSTALLED_APPS = (
     # 分别有markdown2,markdown_deux,pagedown
     'markdown2',
     'markdown_deux',
-    'pagedown',
+    # Markdown编辑器
+    'draceditor',
 )
 
 MIDDLEWARE_CLASSES = (

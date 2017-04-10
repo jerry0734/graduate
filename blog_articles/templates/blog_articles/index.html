@@ -28,6 +28,8 @@
     {% endblock extrastyle %}
     {% block extrahead %}
     {% endblock extrahead %}
+    {#draceditor的渲染标签#}
+    {% load dractags %}
 </head>
 <body>
 {% block content %}
@@ -57,7 +59,7 @@
                 {% endif %}
                 <div class="am-panel am-panel-default" style="border: hidden">
                     <main class="am-panel-bd bodybak">
-                        {{ article.body| markdown | safe }}
+                        {{ article.body| safe_markdown }}
                     </main>
                     <footer class="am-panel-footer catebak">
                         <p>分类:&nbsp;<a href="#">{{ article.category }}</a></p>

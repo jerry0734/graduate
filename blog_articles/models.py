@@ -1,6 +1,7 @@
 from django.db import models
 # 导入自带的User，为文章作者显示正确的用户名
 from django.contrib.auth.models import User
+from draceditor.models import DraceditorField
 
 
 # Create your models here.
@@ -25,7 +26,8 @@ class Aritcle(models.Model):
     # 文章主体
     # '正文'的作用同上，都只是用于admin管理界面
     # help_text是在admin界面文本框中显示的提示文字
-    body = models.TextField('正文', help_text='请编写你的文章')
+    # 换用DraceEditor来实现Markdown编辑器
+    body = DraceditorField('正文', help_text='请编写你的文章')
 
     # 创建时间
     create_time = models.DateTimeField('创建时间', auto_now_add=True)

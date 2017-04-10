@@ -13,16 +13,16 @@
                 color: rgba(35, 51, 51, 0.73);
             }
 
-            .abstractbak {
-                background-color: #ccffcc;
+            .back {
+                background-color: lightgoldenrodyellow;
             }
 
-            .bodybak {
-                background-color: rgba(210, 251, 255, 0.46);
+            .back2 {
+                background-color: lightyellow;
             }
 
-            .catebak {
-                background-color: transparent;
+            .back3 {
+                background-color: #d3fff5;
             }
         </style>
     {% endblock extrastyle %}
@@ -33,13 +33,12 @@
 </head>
 <body>
 {% block content %}
-
     {% for article in article_list %}
         <article class="am-article">
             <div class="am-article-hd">
-                <h1 class="am-article-title" style="background-color: rgba(0,255,255,0.06)"><a
+                <h1 class="am-article-title"><a
                         href="#"> {{ article.title }}</a></h1>
-                <div class="am-article-meta" style="background-color: rgba(155,165,204,0.27)">
+                <div class="am-article-meta">
                     <h6 id="bigger">
                         由作者&nbsp;{{ article.author }}&nbsp;<br>
                         创建于:&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
@@ -49,19 +48,21 @@
             </div>
 
             <div class="am-article-bd">
-                {% if article.abstract == '' %}
+                {% if article.abstract == None %}
                     <p></p>
                 {% else %}
-                    <div class="am-article-lead abstractbak">
+                    <div class="am-article-lead back2">
                         <h5>文章摘要:</h5>
                         {{ article.abstract }}
                     </div>
                 {% endif %}
-                <div class="am-panel am-panel-default" style="border: hidden">
+                <div class="am-panel am-panel-default back" style="border: hidden">
                     <main class="am-panel-bd bodybak">
-                        {{ article.body| safe_markdown }}
+                        {# truncatewords_html：文章太长截取#}
+                        {{ article.body| safe_markdown| truncatewords_html:50 }}
+                        <a href="#">阅读全文>>></a>
                     </main>
-                    <footer class="am-panel-footer catebak">
+                    <footer class="am-panel-footer back3">
                         <p>分类:&nbsp;<a href="#">{{ article.category }}</a></p>
                         <p>
                             标签:&nbsp;

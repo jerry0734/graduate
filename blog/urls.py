@@ -16,10 +16,9 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from blog_articles import views
 
-
 urlpatterns = [
     # 引用blog_articles里面的urls.py
-    url(r'', include('blog_articles.urls',namespace='blog')),
+    url(r'', include('blog_articles.urls', namespace='blog')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^draceditor/', include('draceditor.urls')),
 ]

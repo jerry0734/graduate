@@ -7,9 +7,8 @@
     {% load markdown_deux_tags %}
     {% block extrastyle %}
         <style>
-            h6#bigger {
+            h5#bigger {
                 font-weight: bold;
-                font-size: 13px;
                 color: rgba(35, 51, 51, 0.73);
             }
 
@@ -39,11 +38,11 @@
                 <h1 class="am-article-title"><a
                         href="#"> {{ article.title }}</a></h1>
                 <div class="am-article-meta">
-                    <h6 id="bigger">
-                        由作者&nbsp;{{ article.author }}&nbsp;<br>
-                        创建于:&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
-                        最后修改于:&nbsp;{{ article.modified_time }}
-                    </h6>
+                    <h5 id="bigger">
+                        <span class="am-icon-male am-icon-sm"></span>&nbsp;{{ article.author }}&nbsp;<br>
+                        <span class="am-icon-clock-o am-icon-sm"></span>&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
+                        <span class="am-icon-edit am-icon-sm"></span>&nbsp;{{ article.modified_time }}
+                    </h5>
                 </div>
             </div>
 
@@ -59,13 +58,13 @@
                 <div class="am-panel am-panel-default back" style="border: hidden">
                     <main class="am-panel-bd bodybak">
                         {# truncatewords_html：文章太长截取#}
-                        {{ article.body| safe_markdown| truncatewords_html:50 }}
+                        {{ article.body| safe_markdown| truncatechars_html:50 }}
                         <a href="#">阅读全文>>></a>
                     </main>
                     <footer class="am-panel-footer back3">
-                        <p>分类:&nbsp;<a href="#">{{ article.category }}</a></p>
+                        <p><span class="am-icon-star am-icon-md"></span>&nbsp;<a href="#">{{ article.category }}</a></p>
                         <p>
-                            标签:&nbsp;
+                            <span class="am-icon-tags am-icon-md"></span>
                             <!--使用for循环才能显示出标签，否则获取不了数据-->
                             {% for tag in article.tag.all %}
                                 {{ tag }}&nbsp;&nbsp;

@@ -33,7 +33,8 @@ class ArticleDetailView(DetailView):
 
     pk_url_kwarg = 'article_id'
 
-    def get_queryset(self):
+    # get_object() 返回该视图要显示的对象
+    def get_object(self):
         context = super(ArticleDetailView, self).get_object()
         return context
 

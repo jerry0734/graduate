@@ -40,6 +40,6 @@ def aboutme(request):
     """显示关于博客的页面"""
 
     # 只取第一条数据
-    about = Aboutme.objects.get(id=1)
+    about = Aboutme.objects.all()[0]
     context = {'about': about}
     return render(request, 'blog_articles/aboutme.html', context)

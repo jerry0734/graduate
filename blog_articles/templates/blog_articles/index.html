@@ -12,10 +12,6 @@
                 color: rgba(35, 51, 51, 0.73);
             }
 
-            .backtitle {
-                background-color: rgba(182, 146, 207, 0.32);
-            }
-
             .back {
                 background-color: lightgoldenrodyellow;
             }
@@ -43,14 +39,14 @@
         <div class="am-u-md-8">
             {% for article in article_list %}
                 <article class="am-article">
-                    <div class="am-article-hd backtitle">
+                    <div class="am-article-hd">
                         <h1 class="am-article-title">
                             <a href="{% url 'blog:detail' article.pk %}"> {{ article.title }}</a></h1>
                         <div class="am-article-meta">
                             <h5 id="bigger">
-                                <span class="am-icon-male am-icon-sm"></span>&nbsp;{{ article.author }}&nbsp;<br>
-                                <span class="am-icon-clock-o am-icon-sm"></span>&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
-                                <span class="am-icon-edit am-icon-sm"></span>&nbsp;{{ article.modified_time }}
+                                <span class="am-icon-male am-icon-md"></span>&nbsp;&nbsp;{{ article.author }}&nbsp;<br>
+                                <span class="am-icon-clock-o am-icon-md"></span>&nbsp;&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
+                                <span class="am-icon-edit am-icon-md"></span>&nbsp;&nbsp;{{ article.modified_time }}
                             </h5>
                         </div>
                     </div>
@@ -92,7 +88,14 @@
             <div class="am-panel am-panel-default">
                 <div class="am-panel-hd">热门分类</div>
                 <div class="am-panel-bd">
-
+                    <ul>
+                        {% for foo in category_list %}
+                            <li><a href="#">{{ foo.name }}</a></li>
+                        {% empty %}
+                            <li><a href="#">查看更多>>></a></li>
+                        {% endfor %}
+                    </ul>
+                    <a href="#">查看更多>>></a>
                 </div>
             </div>
             <div class="am-panel am-panel-default">

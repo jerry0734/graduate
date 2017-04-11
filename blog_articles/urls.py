@@ -7,5 +7,5 @@ urlpatterns = [
                   url(r'^$', views.IndexView.as_view(), name='index'),
                   url(r'^aboutme$', views.aboutme, name='aboutme'),
                   url(r'^article/(?P<article_id>\d+)$',
-                      views.ArticleDetailView.as_view(), name='detail')
+                      views.ArticleDetailView.as_view(), name='detail'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

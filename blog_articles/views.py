@@ -18,7 +18,9 @@ class IndexView(ListView):
         return article_list
 
     def get_context_data(self, **kwargs):
-        kwargs['category_list'] = Category.objects.all().order_by('name')
+        # 增加额外的数据，这里返回一个文章分类，以字典的形式
+        # 显示前五项最新修改的分类
+        kwargs['category_list'] = Category.objects.order_by('modified_time')[0:5]
         return super(IndexView, self).get_context_data(**kwargs)
 
 
@@ -31,7 +33,7 @@ class ArticleDetailView(DetailView):
 
     pk_url_kwarg = 'article_id'
 
-    def show_article(self):
+    def get_queryset(self):
         context = super(ArticleDetailView, self).get_object()
         return context
 

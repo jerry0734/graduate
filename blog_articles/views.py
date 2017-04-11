@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from .models import Aritcle, Category, Aboutme, Tag
 import markdown_deux
 import markdown2
@@ -19,6 +20,20 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
         kwargs['category_list'] = Category.objects.all().order_by('name')
         return super(IndexView, self).get_context_data(**kwargs)
+
+
+class ArticleDetailView(DetailView):
+    model = Aritcle
+
+    template_name = "blog_articles/article.html"
+
+    context_object_name = "article"
+
+    pk_url_kwarg = 'article_id'
+
+    def show_article(self):
+        context = super(ArticleDetailView, self).get_object()
+        return context
 
 
 def aboutme(request):

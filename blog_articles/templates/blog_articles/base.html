@@ -33,16 +33,27 @@
     <link href='http://cdn.webfont.youziku.com/webfonts/nomal/100983/46818/58e7aba0f629dd0c1c5b2b80.css'
           rel='stylesheet' type='text/css'/>
     <style>
+        @font-face {
+            font-family: 'NotoSans';
+            src: url('//at.alicdn.com/t/f34h5b7keayycik9.eot'); /* IE9*/
+            src: url('//at.alicdn.com/t/f34h5b7keayycik9.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/f34h5b7keayycik9.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/f34h5b7keayycik9.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/f34h5b7keayycik9.svg#NotoSansHans-DemiLight') format('svg'); /* iOS 4.1- */
+        }
+
         h1.modfont {
             font-family: 'Raleway9ee1fb22818a77';
+        }
+
+        .articlefont {
+            font-family: NotoSans;
         }
     </style>
     {% block extrastyle %}{% endblock %}
     {% block extrahead %}{% endblock %}
 </head>
 <body>
-<nav class="am-topbar">
+<nav class="am-topbar-inverse">
     <h1 class="am-topbar-brand modfont" style="font-size: 150%">
+        <a href="{% url "blog:index" %}"><img src="/static/amaze-assets/i/favicon.png"></a>
         <a href="{% url "blog:index" %}">Jerry's Blog</a>
     </h1>
 
@@ -81,6 +92,15 @@
 <div>
     {% block content %}
     {% endblock content %}
+
+    <!--回到顶部按钮，浮动的-->
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+        <a href="#top" title="回到顶部">
+            <span class="am-gotop-title">回到顶部</span>
+            <i class="am-gotop-icon am-icon-chevron-up"></i>
+        </a>
+    </div>
+
 </div>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="/static/js/jquery-3.2.0.min.js"></script>

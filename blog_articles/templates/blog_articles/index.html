@@ -12,6 +12,10 @@
                 color: rgba(35, 51, 51, 0.73);
             }
 
+            .backtitle {
+                background-color: rgba(182, 146, 207, 0.32);
+            }
+
             .back {
                 background-color: lightgoldenrodyellow;
             }
@@ -23,6 +27,8 @@
             .back3 {
                 background-color: #d3fff5;
             }
+
+
         </style>
     {% endblock extrastyle %}
     {% block extrahead %}
@@ -32,58 +38,83 @@
 </head>
 <body>
 {% block content %}
-    {% for article in article_list %}
-        <article class="am-article">
-            <div class="am-article-hd">
-                <h1 class="am-article-title"><a
-                        href="#"> {{ article.title }}</a></h1>
-                <div class="am-article-meta">
-                    <h5 id="bigger">
-                        <span class="am-icon-male am-icon-sm"></span>&nbsp;{{ article.author }}&nbsp;<br>
-                        <span class="am-icon-clock-o am-icon-sm"></span>&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
-                        <span class="am-icon-edit am-icon-sm"></span>&nbsp;{{ article.modified_time }}
-                    </h5>
-                </div>
-            </div>
-
-            <div class="am-article-bd">
-                {% if article.abstract == None %}
-                    <p></p>
-                {% else %}
-                    <div class="am-article-lead back2">
-                        <h5>文章摘要:</h5>
-                        {{ article.abstract }}
+    <br>
+    <div class="am-g am-g-fixed">
+        <div class="am-u-md-8">
+            {% for article in article_list %}
+                <article class="am-article">
+                    <div class="am-article-hd backtitle">
+                        <h1 class="am-article-title">
+                            <a href="{% url 'blog:detail' article.pk %}"> {{ article.title }}</a></h1>
+                        <div class="am-article-meta">
+                            <h5 id="bigger">
+                                <span class="am-icon-male am-icon-sm"></span>&nbsp;{{ article.author }}&nbsp;<br>
+                                <span class="am-icon-clock-o am-icon-sm"></span>&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
+                                <span class="am-icon-edit am-icon-sm"></span>&nbsp;{{ article.modified_time }}
+                            </h5>
+                        </div>
                     </div>
-                {% endif %}
-                <div class="am-panel am-panel-default back" style="border: hidden">
-                    <main class="am-panel-bd bodybak">
-                        {# truncatewords_html：文章太长截取#}
-                        {{ article.body| safe_markdown| truncatechars_html:50 }}
-                        <a href="#">阅读全文>>></a>
-                    </main>
-                    <footer class="am-panel-footer back3">
-                        <p><span class="am-icon-star am-icon-md"></span>&nbsp;<a href="#">{{ article.category }}</a></p>
-                        <p>
-                            <span class="am-icon-tags am-icon-md"></span>
-                            <!--使用for循环才能显示出标签，否则获取不了数据-->
-                            {% for tag in article.tag.all %}
-                                {{ tag }}&nbsp;&nbsp;
-                            {% endfor %}
-                        </p>
-                    </footer>
+
+                    <div class="am-article-bd">
+                        {% if article.abstract == None %}
+                            <p></p>
+                        {% else %}
+                            <div class="am-article-lead back2">
+                                <h5>文章摘要:</h5>
+                                {{ article.abstract }}
+                            </div>
+                        {% endif %}
+                        <div class="am-panel am-panel-default back" style="border: hidden">
+                            <main class="am-panel-bd bodybak articlefont">
+                                {# truncatewords_html：文章太长截取#}
+                                {{ article.body| safe_markdown| truncatechars_html:50 }}
+                                <a href="{% url 'blog:detail' article.pk %}">阅读全文>>></a>
+                            </main>
+                            <footer class="am-panel-footer back3">
+                                <p><span class="am-icon-star am-icon-md"></span>&nbsp;<a
+                                        href="#">{{ article.category }}</a></p>
+                                <p>
+                                    <span class="am-icon-tags am-icon-md"></span>
+                                    <!--使用for循环才能显示出标签，否则获取不了数据-->
+                                    {% for tag in article.tag.all %}
+                                        {{ tag }}&nbsp;&nbsp;
+                                    {% endfor %}
+                                </p>
+                            </footer>
+                        </div>
+                    </div>
+                </article>
+                <hr class="am-article-divider">
+            {% endfor %}
+        </div>
+
+        <div class="am-u-md-4">
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">热门分类</div>
+                <div class="am-panel-bd">
+
                 </div>
             </div>
-        </article>
-        <hr class="am-article-divider">
-    {% endfor %}
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">文章归档</div>
 
-    <!--回到顶部按钮，浮动的-->
-    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
-        <a href="#top" title="回到顶部">
-            <span class="am-gotop-title">回到顶部</span>
-            <i class="am-gotop-icon am-icon-chevron-up"></i>
-        </a>
+            </div>
+
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">团队成员</div>
+                <div class="am-panel-bd"></div>
+            </div>
+        </div>
     </div>
+
+
+    {#    <!--回到顶部按钮，浮动的-->#}
+    {#    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">#}
+    {#        <a href="#top" title="回到顶部">#}
+    {#            <span class="am-gotop-title">回到顶部</span>#}
+    {#            <i class="am-gotop-icon am-icon-chevron-up"></i>#}
+    {#        </a>#}
+    {#    </div>#}
 {% endblock content %}
 </body>
 </html>

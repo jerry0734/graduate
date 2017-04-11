@@ -1,0 +1,40 @@
+{% extends 'blog_articles/base.html' %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ article.title }}{% endblock %}</title>
+    {% load dractags %}
+    {% block extrastyle %}
+        <style>
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <div class="am-g am-g-fixed">
+        <div class="am-u-lg-1 am-u-md-1"></div>
+        <div class="am-u-lg-10 am-u-md-10">
+
+            <ol class="am-breadcrumb">
+                <li><a href="{% url 'blog:index' %}" class="am-icon-home am-icon-sm">首页</a></li>
+                <li><a href="#">分类:&nbsp;{{ article.category }}</a></li>
+                <li class="am-active">{{ article.title }}</li>
+            </ol>
+
+            <div style="background-color: inherit">
+                <h1 style="font-family: NotoSans">{{ article.title }}</h1>
+                <h3 style="font-family: NotoSans">
+                    由&nbsp;{{ article.author }}&nbsp;最后修改于&nbsp;{{ article.modified_time }}
+                </h3>
+            </div>
+            <div class="articlefont" style="background-color: lightcyan; font-family: NotoSans">
+                {{ article.body | safe_markdown }}
+            </div>
+        </div>
+        <div class="am-u-lg-1 am-u-md-1"></div>
+    </div>
+{% endblock content %}
+</body>
+</html>

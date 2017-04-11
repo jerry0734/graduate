@@ -87,8 +87,8 @@ class Aritcle(models.Model):
 
 class Category(models.Model):
     """文章分类"""
-    # 分类名称
-    name = models.CharField('分类名', max_length=20)
+    # 分类名称,独一无二
+    name = models.CharField('分类名', max_length=20, unique=True)
     # 分类创建时间
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     # 分类修改时间
@@ -103,7 +103,7 @@ class Category(models.Model):
 
 class Tag(models.Model):
     """文章标签"""
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name

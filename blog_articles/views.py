@@ -20,7 +20,7 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
         # 增加额外的数据，这里返回一个文章分类，以字典的形式
         # 显示前五项最新修改的分类
-        kwargs['category_list'] = Category.objects.order_by('modified_time')[0:5]
+        kwargs['category_list'] = Category.objects.order_by('-modified_time')[0:5]
         return super(IndexView, self).get_context_data(**kwargs)
 
 

@@ -7,12 +7,15 @@
     {% load dractags %}
     {% block extrastyle %}
         <style>
+            /*直接从amazeui.css里面套用响应式图片，实现根据屏幕分辨率变化*/
+
 
         </style>
     {% endblock %}
 </head>
 <body>
 {% block content %}
+
     <div class="am-g am-g-fixed">
         <div class="am-u-lg-1 am-u-md-1"></div>
         <div class="am-u-lg-10 am-u-md-10">
@@ -29,12 +32,20 @@
                     由&nbsp;{{ article.author }}&nbsp;最后修改于&nbsp;{{ article.modified_time }}
                 </h3>
             </div>
-            <div class="articlefont" style="background-color: lightcyan; font-family: NotoSans">
+            <div class="articlefont" style="font-family: NotoSans">
+                <style>
+                    img {
+                        display: block;
+                        max-width: 100%;
+                        height: auto;
+                    }
+                </style>
                 {{ article.body | safe_markdown }}
             </div>
         </div>
         <div class="am-u-lg-1 am-u-md-1"></div>
     </div>
+    <br><br>
 {% endblock content %}
 </body>
 </html>

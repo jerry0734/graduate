@@ -67,7 +67,7 @@
                         <div class="am-panel am-panel-default back" style="border: hidden">
                             <main class="am-panel-bd bodybak articlefont">
                                 {# truncatewords_html：文章太长截取#}
-                                {{ article.body| safe_markdown| truncatechars_html:50 }}
+                                {{ article.body| safe_markdown| truncatewords_html:20 }}
                                 <a href="{% url 'blog:detail' article.pk %}">阅读全文>>></a>
                             </main>
                             <footer class="am-panel-footer back3">
@@ -106,15 +106,6 @@
             </div>
         </div>
     </div>
-
-
-    {#    <!--回到顶部按钮，浮动的-->#}
-    {#    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">#}
-    {#        <a href="#top" title="回到顶部">#}
-    {#            <span class="am-gotop-title">回到顶部</span>#}
-    {#            <i class="am-gotop-icon am-icon-chevron-up"></i>#}
-    {#        </a>#}
-    {#    </div>#}
 {% endblock content %}
 </body>
 </html>

@@ -7,7 +7,7 @@ from draceditor.models import DraceditorField
 # Create your models here.
 
 # 创建博客主题模型
-class Aritcle(models.Model):
+class Article(models.Model):
     """博客主体，内包含文章，编者，发布状态与时间等等"""
 
     # Field.choices

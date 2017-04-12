@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from .models import Aritcle, Category, Aboutme, Tag
+from .models import Article, Category, Aboutme, Tag
 import markdown_deux
 import markdown2
 
@@ -14,7 +14,7 @@ class IndexView(ListView):
 
     # 返回文章
     def get_queryset(self):
-        article_list = Aritcle.objects.filter(status='p')
+        article_list = Article.objects.filter(status='p')
         return article_list
 
     def get_context_data(self, **kwargs):
@@ -26,7 +26,7 @@ class IndexView(ListView):
 
 class ArticleDetailView(DetailView):
     """文章详情页视图"""
-    model = Aritcle
+    model = Article
 
     template_name = "blog_articles/article.html"
 
@@ -82,6 +82,6 @@ def showcategories(request):
 
 def categoryview(request, category_id):
     category = Category.objects.get(id=category_id)
-    article_list = category.aritcle_set.order_by('-modified_time')
+    article_list = category.article_set.order_by('-modified_time')
     context = {'category': category, 'article_list': article_list}
     return render(request, 'blog_articles/category.html', context)

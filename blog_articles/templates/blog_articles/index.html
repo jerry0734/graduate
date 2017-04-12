@@ -89,8 +89,8 @@
                 <div class="am-panel-hd">热门分类</div>
                 <div class="am-panel-bd">
                     <ul>
-                        {% for foo in category_list %}
-                            <li><a href="#">{{ foo.name }}</a></li>
+                        {% for category in category_list %}
+                            <li><a href="{% url 'blog:category' category.id %}">{{ category.name }}</a></li>
                         {% empty %}
                             <li><a href="#">查看更多>>></a></li>
                         {% endfor %}

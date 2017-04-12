@@ -28,8 +28,8 @@
             <ol class="am-breadcrumb">
                 <li><a href="{% url 'blog:index' %}" class="am-icon-home am-icon-sm">首页</a></li>
                 <li><a href="{% url 'blog:categories' %}">分类</a></li>
-                <li class="am-active">{{ article.category }}</li>
-                <li class="am-active">{{ article.title }}</li>
+                <li><a href="{% url 'blog:category' article.category_id %}">{{ article.category }}</a></li>
+                <li>{{ article.title }}</li>
             </ol>
 
             <div style="background-color: inherit">

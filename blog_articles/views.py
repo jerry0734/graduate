@@ -41,7 +41,6 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         kwargs['category_list'] = Category.objects.all().order_by('name')
-        # 增加一个category_list,用于在页面显示所有分类，按照名字排序
         return super(ArticleDetailView, self).get_context_data(**kwargs)
 
 

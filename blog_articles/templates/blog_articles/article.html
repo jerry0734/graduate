@@ -28,7 +28,9 @@
             <ol class="am-breadcrumb">
                 <li><a href="{% url 'blog:index' %}" class="am-icon-home am-icon-sm">首页</a></li>
                 <li><a href="{% url 'blog:categories' %}">分类</a></li>
-                <li><a href="{% url 'blog:category' article.category_id %}">{{ article.category }}</a></li>
+                <!--before:article.category_id是article的外键-->
+                <!--after: article.category.id 看起来易懂些。。-->
+                <li><a href="{% url 'blog:category' article.category.id %}">{{ article.category }}</a></li>
                 <li>{{ article.title }}</li>
             </ol>
 

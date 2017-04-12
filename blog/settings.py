@@ -39,7 +39,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 添加使用manage.py生成的app
+    # 博客应用
     'blog_articles',
+    # 留言板应用
+    'msb',
     # 加入通过pip安装的包
     # 分别有markdown2,markdown_deux,pagedown
     'markdown2',

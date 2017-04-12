@@ -4,8 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}分类{% endblock title %}</title>
+    {% block extrastyle %}
+        <style>
+            div#border {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            h1#titlefont {
+                font-family: NotoSans;
+                text-align: center;
+                font-size: 300%;
+            }
+        </style>
+    {% endblock %}
 </head>
 <body>
+{% block content %}
+    <br>
+    <div class="am-g am-g-fixed">
+        <h1 class="am-u-sm-12" id="titlefont">分类列表</h1>
+    </div>
 
+    <div class="am-panel am-panel-default" id="border">
+        {% for category in category_list %}
+            <a href="{% url 'blog:category' category.id %}" style="font-size: 30px; left: 1px;">{{ category.name }}&nbsp;&nbsp;</a>
+        {% endfor %}
+    </div>
+{% endblock %}
 </body>
 </html>

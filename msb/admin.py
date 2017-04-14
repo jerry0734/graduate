@@ -4,7 +4,7 @@ from msb.models import Message
 # Register your models here.
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ['content', 'author_name', 'published_time', ]
+    list_display = ['author_name', 'email','published_time', ]
 
 
-admin.site.register(Message)
+admin.site.register(Message, MessageAdmin)

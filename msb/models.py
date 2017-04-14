@@ -20,10 +20,10 @@ class Message(models.Model):
 
     def __str__(self):
         # 控制显示长度
-        if len(self.content) <= 50:
+        if len(self.content) <= 25:
             return self.content
         else:
-            return self.content[:50] + "..."
+            return self.content[:25] + "..."
 
     class Meta:
         ordering = ['-published_time']

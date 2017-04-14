@@ -93,8 +93,8 @@ DATABASES = {
         # 写完这些信息之后执行python manage.py migrate进行迁移
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'jerry',
+        'PASSWORD': 'Youmima_0734',
         'HOST': 'localhost',
         'PORT': '3306',
     }

@@ -13,11 +13,17 @@
                 max-width: 100%;
                 height: auto;
             }
+
+            /*解决使用highlight.js造成的白边问题*/
+            pre {
+                padding: 0px;
+            }
         </style>
     {% endblock %}
     {% block extrahead %}
+        <!--导入highlight.js实现代码高亮-->
         <script src="//cdn.bootcss.com/highlight.js/9.10.0/highlight.min.js"></script>
-        <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/default.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/agate.min.css" rel="stylesheet">
     {% endblock %}
 </head>
 <body>

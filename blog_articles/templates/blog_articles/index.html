@@ -95,17 +95,62 @@
                             <li><a href="{% url 'blog:categories' %}">查看更多>>></a></li>
                         {% endfor %}
                     </ul>
-                    <a href="{% url 'blog:categories' %}">查看更多>>></a>
+                    <a href="{% url 'blog:categories' %}" class="am-btn am-round am-btn-xs am-btn-warning">查看更多>>></a>
                 </div>
             </div>
-            <div class="am-panel am-panel-default">
-                <div class="am-panel-hd">文章归档</div>
 
-            </div>
+            <div class="am-panel-group" id="accordation">
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#tags'}">文章标签</div>
+                    <div class="am-panel-bd am-collapse" id="tags">
+                        {% for tag in tag_list %}
+                            {% if tag.name|length >= 10 %}
+                                <a href="{% url 'blog:tag' tag.pk %}"
+                                   class="am-badge am-radius">{{ tag }}</a>
+                            {% elif tag.name|length >= 8 %}
+                                <a href="{% url 'blog:tag' tag.pk %}"
+                                   class="am-badge am-badge-success am-radius">{{ tag }}</a>
+                            {% elif tag.name|length >= 7 %}
+                                <a href="{% url 'blog:tag' tag.pk %}"
+                                   class="am-badge am-badge-warning   am-radius">{{ tag }}</a>
+                            {% elif tag.name|length >= 6 %}
+                                <a href="{% url 'blog:tag' tag.pk %}"
+                                   class="am-badge am-badge-primary am-radius">{{ tag }}</a>
+                            {% elif tag.name|length >= 5 %}
+                                <a href="{% url 'blog:tag' tag.pk %}"
+                                   class="am-badge am-badge-secondary  am-radius">{{ tag }}</a>
+                            {% else %}
+                                <a href="{% url 'blog:tag' tag.pk %}"
+                                   class="am-badge am-badge-danger am-radius">{{ tag }}</a>
+                            {% endif %}
+                        {% endfor %}
 
-            <div class="am-panel am-panel-default">
-                <div class="am-panel-hd">联系我</div>
-                <div class="am-panel-bd"></div>
+                    </div>
+                </div>
+
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#archive'}">文章归档</div>
+                    <div class="am-panel-bd am-collapse" id="archive">2333</div>
+                </div>
+
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#contact'}">联系我</div>
+                    <div class="am-panel-bd am-collapse" id="contact">
+                        <p>
+                            <a href="https://github.com/jerry0734" target="_blank"
+                               class="am-icon-btn am-icon-github "></a>
+                            <a href="http://weibo.com/jerryxjy" target="_blank"
+                               class="am-icon-btn am-warning am-icon-weibo"></a>
+                            <a href="http://ocvs5dg73.bkt.clouddn.com/mmqrcode1492430307368.png" target="_blank"
+                               class="am-icon-btn am-success am-icon-wechat"
+                               data-am-popover="{content: '点击打开二维码', trigger: 'hover focus'}"></a>
+                            <a href="https://user.qzone.qq.com/891192183" target="_blank"
+                               class="am-icon-btn am-primary am-icon-qq"></a>
+                            <a href="mailto:jerry34@foxmail.com"
+                               class="am-icon-btn am-secondary am-icon-envelope-o"></a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

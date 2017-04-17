@@ -1,0 +1,92 @@
+{% extends 'blog_articles/base.html' %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ tag }}{% endblock %}</title>
+    {% load markdown_deux_tags %}
+    {% block extrastyle %}
+        <style>
+            h5#bigger {
+                font-weight: bold;
+                color: rgba(35, 51, 51, 0.73);
+            }
+
+            .back {
+                background-color: lightgoldenrodyellow;
+            }
+
+            .back2 {
+                background-color: lightyellow;
+            }
+
+            .back3 {
+                background-color: #d3fff5;
+            }
+
+
+        </style>
+    {% endblock extrastyle %}
+    {% block extrahead %}
+    {% endblock extrahead %}
+    {#draceditor的渲染标签#}
+    {% load dractags %}
+</head>
+<body>
+{% block content %}
+    <br>
+    <div class="am-g am-g-fixed">
+        <h2>标签:{{ tag }}</h2>
+        <div class="am-u-md-8">
+            {% for article in article_list %}
+                <article class="am-article">
+                    <div class="am-article-hd">
+                        <h1 class="am-article-title">
+                            <a href="{% url 'blog:detail' article.pk %}"> {{ article.title }}</a></h1>
+                        <div class="am-article-meta">
+                            <h5 id="bigger">
+                                <span class="am-icon-male am-icon-md"></span>&nbsp;&nbsp;{{ article.author }}&nbsp;<br>
+                                <span class="am-icon-clock-o am-icon-md"></span>&nbsp;&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
+                                <span class="am-icon-edit am-icon-md"></span>&nbsp;&nbsp;{{ article.modified_time }}
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="am-article-bd">
+                        {% if article.abstract == None %}
+                            <p></p>
+                        {% else %}
+                            <div class="am-article-lead back2">
+                                <h5>文章摘要:</h5>
+                                {{ article.abstract }}
+                            </div>
+                        {% endif %}
+                        <div class="am-panel am-panel-default back" style="border: hidden">
+                            <main class="am-panel-bd bodybak articlefont">
+                                {# truncatewords_html：文章太长截取#}
+                                {{ article.body| safe_markdown| truncatewords_html:20 }}
+                                <a href="{% url 'blog:detail' article.pk %}">阅读全文>>></a>
+                            </main>
+                            <footer class="am-panel-footer back3">
+                                <p><span class="am-icon-star am-icon-md"></span>&nbsp;<a
+                                        href="#">{{ article.category }}</a></p>
+                                <p>
+                                    <span class="am-icon-tags am-icon-md"></span>
+                                    <!--使用for循环才能显示出标签，否则获取不了数据-->
+                                    {% for tag in article.tag.all %}
+                                        {{ tag }}&nbsp;&nbsp;
+                                    {% endfor %}
+                                </p>
+                            </footer>
+                        </div>
+                    </div>
+                </article>
+                <hr class="am-article-divider">
+
+            {% endfor %}
+            <h1>没有更多了。。。</h1>
+        </div>
+    </div>
+{% endblock content %}
+</body>
+</html>

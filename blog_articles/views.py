@@ -21,6 +21,8 @@ class IndexView(ListView):
         # 增加额外的数据，这里返回一个文章分类，以字典的形式
         # 显示前五项最新修改的分类
         kwargs['category_list'] = Category.objects.order_by('-modified_time')[0:5]
+        # 标签列表
+        kwargs['tag_list'] = Tag.objects.all().order_by('name')
         return super(IndexView, self).get_context_data(**kwargs)
 
 
@@ -67,6 +69,21 @@ class CategoryView(ListView):
         kwargs['category'] = Category.objects.get(id=self.kwargs['category_id'])
         # 增加一个category_list,用于在页面显示所有分类，按照名字排序
         return super(CategoryView, self).get_context_data(**kwargs)
+
+
+class Tagview(ListView):
+    template_name = 'blog_articles/tag.html'
+
+    context_object_name = 'article_list'
+
+    def get_queryset(self):
+        article_list = Article.objects.filter(tag=self.kwargs['tag_id'], status='p')
+        return article_list
+
+    def get_context_data(self, **kwargs):
+        kwargs['tag_list'] = Tag.objects.all().order_by('name')
+        kwargs['tag'] = Tag.objects.get(id=self.kwargs['tag_id'])
+        return super(Tagview, self).get_context_data(**kwargs)
 
 
 # 单个分类下的文章列表视图-次选-函数形式

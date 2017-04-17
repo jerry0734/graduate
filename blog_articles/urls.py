@@ -11,4 +11,5 @@ urlpatterns = [
                       views.CategoryView.as_view(), name='category'),
                   url(r'^article/(?P<article_id>\d+)$',
                       views.ArticleDetailView.as_view(), name='detail'),
+                  url(r'^tag/(?P<tag_id>\d+)$', views.Tagview.as_view(), name='tag'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

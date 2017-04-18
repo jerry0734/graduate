@@ -1,0 +1,19 @@
+{% extends 'blog_articles/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}留言板{% endblock %}</title>
+    {% load bootstrap %}
+</head>
+<body>
+{% block content %}
+    <h2>留个言呗</h2>
+    <form action="{% url 'msb:board' %}" method="post">
+        {% csrf_token %}
+        {{ form| bootstrap }}
+        <button name="提交" class="am-btn">提交</button>
+    </form>
+{% endblock %}
+</body>
+</html>

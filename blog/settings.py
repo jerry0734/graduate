@@ -34,8 +34,6 @@ else:
 # Application definition
 
 INSTALLED_APPS = (
-    # 'material',
-    # 'material.admin',
     # 原来自带的
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,6 +52,9 @@ INSTALLED_APPS = (
     'markdown_deux',
     # Markdown编辑器
     'draceditor',
+    # crispy-forms
+    'crispy_forms',
+    'bootstrapform',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -138,3 +139,5 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

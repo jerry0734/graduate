@@ -23,11 +23,10 @@
             .back3 {
                 background-color: #d3fff5;
             }
-
-
         </style>
     {% endblock extrastyle %}
     {% block extrahead %}
+        <link rel="stylesheet" href="">
     {% endblock extrahead %}
     {#draceditor的渲染标签#}
     {% load dractags %}
@@ -36,6 +35,7 @@
 {% block content %}
     <br>
     <div class="am-g am-g-fixed">
+        <!--文章列表-->
         <div class="am-u-md-8">
             {% for article in article_list %}
                 <article class="am-article">
@@ -84,6 +84,7 @@
             {% endfor %}
         </div>
 
+        <!--侧边栏-->
         <div class="am-u-md-4">
             <div class="am-panel am-panel-default">
                 <div class="am-panel-hd">热门分类</div>
@@ -141,9 +142,9 @@
                                class="am-icon-btn am-icon-github "></a>
                             <a href="http://weibo.com/jerryxjy" target="_blank"
                                class="am-icon-btn am-warning am-icon-weibo"></a>
-                            <a href="http://ocvs5dg73.bkt.clouddn.com/mmqrcode1492430307368.png" target="_blank"
-                               class="am-icon-btn am-success am-icon-wechat"
-                               data-am-popover="{content: '点击打开二维码', trigger: 'hover focus'}"></a>
+                            <a class="am-icon-btn am-success am-icon-wechat"
+                               data-am-popover="{content: '点击打开二维码', trigger: 'hover focus'}"
+                               onclick="window.open('http://ocvs5dg73.bkt.clouddn.com/mmqrcode1492430307368.png')"></a>
                             <a href="https://user.qzone.qq.com/891192183" target="_blank"
                                class="am-icon-btn am-primary am-icon-qq"></a>
                             <a href="mailto:jerry34@foxmail.com"
@@ -157,3 +158,6 @@
 {% endblock content %}
 </body>
 </html>
+
+
+

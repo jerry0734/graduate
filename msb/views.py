@@ -16,5 +16,7 @@ def MessageBoard(request):
             form.save()
             return HttpResponseRedirect(reverse('msb:board'))
 
-    context = {'form': form}
+    messages = Message.objects.all().order_by('-published_time')
+
+    context = {'form': form, 'messages': messages}
     return render(request, 'msb/board.html', context)

@@ -12,4 +12,6 @@ urlpatterns = [
                   url(r'^article/(?P<article_id>\d+)$',
                       views.ArticleDetailView.as_view(), name='detail'),
                   url(r'^tag/(?P<tag_id>\d+)$', views.Tagview.as_view(), name='tag'),
+                  url(r'^archives/(?P<year>[0-9]{4})/$',
+                      views.archive, name='archive'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

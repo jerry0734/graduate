@@ -1,4 +1,5 @@
 {% extends 'blog_articles/base.html' %}
+{% load blog_tags %}
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -38,7 +39,7 @@
                             </h5>
                         </div>
                     </div>
-
+                    <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
                     <div class="am-article-bd">
                         {% if article.abstract == None %}
                             <p></p>
@@ -48,6 +49,7 @@
                                 {{ article.abstract }}
                             </div>
                         {% endif %}
+                        <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
                         <div class="am-panel am-panel-default back" style="border: hidden">
                             <main class="am-panel-bd bodybak articlefont">
                                 {# truncatewords_html：文章太长截取#}
@@ -92,8 +94,9 @@
                 </div>
             </div>
 
-            <!--文章标签面板-->
+
             <div class="am-panel-group" id="accordation">
+                <!--文章标签面板-->
                 <div class="am-panel am-panel-default">
                     <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#tags'}">文章标签</div>
                     <div class="am-panel-bd am-collapse" id="tags">
@@ -125,7 +128,16 @@
                 <!--文章归档面板-->
                 <div class="am-panel am-panel-default">
                     <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#archive'}">文章归档</div>
-                    <div class="am-panel-bd am-collapse" id="archive">2333</div>
+                    <div class="am-panel-bd am-collapse" id="archive">
+                        <ul>
+                            <li class="am-icon-calendar">
+                                {% archives as date_list %}
+                                {% for date in date_list %}
+                                    <a href="{% url 'blog:archive' date.year %}">&nbsp;{{ date.year }} 年</a>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!--联系我面板-->

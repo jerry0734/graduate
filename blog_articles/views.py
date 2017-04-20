@@ -107,3 +107,13 @@ def showcategories(request):
     category_list = Category.objects.all()
     context = {'category_list': category_list}
     return render(request, 'blog_articles/categories.html', context)
+
+
+def archive(request, year):
+    """日期归档视图函数"""
+    article_list = Article.objects.filter(create_time__year=year)
+    category_list = Category.objects.all().order_by('-modified_time')[0:5]
+    tag_list = Tag.objects.all().order_by('name')
+    context = {'article_list': article_list, 'category_list': category_list,
+               'tag_list': tag_list}
+    return render(request, 'blog_articles/index.html', context)

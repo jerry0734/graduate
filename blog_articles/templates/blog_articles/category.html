@@ -11,20 +11,6 @@
                 font-weight: bold;
                 color: rgba(35, 51, 51, 0.73);
             }
-
-            .back {
-                background-color: lightgoldenrodyellow;
-            }
-
-            .back2 {
-                background-color: lightyellow;
-            }
-
-            .back3 {
-                background-color: #d3fff5;
-            }
-
-
         </style>
     {% endblock extrastyle %}
     {% block extrahead %}
@@ -59,7 +45,7 @@
                         {% if article.abstract == None %}
                             <p></p>
                         {% else %}
-                            <div class="am-article-lead back2">
+                            <div class="am-article-lead">
                                 <h5>文章摘要:</h5>
                                 {{ article.abstract }}
                             </div>
@@ -70,14 +56,15 @@
                                 {{ article.body| safe_markdown| truncatewords_html:20 }}
                                 <a href="{% url 'blog:detail' article.pk %}">阅读全文>>></a>
                             </main>
-                            <footer class="am-panel-footer back3">
+                            <footer class="am-panel-footer">
                                 <p><span class="am-icon-star am-icon-md"></span>&nbsp;<a
-                                        href="#">{{ article.category }}</a></p>
+                                        href="{% url 'blog:category' article.category.id %}">{{ article.category }}</a>
+                                </p>
                                 <p>
                                     <span class="am-icon-tags am-icon-md"></span>
                                     <!--使用for循环才能显示出标签，否则获取不了数据-->
                                     {% for tag in article.tag.all %}
-                                        {{ tag }}&nbsp;&nbsp;
+                                        <a href="{% url 'blog:tag' tag.id %}">{{ tag }}</a>&nbsp;
                                     {% endfor %}
                                 </p>
                             </footer>

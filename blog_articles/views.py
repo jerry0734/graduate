@@ -105,7 +105,8 @@ def aboutme(request):
 def showcategories(request):
     """分类主页面"""
     category_list = Category.objects.all()
-    context = {'category_list': category_list}
+    tag_list = Tag.objects.all()
+    context = {'category_list': category_list, 'tag_list': tag_list}
     return render(request, 'blog_articles/categories.html', context)
 
 

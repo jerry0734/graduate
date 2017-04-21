@@ -22,8 +22,8 @@
 </head>
 <body>
 {% block content %}
-    <div class="">
         <div class="am-g am-g-fixed">
+            <br>
             <!--文章列表-->
             <div class="am-u-md-8">
                 {% for article in article_list %}
@@ -53,7 +53,7 @@
                             <div class="am-panel am-panel-default back" style="border: hidden">
                                 <main class="am-panel-bd bodybak articlefont">
                                     {# truncatewords_html：文章太长截取#}
-                                    {{ article.body| safe_markdown| truncatewords_html:20 }}
+                                    {{ article.body| safe_markdown| truncatewords_html:35 }}
                                     <a href="{% url 'blog:detail' article.pk %}">阅读全文>>></a>
                                 </main>
                                 <footer class="am-panel-footer back">
@@ -196,7 +196,6 @@
                 </div>
             </div>
         </div>
-    </div>
 {% endblock content %}
 </body>
 </html>

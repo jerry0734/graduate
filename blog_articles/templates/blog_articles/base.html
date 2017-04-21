@@ -41,14 +41,6 @@
             src: url('//at.alicdn.com/t/f34h5b7keayycik9.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/f34h5b7keayycik9.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/f34h5b7keayycik9.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/f34h5b7keayycik9.svg#NotoSansHans-DemiLight') format('svg'); /* iOS 4.1- */
         }
 
-        html {
-            height: 100%;
-        }
-
-        body {
-            min-height: 100%;
-        }
-
         h1.modfont {
             font-family: 'Raleway9ee1fb22818a77';
         }
@@ -62,7 +54,7 @@
             font-family: NotoSans;
         }
 
-        img.nothappen {
+        #mainfooter img {
 
         }
 
@@ -77,6 +69,7 @@
 <nav class="am-topbar-inverse am-topbar-fixed-top" style="background-color: #008cba">
 
     <h1 class="am-topbar-brand modfont" style="font-size: 125%">
+        <a href="{% url "blog:index" %}"><img src="/static/amaze-assets/i/favicon.png"></a>
         <a href="{% url "blog:index" %}">Jerry's Blog</a>
     </h1>
 
@@ -126,10 +119,9 @@
 
 </div>
 <!--底部-->
-<footer class="am-footer am-footer-default foot" data-am-widget="footer"
-        data-am-footer="{  }">
+<div class="am-footer am-footer-default foot">
     <div class="am-g am-g-fixed">
-        <div class="am-footer-miscs">
+        <div class="am-footer-miscs am-u-sm-12 am-u-md-12 am-u-lg-12" id="mainfooter">
             <p><a href="https://hellojerry.cn"><img src="/static/amaze-assets/i/favicon.png"></a>
                 CopyRight©2017 <a href="https://hellojerry.cn">hellojerry.cn</a>
             </p>
@@ -143,7 +135,7 @@
             <p><a href="http://www.miitbeian.gov.cn">粤ICP备16074515</a></p>
         </div>
     </div>
-</footer>
+</div>
 
 
 <!--[if (gte IE 9)|!(IE)]><!-->

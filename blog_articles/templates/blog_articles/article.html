@@ -8,7 +8,7 @@
     {% block extrastyle %}
         <style>
             /*直接从amazeui.css里面套用响应式图片，实现根据屏幕分辨率变化*/
-            img {
+            #mainbody img {
                 display: block;
                 max-width: 100%;
                 height: auto;
@@ -59,7 +59,7 @@
                     {% endfor %}
                 </p>
             </div>
-            <div class="articlefont" style="font-family: NotoSans">
+            <div class="articlefont" style="font-family: NotoSans" id="mainbody">
                 {{ article.body | safe_markdown }}
             </div>
             <hr>

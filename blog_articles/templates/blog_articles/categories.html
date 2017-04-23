@@ -7,7 +7,7 @@
     {% block extrastyle %}
         <style>
             div#border {
-                width: 60%;
+                width: 80%;
                 margin: 0 auto;
             }
 
@@ -30,8 +30,23 @@
             <ul class="am-list am-list-striped am-u-sm-12 am-u-md-12 am-u-lg-12" id="border">
                 {% for category in category_list %}
                     <li>
-                        <a href="{% url 'blog:category' category.id %}"
-                           style="text-align: center">{{ category.name }}</a>
+                        <a href="{% url 'blog:category' category.id %}" style="text-align: center">{{ category.name }}
+                            {% with category.article_set.count as count %}
+                                {% if count == 0 %}
+                                    <span class="am-badge am-radius">{{ count }}</span>
+                                {% elif count <= 1 %}
+                                    <span class="am-badge am-badge-primary am-radius">{{ count }}</span>
+                                {% elif count <= 2 %}
+                                    <span class="am-badge am-badge-secondary am-radius">{{ count }}</span>
+                                {% elif count <= 3 %}
+                                    <span class="am-badge am-badge-success am-radius">{{ count }}</span>
+                                {% elif count <= 5 %}
+                                    <span class="am-badge am-badge-warning am-radius">{{ count }}</span>
+                                {% else %}
+                                    <span class="am-badge am-badge-danger am-radius">{{ count }}</span>
+                                {% endif %}
+                            {% endwith %}
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
@@ -40,9 +55,41 @@
         <div class="am-g am-g-fixed">
             <h1 class="am-u-sm-12" id="titlefont">标签列表</h1>
         </div>
-        <div class="am-panel am-panel-default" id="border">
+        <div class="" id="border">
             {% for tag in tag_list %}
-                <a class="am-badge am-badge-secondary am-round" href="{% url 'blog:tag' tag.id %}">{{ tag.name }}&nbsp;&nbsp;</a>
+                {% with tag.article_set.count as tagcount %}
+                    {% if tagcount >= 8 %}
+                        <button type="button" href="{% url 'blog:tag' tag.id %}"
+                                class="am-btn am-btn-danger am-round am-btn-sm">
+                            {{ tag.name }}({{ tagcount }})
+                        </button>
+                    {% elif tagcount >= 6 %}
+                        <button type="button" href="{% url 'blog:tag' tag.id %}"
+                                class="am-btn am-btn-warning am-round am-btn-sm">
+                            {{ tag.name }}({{ tagcount }})
+                        </button>
+                    {% elif tagcount >= 4 %}
+                        <button type="button" href="{% url 'blog:tag' tag.id %}"
+                                class="am-btn am-btn-success am-round am-btn-sm">
+                            {{ tag.name }}({{ tagcount }})
+                        </button>
+                    {% elif tagcount >= 2 %}
+                        <button type="button" href="{% url 'blog:tag' tag.id %}"
+                                class="am-btn am-btn-secondary am-round am-btn-sm">
+                            {{ tag.name }}({{ tagcount }})
+                        </button>
+                    {% elif tagcount >= 1 %}
+                        <button type="button" href="{% url 'blog:tag' tag.id %}"
+                                class="am-btn am-btn-primary am-round am-btn-sm">
+                            {{ tag.name }}({{ tagcount }})
+                        </button>
+                    {% else %}
+                        <button type="button" href="{% url 'blog:tag' tag.id %}"
+                                class="am-btn am-btn-default am-round am-btn-sm">
+                            {{ tag.name }}({{ tagcount }})
+                        </button>
+                    {% endif %}
+                {% endwith %}
             {% endfor %}
         </div>
 

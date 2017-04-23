@@ -19,6 +19,7 @@
     {% endblock extrahead %}
     {#draceditor的渲染标签#}
     {% load dractags %}
+    {% load el_pagination_tags %}
 </head>
 <body>
 {% block content %}
@@ -26,6 +27,7 @@
             <br>
             <!--文章列表-->
             <div class="am-u-md-8">
+                {% lazy_paginate article_list %}
                 {% for article in article_list %}
                     <article class="am-article">
                         <div class="am-article-hd">
@@ -74,12 +76,13 @@
                     <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed">
                     <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed">
                 {% endfor %}
+                {% show_pages %}
             </div>
 
             <!--侧边栏-->
             <div class="am-u-md-4">
+                <!--文章热门分类面板-->
                 <div class="am-panel am-panel-default">
-                    <!--文章热门分类面板-->
                     <!--只显示新增加的前5个分类，其他的要点击查看更多进入到分类页面去看-->
                     <div class="am-panel-hd">热门分类</div>
                     <div class="am-panel-bd">

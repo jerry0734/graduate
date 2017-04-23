@@ -55,6 +55,9 @@ INSTALLED_APPS = (
     # crispy-forms
     'crispy_forms',
     'bootstrapform',
+    # el_pagination分页插件
+    'el_pagination',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -141,3 +144,5 @@ STATICFILES_FINDERS = (
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+EL_PAGINATION_PER_PAGE = 3

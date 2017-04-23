@@ -1,9 +1,8 @@
 from django.shortcuts import render
+from django.db.models import Count
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Article, Category, Aboutme, Tag
-import markdown_deux
-import markdown2
 
 
 class IndexView(ListView):
@@ -14,7 +13,7 @@ class IndexView(ListView):
 
     # 返回文章
     def get_queryset(self):
-        article_list = Article.objects.filter(status='p')
+        article_list = Article.objects.filter(status='p').order_by('-create_time')
         return article_list
 
     def get_context_data(self, **kwargs):
@@ -64,10 +63,12 @@ class CategoryView(ListView):
 
     # 给视图增加额外的数据
     def get_context_data(self, **kwargs):
+        # 增加一个category_list,用于在页面显示所有分类，按照名字排序
         kwargs['category_list'] = Category.objects.all().order_by('name')
         # 获取正确的分类id，以便在标题栏正确显示分类名称
         kwargs['category'] = Category.objects.get(id=self.kwargs['category_id'])
-        # 增加一个category_list,用于在页面显示所有分类，按照名字排序
+        # 统计分类下的文章数量
+        kwargs['count'] = Category.objects.annotate(num=Count('article'))
         return super(CategoryView, self).get_context_data(**kwargs)
 
 
@@ -105,8 +106,9 @@ def aboutme(request):
 def showcategories(request):
     """分类主页面"""
     category_list = Category.objects.all()
+    # count = Category.objects.annotate(num=Count('article'))
     tag_list = Tag.objects.all()
-    context = {'category_list': category_list, 'tag_list': tag_list}
+    context = {'category_list': category_list, 'tag_list': tag_list, }
     return render(request, 'blog_articles/categories.html', context)
 
 

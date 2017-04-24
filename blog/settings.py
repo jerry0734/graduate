@@ -29,7 +29,7 @@ if DEBUG:
     # 根据DEBUG来确定
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", 'hellojerry.cn', 'd.hellojerry.cn']
 
 # Application definition
 
@@ -145,7 +145,9 @@ STATICFILES_FINDERS = (
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-EL_PAGINATION_PER_PAGE = 1
+# django-el-pagination 的自定义设置
+# 每页5篇
+EL_PAGINATION_PER_PAGE = 5
 EL_PAGINATION_FIRST_LABEL = 'First'
 EL_PAGINATION_LAST_LABEL = 'Last'
 EL_PAGINATION_NEXT_LABEL = 'Next'

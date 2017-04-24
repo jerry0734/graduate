@@ -105,7 +105,8 @@ def aboutme(request):
 
 def showcategories(request):
     """分类主页面"""
-    category_list = Category.objects.all()
+    # 分类下没有文章不显示
+    category_list = Category.objects.all().annotate(num_articles=Count('article')).filter(num_articles__gt=0)
     # count = Category.objects.annotate(num=Count('article'))
     tag_list = Tag.objects.all()
     context = {'category_list': category_list, 'tag_list': tag_list, }

@@ -27,22 +27,31 @@
             <h1 class="am-u-sm-12 am-u-md-12 am-u-lg-12" id="titlefont">分类归档</h1>
         </div>
         <div class="am-g am-g-fixed">
-            <ul class="am-list am-list-striped am-u-sm-12 am-u-md-12 am-u-lg-12" id="border">
+            <ul class="am-list am-u-sm-12 am-u-md-12 am-u-lg-12" id="border">
                 {% for category in category_list %}
                     <li>
-                        <a href="{% url 'blog:category' category.id %}" style="text-align: center">{{ category.name }}
                             {% with category.article_set.count as count %}
                                 {% if count == 0 %}
-                                    <span class="am-badge am-radius">{{ count }}</span>
+                                    {#                                    <!--不显示文章数为零的分类-->
                                 {% elif count <= 1 %}
+                                    <a href="{% url 'blog:category' category.id %}" style="text-align: center">
+                                    {{ category.name }}
                                     <span class="am-badge am-badge-primary am-radius">{{ count }}</span>
                                 {% elif count <= 2 %}
+                                    <a href="{% url 'blog:category' category.id %}" style="text-align: center">
+                                    {{ category.name }}
                                     <span class="am-badge am-badge-secondary am-radius">{{ count }}</span>
                                 {% elif count <= 3 %}
+                                    <a href="{% url 'blog:category' category.id %}" style="text-align: center">
+                                    {{ category.name }}
                                     <span class="am-badge am-badge-success am-radius">{{ count }}</span>
                                 {% elif count <= 5 %}
+                                    <a href="{% url 'blog:category' category.id %}" style="text-align: center">
+                                    {{ category.name }}
                                     <span class="am-badge am-badge-warning am-radius">{{ count }}</span>
                                 {% else %}
+                                    <a href="{% url 'blog:category' category.id %}" style="text-align: center">
+                                    {{ category.name }}
                                     <span class="am-badge am-badge-danger am-radius">{{ count }}</span>
                                 {% endif %}
                             {% endwith %}
@@ -57,39 +66,14 @@
         </div>
         <div class="" id="border">
             {% for tag in tag_list %}
-                {% with tag.article_set.count as tagcount %}
-                    {% if tagcount >= 8 %}
-                        <button type="button" href="{% url 'blog:tag' tag.id %}"
-                                class="am-btn am-btn-danger am-round am-btn-sm">
-                            {{ tag.name }}({{ tagcount }})
-                        </button>
-                    {% elif tagcount >= 6 %}
-                        <button type="button" href="{% url 'blog:tag' tag.id %}"
-                                class="am-btn am-btn-warning am-round am-btn-sm">
-                            {{ tag.name }}({{ tagcount }})
-                        </button>
-                    {% elif tagcount >= 4 %}
-                        <button type="button" href="{% url 'blog:tag' tag.id %}"
-                                class="am-btn am-btn-success am-round am-btn-sm">
-                            {{ tag.name }}({{ tagcount }})
-                        </button>
-                    {% elif tagcount >= 2 %}
-                        <button type="button" href="{% url 'blog:tag' tag.id %}"
-                                class="am-btn am-btn-secondary am-round am-btn-sm">
-                            {{ tag.name }}({{ tagcount }})
-                        </button>
-                    {% elif tagcount >= 1 %}
-                        <button type="button" href="{% url 'blog:tag' tag.id %}"
-                                class="am-btn am-btn-primary am-round am-btn-sm">
-                            {{ tag.name }}({{ tagcount }})
-                        </button>
-                    {% else %}
-                        <button type="button" href="{% url 'blog:tag' tag.id %}"
-                                class="am-btn am-btn-default am-round am-btn-sm">
-                            {{ tag.name }}({{ tagcount }})
-                        </button>
-                    {% endif %}
-                {% endwith %}
+                {% if tag.article_set.count > 0 %}
+                    <a href="{% url 'blog:tag' tag.id %}" class="am-badge am-badge-primary am-round am-text-default">
+                        {{ tag.name }}({{ tag.article_set.count }})</a>
+                {% else %}
+                    <a href="{% url 'blog:tag' tag.id %}" class="am-badge am-badge-default am-round am-text-default">
+                        {{ tag.name }}({{ tag.article_set.count }})</a>
+                {% endif %}
+
             {% endfor %}
         </div>
 

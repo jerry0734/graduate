@@ -61,12 +61,16 @@
         .foot {
             background-color: #d8dbd8;
         }
+
+        #navbc {
+            background-color: #008cba
+        }
     </style>
     {% block extrastyle %}{% endblock %}
     {% block extrahead %}{% endblock %}
 </head>
 <body>
-<nav class="am-topbar-inverse am-topbar-fixed-top" style="background-color: #008cba">
+<nav class="am-topbar-inverse am-topbar-fixed-top" id="navbc">
 
     <h1 class="am-topbar-brand modfont" style="font-size: 125%">
         <a href="{% url "blog:index" %}"><img src="/static/amaze-assets/i/favicon.png"></a>

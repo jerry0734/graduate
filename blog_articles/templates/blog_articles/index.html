@@ -17,6 +17,12 @@
                 float: left;
                 list-style: none;
             }
+
+            #title {
+                text-align: center;
+                font-family: NotoSans, SansSerif;
+                font-size: 250%;
+            }
         </style>
     {% endblock extrastyle %}
     {% block extrahead %}
@@ -36,17 +42,16 @@
             {% for article in article_list %}
                 <article class="am-article">
                     <div class="am-article-hd">
-                        <h1 class="am-article-title">
+                        <h1 class="am-article-title" id="title">
                             <a href="{% url 'blog:detail' article.pk %}"> {{ article.title }}</a></h1>
                         <div class="am-article-meta">
-                            <h5 id="bigger">
-                                <span class="am-icon-male am-icon-md"></span>&nbsp;&nbsp;{{ article.author }}&nbsp;<br>
-                                <span class="am-icon-clock-o am-icon-md"></span>&nbsp;&nbsp;{{ article.create_time }}&nbsp;&nbsp;<br>
+                            <h5 id="bigger" style="text-align: center">
+                                <span class="am-icon-male am-icon-md"></span>&nbsp;&nbsp;{{ article.author }}&nbsp;
+                                <span class="am-icon-clock-o am-icon-md"></span>&nbsp;&nbsp;{{ article.create_time }}&nbsp;&nbsp;
                                 <span class="am-icon-edit am-icon-md"></span>&nbsp;&nbsp;{{ article.modified_time }}
                             </h5>
                         </div>
                     </div>
-                    <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
                     <div class="am-article-bd">
                         {% if article.abstract == None %}
                             <p></p>
@@ -79,7 +84,7 @@
                     </div>
                 </article>
                 <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed">
-                <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed">
+                <br>
             {% endfor %}
             {% get_pages %}
             <ul class="am-pagination am-pagination-centered">
@@ -97,7 +102,7 @@
             <!--文章热门分类面板-->
             <div class="am-panel am-panel-default">
                 <!--只显示新增加的前5个分类，其他的要点击查看更多进入到分类页面去看-->
-                <div class="am-panel-hd">热门分类</div>
+                <div class="am-panel-hd" style="background-color: #edfff4">热门分类</div>
                 <div class="am-panel-bd">
                     <ul>
                         {% for category in category_list %}
@@ -112,9 +117,9 @@
             </div>
 
 
-            <div class="am-panel-group" id="accordation">
+            <div class="am-panel-group color-panel-group" id="accordation">
                 <!--文章标签面板-->
-                <div class="am-panel am-panel-default">
+                <div class="am-panel am-panel-default color-panel-border">
                     <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#tags'}">文章标签</div>
                     <div class="am-panel-bd am-collapse" id="tags">
                         {% for tag in tag_list %}
@@ -143,7 +148,7 @@
                 </div>
 
                 <!--文章归档面板-->
-                <div class="am-panel am-panel-default">
+                <div class="am-panel am-panel-default color-panel-border">
                     <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#archive'}">文章归档
                     </div>
                     <div class="am-panel-bd am-collapse" id="archive">
@@ -159,8 +164,10 @@
                 </div>
 
                 <!--联系我面板-->
-                <div class="am-panel am-panel-default">
-                    <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#contact'}">联系我</div>
+                <div class="am-panel am-panel-default color-panel-border">
+                    <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#contact'}">
+                        联系我
+                    </div>
                     <div class="am-panel-bd am-collapse" id="contact">
                         <p>
                             <a href="https://github.com/jerry0734" target="_blank"

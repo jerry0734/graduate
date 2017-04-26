@@ -69,8 +69,9 @@ class Article(models.Model):
 
     # 文章作者
     # User是django内置的用户模型，
-    # 通过 ForeignKey 把文章和User关联起来，
-    author = models.ForeignKey(User)
+    # 通过 ForeignKey 把文章和User关联起来
+    # limit_choice_to 控制只有超级管理员才能是作者，从而把评论者和撰文者分开
+    author = models.ForeignKey(User, limit_choices_to={'is_superuser': 1})
 
     def __str__(self):
         # 显示文章的标题
@@ -123,3 +124,7 @@ class Aboutme(models.Model):
 
     def __str__(self):
         return self.blog_name
+
+
+class comment(models.Model):
+    pass

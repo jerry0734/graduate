@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-class gusetUser(AbstractUser):
+class allUser(AbstractUser):
     avatar = models.CharField(max_length=255, default='/static/amaze-assets/i/ren.png',
                               verbose_name='头像')
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name='手机号码')

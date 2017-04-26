@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 # 导入自带的User，为文章作者显示正确的用户名
 from django.contrib.auth.models import User
 from draceditor.models import DraceditorField
@@ -71,7 +72,7 @@ class Article(models.Model):
     # User是django内置的用户模型，
     # 通过 ForeignKey 把文章和User关联起来
     # limit_choice_to 控制只有超级管理员才能是作者，从而把评论者和撰文者分开
-    author = models.ForeignKey(User, limit_choices_to={'is_superuser': 1})
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, limit_choices_to={'is_superuser': 1})
 
     def __str__(self):
         # 显示文章的标题

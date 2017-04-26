@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^draceditor/', include('draceditor.urls')),
     url(r'^board/', include('msb.urls', namespace='msb')),
+    url(r'^account/', include('myuser.urls', namespace='account')),
 ]

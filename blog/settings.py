@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'blog_articles',
     # 留言板应用
     'msb',
+    'myuser',
     # 加入通过pip安装的包
     # 分别有markdown2,markdown_deux,pagedown
     'markdown2',
@@ -57,7 +58,7 @@ INSTALLED_APPS = (
     'bootstrapform',
     # el_pagination分页插件
     'el_pagination',
-
+    # 'gunicorn',
 )
 
 MIDDLEWARE_CLASSES = (

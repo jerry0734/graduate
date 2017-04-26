@@ -22,15 +22,19 @@
 {% block content %}
     <br>
     <div class="am-g am-g-fixed">
-        <div class="color-breadcrumb">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="color-breadcrumb">
             <span><a class="color-breadcrumb-link" href="{% url 'blog:index' %}"><i type="home"
                                                                                     class="am-icon-home"></i>首页</a>
                 <span class="color-breadcrumb-separator">/</span></span>
-            <span><a class="color-breadcrumb-link" href="{% url 'blog:categories' %}">分类</a>
+                <span><a class="color-breadcrumb-link" href="{% url 'blog:categories' %}">分类</a>
                 <span class="color-breadcrumb-separator">/</span></span>
-            <span><span class="color-breadcrumb-link">{{ category.name }}</span><span
-                    class="color-breadcrumb-separator">/</span></span>
+                <span><span class="color-breadcrumb-link">{{ category.name }}</span><span
+                        class="color-breadcrumb-separator">/</span></span>
+            </div>
         </div>
+
+        <br>
         <br>
         <div class="am-u-md-8">
             {% for article in article_list %}

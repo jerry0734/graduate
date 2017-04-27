@@ -63,10 +63,10 @@
         }
 
         #navbc {
-            background-color: #4e4e4e;
-            filter: alpha(opacity=85);
-            -moz-opacity: 0.85;
-            opacity: 0.85;
+            background-color: #004aa2;
+            filter: alpha(opacity=80);
+            -moz-opacity: 0.80;
+            opacity: 0.80;
         }
 
         .right-text {
@@ -96,7 +96,7 @@
 <body>
 <nav class="am-topbar-inverse am-topbar-fixed-top" id="navbc">
 
-    <h1 class="am-topbar-brand modfont" style="font-size: 125%">
+    <h1 class="am-topbar-brand modfont" style="font-size: 150%">
         <a href="{% url "blog:index" %}"><img src="/static/amaze-assets/i/favicon.png"></a>
         <a href="{% url "blog:index" %}">Jerry's Blog</a>
     </h1>
@@ -108,7 +108,7 @@
 
     <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li class="am-active"><a href="{% url "blog:index" %}">首页</a></li>
+            <li><a href="{% url "blog:index" %}">首页</a></li>
             <li><a href="{% url 'blog:categories' %}">分类</a></li>
             <li><a href="{% url 'msb:board' %}">留言</a></li>
             <li><a href="{% url "blog:aboutme" %}">关于我</a></li>
@@ -123,12 +123,21 @@
 
         <div class="am-topbar-right">
             {% if user.is_authenticated %}
-                <ul class="am-nav am-nav-pills am-topbar-nav">
-                    <li class="right-text">您好, {{ user.username }}</li>
-                    <li class="right-text">
-                        <a href="{% url 'account:logout' %}">注销</a>
-                    </li>
-                </ul>
+                {#                <ul class="am-nav am-nav-pills am-topbar-nav">#}
+                {#                    <li class="right-text">您好, {{ user.username }}</li>#}
+                {#                    <li class="right-text">#}
+                {#                        <a href="{% url 'account:logout' %}">注销</a>#}
+                {#                    </li>#}
+                {#                </ul>#}
+                <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
+                    <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle"
+                            data-am-dropdown-toggle>您好, {{ user.username }}<span class="am-icon-caret-down"></span>
+                    </button>
+                    <ul class="am-dropdown-content">
+                        <li><a href="{% url 'account:logout' %}">注销</a></li>
+                        <li><a href="#">个人资料</a></li>
+                    </ul>
+                </div>
             {% else %}
                 <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
                     <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm am-dropdown-toggle"

@@ -123,27 +123,22 @@
                     <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#tags'}">文章标签</div>
                     <div class="am-panel-bd am-collapse" id="tags">
                         {% for tag in tag_list %}
-                            {% if tag.name|length >= 10 %}
-                                <a href="{% url 'blog:tag' tag.pk %}"
-                                   class="am-badge am-radius">{{ tag }}</a>
-                            {% elif tag.name|length >= 8 %}
-                                <a href="{% url 'blog:tag' tag.pk %}"
-                                   class="am-badge am-badge-success am-radius">{{ tag }}</a>
-                            {% elif tag.name|length >= 7 %}
-                                <a href="{% url 'blog:tag' tag.pk %}"
-                                   class="am-badge am-badge-warning   am-radius">{{ tag }}</a>
-                            {% elif tag.name|length >= 6 %}
-                                <a href="{% url 'blog:tag' tag.pk %}"
-                                   class="am-badge am-badge-primary am-radius">{{ tag }}</a>
-                            {% elif tag.name|length >= 5 %}
-                                <a href="{% url 'blog:tag' tag.pk %}"
-                                   class="am-badge am-badge-secondary  am-radius">{{ tag }}</a>
-                            {% else %}
-                                <a href="{% url 'blog:tag' tag.pk %}"
-                                   class="am-badge am-badge-danger am-radius">{{ tag }}</a>
-                            {% endif %}
+                            <a href="{% url 'blog:tag' tag.pk %}"
+                               id="tagcloud"
+                               class="am-badge am-radius">{{ tag }}</a>
                         {% endfor %}
-
+                        <!--随机颜色标签云-->
+                        <script>
+                            window.onload = function () {
+                                var tagcloud = document.getElementById('tags');
+                                var oa = tagcloud.getElementsByTagName('a');
+                                for (var i = 0; i < oa.length; i++) {
+                                    oa[i].style.background = "rgb(" + parseInt(Math.random() * 255) + ","
+                                        + parseInt(Math.random() * 255) + ","
+                                        + parseInt(Math.random() * 255) + ")";
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
 
@@ -175,7 +170,6 @@
                             <a href="http://weibo.com/jerryxjy" target="_blank"
                                class="am-icon-btn am-warning am-icon-weibo"></a>
                             <a class="am-icon-btn am-success am-icon-wechat"
-                               data-am-popover="{content: '点击打开二维码', trigger: 'hover focus'}"
                                data-am-modal="{target: '#my-wechat'}"></a>
                             <a class="am-icon-btn am-primary am-icon-qq"
                                data-am-modal="{target: '#my-qq'}"></a>

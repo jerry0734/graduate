@@ -125,7 +125,7 @@
                         {% for tag in tag_list %}
                             <a href="{% url 'blog:tag' tag.pk %}"
                                id="tagcloud"
-                               class="am-badge am-radius">{{ tag }}</a>
+                               class="am-badge am-radius am-text-sm">{{ tag }}</a>
                         {% endfor %}
                         <!--随机颜色标签云-->
                         <script>

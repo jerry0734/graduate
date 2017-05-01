@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .forms import BlogUserCreationForm
 from .models import allUser
 
 
@@ -28,7 +29,16 @@ def user_login(request):
 
 
 # 限制修饰符
+@login_required
 def user_logout(request):
     """用户注销"""
     logout(request)
     return HttpResponseRedirect(reverse('blog:index'))
+
+
+def register(request):
+    # if request.method == "POST":
+    if request.method != "POST":
+        form = BlogUserCreationForm()
+    else:
+        form = BlogUserCreationForm(data=request.POST)

@@ -127,5 +127,15 @@ class Aboutme(models.Model):
         return self.blog_name
 
 
-class comment(models.Model):
-    pass
+class Comments(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='用户')
+    article = models.ForeignKey(Article, verbose_name='关联文章')
+    content = models.TextField(verbose_name='内容')
+    published_time = models.DateTimeField('创建时间', auto_now_add=True)
+
+    related = models.ForeignKey('self', default=None, blank=True, null=True,
+                                verbose_name='引用')
+
+    class Meta:
+        verbose_name_plural = '评论'
+        ordering = ['-published_time']

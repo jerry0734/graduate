@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class allUser(AbstractUser):
-    avatar = models.ImageField(upload_to='avatar', default='/static/amaze-assets/i/ren.png',
+    avatar = models.ImageField(upload_to='avatar', default='/default/ren.png',
                                verbose_name='头像')
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name='手机号码')
 

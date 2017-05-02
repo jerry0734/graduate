@@ -14,12 +14,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+from . import settings
 
 urlpatterns = [
-    # 引用blog_articles里面的urls.py
-    url(r'', include('blog_articles.urls', namespace='blog')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^draceditor/', include('draceditor.urls')),
-    url(r'^board/', include('msb.urls', namespace='msb')),
-    url(r'^account/', include('myuser.urls', namespace='account')),
-]
+                  # 引用blog_articles里面的urls.py
+                  url(r'', include('blog_articles.urls', namespace='blog')),
+                  url(r'^admin/', include(admin.site.urls)),
+                  url(r'^draceditor/', include('draceditor.urls')),
+                  url(r'^board/', include('msb.urls', namespace='msb')),
+                  url(r'^account/', include('myuser.urls', namespace='account')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,
+                                                                                         document_root=settings.STATIC_ROOT)

@@ -65,10 +65,38 @@
             </div>
             <hr>
 
-            <button type="button" class="am-btn am-radius color-modal-btn-blue"
-                    data-am-modal="{target: '#doc-modal-1'}">
-                手机扫码阅读
-            </button>
+            <div style="display:inline">
+                <button type="button" class="am-btn am-radius color-modal-btn-blue"
+                        data-am-modal="{target: '#doc-modal-1'}"
+                        style="float:left">
+                    手机扫码阅读
+                </button>
+                <!--百度分享按钮-->
+                <!--http://share.baidu.com/-->
+                <div class="bdsharebuttonbox" style="float:left">
+                    {#                <a href="#" class="bds_more" data-cmd="more"></a>#}
+                    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+                    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+                </div>
+                <script>
+                    window._bd_share_config = {
+                        "common": {
+                            "bdSnsKey": {},
+                            "bdText": "",
+                            "bdMini": "1",
+                            "bdMiniList": false,
+                            "bdPic": "",
+                            "bdStyle": "1",
+                            "bdSize": "24"
+                        }, "share": {}
+                    };
+                    with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+                </script>
+            </div>
+
 
             <!--Modal隐藏窗口,文章二维码-->
             <div class="am-modal am-modal-no-btn color-modal-style color-modal-style-blue" tabindex="-1"

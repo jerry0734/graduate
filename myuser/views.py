@@ -36,9 +36,19 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('blog:index'))
 
 
-def register(request):
+def user_register(request):
     # if request.method == "POST":
     if request.method != "POST":
         form = BlogUserCreationForm()
     else:
         form = BlogUserCreationForm(data=request.POST)
+        username = request.POST.get('username', '')
+        password = request.POST.get('password2', '')
+        if form.is_valid():
+            user = form.save()
+            authenticated_user = authenticate(username=username, password=password)
+            login(request, authenticated_user)
+            return HttpResponseRedirect(reverse('blog:index'))
+
+    context = {'form': form}
+    return render(request, 'myuser/register.html', context)

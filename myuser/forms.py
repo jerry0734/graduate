@@ -2,6 +2,7 @@ import unicodedata
 from django import forms
 from django.contrib.auth import authenticate, password_validation, get_user_model
 from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError
 from .models import allUser
 
 
@@ -20,6 +21,7 @@ class BlogUserCreationForm(forms.ModelForm):
 
     # 包含字母、数字和字符@/./+/-/_
     username = forms.RegexField(
+        label='用户名',
         regex=r'^[\w.@+-]+$',
         max_length=20,
         error_messages={
@@ -88,37 +90,52 @@ class BlogUserCreationForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        existed_email = allUser._default_manager.get(email=email)
-        try:
-            existed_email
-        except allUser.DoesNotExist:
+        existed_email = allUser.objects.values_list('email')
+        if email in existed_email:
+            raise ValidationError(
+                self.error_messages['Duplicate_email'],
+                code='Duplicate_email',
+            )
+        else:
             return email
-        raise forms.ValidationError(
-            self.error_messages['Duplicate_email'],
-            code='Duplicate_email',
-        )
 
     def clean_phone(self):
         phone = self.cleaned_data.get("phone")
-        try:
-            allUser._default_manager.get(phone=phone)
-        except allUser.DoesNotExist:
+        # try:
+        #     allUser.objects.get(phone=phone)
+        # except allUser.DoesNotExist:
+        #     return phone
+        # raise forms.ValidationError(
+        #     self.error_messages['Duplicate_phone'],
+        #     code='Duplicate_phone'
+        # )
+        existed_phone = allUser.objects.values_list('phone')
+        if phone in existed_phone:
+            raise ValidationError(
+                self.error_messages['Duplicate_phone'],
+                code='Duplicate_phone',
+            )
+        else:
             return phone
-        raise forms.ValidationError(
-            self.error_messages['Duplicate_phone'],
-            code='Duplicate_phone'
-        )
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
-        try:
-            allUser._default_manager.get(username=username)
-        except allUser.DoesNotExist:
+        # try:
+        #     allUser.objects.get(username=username)
+        # except allUser.DoesNotExist:
+        #     return username
+        # raise forms.ValidationError(
+        #     self.error_messages['Duplicate_username'],
+        #     code='Duplicate_username'
+        # )
+        existed_username = allUser.objects.values_list('username')
+        if username in existed_username:
+            raise ValidationError(
+                self.error_messages['Duplicate_username'],
+                code='Duplicate_username',
+            )
+        else:
             return username
-        raise forms.ValidationError(
-            self.error_messages['Duplicate_username'],
-            code='Duplicate_username'
-        )
 
     def save(self, commit=True):
         user = super().save(commit=False)

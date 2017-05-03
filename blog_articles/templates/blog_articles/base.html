@@ -141,6 +141,9 @@
                     <ul class="am-dropdown-content">
                         <li><a href="{% url 'account:logout' %}">注销</a></li>
                         <li><a href="#">个人资料</a></li>
+                        {% if user.is_superuser %}
+                            <li><a href="/admin/">管理界面</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             {% else %}

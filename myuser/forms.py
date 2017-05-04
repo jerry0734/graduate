@@ -27,21 +27,23 @@ class BlogUserCreationForm(forms.ModelForm):
         error_messages={
             'required': "用户名未输入",
             'invalid': "用户名不合法",
-        }
+        },
+        widget=forms.TextInput(attrs={'class': 'color-form-control'}),
+        help_text='请输入您想要的用户名',
     )
 
     password1 = forms.CharField(
         label="密码",
         strip=False,
-        widget=forms.PasswordInput,
-        help_text=password_validation.password_validators_help_text_html(),
+        widget=forms.PasswordInput(attrs={'class': 'color-form-control'}),
+        help_text='请输入您的新密码',
         error_messages={
             'required': "密码未输入",
-        }
+        },
     )
     password2 = forms.CharField(
         label="密码确认",
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(attrs={'class': 'color-form-control'}),
         strip=False,
         help_text="请输入与上面一样的密码",
         error_messages={
@@ -51,19 +53,22 @@ class BlogUserCreationForm(forms.ModelForm):
 
     email = forms.EmailField(
         label="邮箱",
+        widget=forms.EmailInput(attrs={'class': 'color-form-control'}),
         error_messages={
             'invalid': "email格式不正确",
             'required': "email未输入",
         }
     )
 
-    phone = forms.CharField(
+    phone = forms.RegexField(
         label="手机号",
         max_length=15,
+        regex='^[0-9]*$',
         error_messages={
             'invalid': "格式不对",
             'required': "未输入手机号",
-        }
+        },
+        widget=forms.TextInput(attrs={'class': 'color-form-control'}),
     )
 
     class Meta:

@@ -37,6 +37,7 @@ def user_logout(request):
 
 
 def user_register(request):
+    errors = []
     # if request.method == "POST":
     if request.method != "POST":
         form = BlogUserCreationForm()
@@ -49,6 +50,9 @@ def user_register(request):
             authenticated_user = authenticate(username=username, password=password)
             login(request, authenticated_user)
             return HttpResponseRedirect(reverse('blog:index'))
+        else:
+            for key, value in form.errors.items():
+                errors.append(value.as_text)
 
-    context = {'form': form}
+    context = {'form': form, 'errors': errors}
     return render(request, 'myuser/register.html', context)

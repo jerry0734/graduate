@@ -13,10 +13,10 @@ class BlogUserCreationForm(forms.ModelForm):
     https://github.com/django/django/blob/master/django/contrib/auth/forms.py
     """
     error_messages = {
-        'password_mismatch': "两次密码不相符",
-        'Duplicate_username': "这个用户名已经有人注册过了，请更换",
-        'Duplicate_email': "这个邮箱已经被注册过了",
-        'Duplicate_phone': "这个手机号已经被注册过了",
+        'password_mismatch': "两次密码不相符,请重新填写",
+        'duplicate_username': "这个用户名已经有人注册过了，请更换",
+        'duplicate_email': "这个邮箱已经被注册过了",
+        'duplicate_phone': "这个手机号已经被注册过了",
     }
 
     # 包含字母、数字和字符@/./+/-/_
@@ -57,6 +57,7 @@ class BlogUserCreationForm(forms.ModelForm):
         error_messages={
             'invalid': "email格式不正确",
             'required': "email未输入",
+            'duplicate_email': "这个邮箱已经被注册过了",
         }
     )
 
@@ -65,15 +66,16 @@ class BlogUserCreationForm(forms.ModelForm):
         max_length=15,
         regex=r'^[0-9]+$',
         error_messages={
-            'invalid': "格式不对",
+            'invalid': "电话格式不对",
             'required': "未输入手机号",
+            'duplicate_phone': "这个手机号已经被注册过了",
         },
         widget=forms.TextInput(attrs={'class': 'color-form-control'}),
     )
 
     class Meta:
         model = allUser
-        fields = ("username", "email", "phone")
+        fields = ('username', 'email', 'phone')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -95,52 +97,37 @@ class BlogUserCreationForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        existed_email = allUser.objects.values_list('email')
-        if email in existed_email:
-            raise ValidationError(
-                self.error_messages['Duplicate_email'],
-                code='Duplicate_email',
-            )
-        else:
+        existed_email = allUser.objects.filter(email=email).exists()
+        if not existed_email:
             return email
+        else:
+            raise forms.ValidationError(
+                self.error_messages['duplicate_email'],
+                code='duplicate_email',
+            )
 
     def clean_phone(self):
         phone = self.cleaned_data.get("phone")
-        # try:
-        #     allUser.objects.get(phone=phone)
-        # except allUser.DoesNotExist:
-        #     return phone
-        # raise forms.ValidationError(
-        #     self.error_messages['Duplicate_phone'],
-        #     code='Duplicate_phone'
-        # )
-        existed_phone = allUser.objects.values_list('phone')
-        if phone in existed_phone:
-            raise ValidationError(
-                self.error_messages['Duplicate_phone'],
-                code='Duplicate_phone',
-            )
-        else:
+        existed_phone = allUser.objects.filter(phone=phone).exists()
+        if not existed_phone:
             return phone
+        else:
+            raise forms.ValidationError(
+                self.error_messages['duplicate_phone'],
+                code='duplicate_phone',
+            )
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
-        # try:
-        #     allUser.objects.get(username=username)
-        # except allUser.DoesNotExist:
-        #     return username
-        # raise forms.ValidationError(
-        #     self.error_messages['Duplicate_username'],
-        #     code='Duplicate_username'
-        # )
-        existed_username = allUser.objects.values_list('username')
-        if username in existed_username:
-            raise ValidationError(
-                self.error_messages['Duplicate_username'],
-                code='Duplicate_username',
-            )
-        else:
+        existed = allUser.objects.filter(username=username).exists()
+        # existed_username = allUser.objects.values_list('username')
+        if not existed:
             return username
+        else:
+            raise forms.ValidationError(
+                self.error_messages['duplicate_username'],
+                code='duplicate_username',
+            )
 
     def save(self, commit=True):
         user = super().save(commit=False)

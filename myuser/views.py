@@ -37,6 +37,7 @@ def user_logout(request):
 
 
 def user_register(request):
+    """用户注册"""
     errors = []
     # if request.method == "POST":
     if request.method != "POST":

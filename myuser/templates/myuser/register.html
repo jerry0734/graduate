@@ -4,13 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}注册{% endblock %}</title>
+    {% block extrastyle %}
+        <style>
+            .li-style {
+                list-style-type: none;
+            }
+        </style>
+    {% endblock %}
 </head>
 <body>
 {% block content %}
     <br>
+    <br>
     <div class="am-container">
-        <div class="am-g am-g-fixed">
-            <div class="am-u-lg-8 am-u-lg-centered am-u-md-8 am-u-md-centered am-u-sm-10 am-u-sm-centered"></div>
+    <div class="am-g am-g-fixed">
+        <div class="am-u-lg-8 am-u-lg-centered am-u-md-8 am-u-md-centered am-u-sm-10 am-u-sm-centered">
+            {% if errors %}
+                <div class="am-alert am-alert-danger am-text-xs" data-am-alert>
+                    <button type="button" class="am-close">&times;</button>
+                    <ul>
+                        {% for error in errors %}
+                            <li class="li-style">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
             <form action="{% url 'account:register' %}" method="post" class="form">
                 {% csrf_token %}
                 <div class="color-form-group color-form-line">
@@ -43,10 +61,13 @@
                     <span class="color-form-control-help">{{ form.phone.help_text }}</span>
                 </div>
 
-                <button type="submit" name="submit">注册</button>
+                <button class="am-btn am-btn-success" type="submit" name="submit">注册</button>
+                <button class="am-btn am-btn-warning" type="reset" name="submit">重新填写</button>
             </form>
         </div>
     </div>
+
+    <br><br><br>
 
 
 {% endblock content %}

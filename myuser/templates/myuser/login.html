@@ -9,6 +9,7 @@
 <body>
 {% block content %}
     <div class="am-g am-g-fixed" align="center">
+        <br><br>
         <h1>登录</h1>
         <form id="login_form" class="am-form" method="post" action="{% url 'account:login' %}" style="width: 70%">
             {% csrf_token %}
@@ -16,7 +17,7 @@
                 <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
                 <input type="text" name="username" class="am-form-field" placeholder="用户名">
             </div>
-
+            <br>
             <div class="am-input-group">
                 <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
                 <input type="password" name="password" class="am-form-field" placeholder="密码">
@@ -30,7 +31,7 @@
 
         </form>
     </div>
-    <br>
+    <br><br><br><br><br><br><br><br>
 {% endblock %}
 </body>
 </html>

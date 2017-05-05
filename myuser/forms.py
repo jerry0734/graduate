@@ -63,7 +63,7 @@ class BlogUserCreationForm(forms.ModelForm):
     phone = forms.RegexField(
         label="手机号",
         max_length=15,
-        regex='^[0-9]*$',
+        regex=r'^[0-9]+$',
         error_messages={
             'invalid': "格式不对",
             'required': "未输入手机号",

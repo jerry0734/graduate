@@ -60,7 +60,7 @@
                     {% endfor %}
                 </p>
             </div>
-            <div class="articlefont" style="font-family: NotoSans" id="mainbody">
+            <div class="articlefont" style="font-family: NotoSans, SansSerif" id="mainbody">
                 {{ article.body | safe_markdown }}
             </div>
             <hr>
@@ -69,7 +69,7 @@
                 <button type="button" class="am-btn am-radius color-modal-btn-blue"
                         data-am-modal="{target: '#doc-modal-1'}"
                         style="float:left">
-                    手机扫码阅读
+                    扫码阅读
                 </button>
                 <!--百度分享按钮-->
                 <!--http://share.baidu.com/-->
@@ -95,6 +95,23 @@
                     };
                     with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
                 </script>
+            </div>
+
+            <div>
+                <form action="{% url 'blog:comment' article.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">提交</button>
+                </form>
+            </div>
+
+            <div>
+                {% for comment in comment_list %}
+                    {{ comment.user }}
+                    {{ comment.published_time }}
+                    {{ comment.content }}
+                {% endfor %}
+
             </div>
 
 

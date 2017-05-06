@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.db.models import Count
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from .models import Article, Category, Aboutme, Tag
+from myuser.models import allUser
+from .models import Article, Category, Aboutme, Tag, Comments
+from .forms import CommentForm
 
 
 class IndexView(ListView):
@@ -42,6 +45,8 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         kwargs['category_list'] = Category.objects.all().order_by('name')
+        kwargs['form'] = CommentForm()
+        kwargs['comment_list'] = self.object.comments_set.all()
         return super(ArticleDetailView, self).get_context_data(**kwargs)
 
 
@@ -121,3 +126,23 @@ def archive(request, year):
     context = {'article_list': article_list, 'category_list': category_list,
                'tag_list': tag_list}
     return render(request, 'blog_articles/index.html', context)
+
+
+def write_comments(request, article_id):
+    """评论"""
+    if request.method != 'POST':
+        form = CommentForm()
+
+    else:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            article = Article.objects.get(id=article_id)
+            user = request.user
+            comment = form.save(commit=False)
+            comment.article = article
+            comment.user = user
+            form.save()
+            # return redirect(to='article', id=article_id)
+            return redirect('blog:detail', article_id=article_id)
+
+    return redirect('blog:detail', article_id=article_id)

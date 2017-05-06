@@ -133,6 +133,7 @@ class Comments(models.Model):
     content = models.TextField(verbose_name='内容')
     published_time = models.DateTimeField('创建时间', auto_now_add=True)
 
+    # 预留接口
     related = models.ForeignKey('self', default=None, blank=True, null=True,
                                 verbose_name='引用')
 

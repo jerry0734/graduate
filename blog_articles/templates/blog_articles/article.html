@@ -34,6 +34,7 @@
         <!--文章详细主体-->
         <div class="am-u-lg-12 am-u-md-12 am-u-sm-12">
 
+            <br>
             <!--导航条-->
             <ol class="am-breadcrumb">
                 <li><a href="{% url 'blog:index' %}" class="am-icon-home am-icon-sm">首页</a></li>
@@ -46,11 +47,11 @@
 
             <div style="background-color: inherit">
                 <!--文章标题-->
-                <h1 style="font-family: NotoSans">{{ article.title }}</h1>
+                <h1 style="font-family: NotoSans; font-size: 350%; text-align: center">{{ article.title }}</h1>
                 <!--作者和最后修改时间-->
-                <h3 style="font-family: NotoSans">
+                <h6 style="font-family: NotoSans; text-align: center">
                     由&nbsp;{{ article.author }}&nbsp;最后修改于&nbsp;{{ article.modified_time }}
-                </h3>
+                </h6>
                 <!--文章标签-->
                 <p>
                     <span class="am-icon-tags am-icon-md"></span>
@@ -97,21 +98,50 @@
                 </script>
             </div>
 
-            <div>
-                <form action="{% url 'blog:comment' article.id %}" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit">提交</button>
-                </form>
-            </div>
+            <br><br>
+
+            {% if user.is_authenticated %}
+                <div>
+                    <form action="{% url 'blog:comment' article.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="am-form-group">
+                            <label>请输入您的评论</label><br>
+                            {{ form.content }}
+                        </div>
+                        <button class="am-btn am-btn-success" type="submit">提交评论</button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-bd">真正的粉丝，不用说也知道要 --->
+                        <a href="{% url 'account:login' %}">登录</a>&nbsp;
+                        <a href="{% url 'account:register' %}">注册</a>
+                    </div>
+                </div>
+            {% endif %}
+
+            <br>
 
             <div>
-                {% for comment in comment_list %}
-                    {{ comment.user }}
-                    {{ comment.published_time }}
-                    {{ comment.content }}
-                {% endfor %}
-
+                <ul class="am-comments-list">
+                    {% for comment in comment_list %}
+                        <li class="am-comment ">
+                            <img class="am-comment-avatar" alt="" src="/media/{{ comment.user.avatar }}"/>
+                            <div class="am-comment-main ">
+                                <header class="am-comment-hd">
+                                    <div class="am-comment-meta" style="background-color: #f5f5ff">
+                                        {{ comment.user }}
+                                        评论于
+                                        {{ comment.published_time }}
+                                    </div>
+                                </header>
+                                <div class="am-comment-bd"
+                                     style="background-color: rgba(211,255,245,0.12)">{{ comment.content }}</div>
+                                <!-- 评论内容 -->
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
 
 

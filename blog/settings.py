@@ -27,7 +27,7 @@ DEBUG = True
 
 if DEBUG:
     # 根据DEBUG来确定
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", 'hellojerry.cn', 'd.hellojerry.cn']
 else:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1", 'hellojerry.cn', 'd.hellojerry.cn']
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 全文搜索引擎haystack
+    'haystack',
     # 添加使用manage.py生成的app
     # 博客应用
     'blog_articles',
@@ -157,3 +159,13 @@ EL_PAGINATION_FIRST_LABEL = 'First'
 EL_PAGINATION_LAST_LABEL = 'Last'
 EL_PAGINATION_NEXT_LABEL = 'Next'
 EL_PAGINATION_PREVIOUS_LABEL = 'Prev'
+
+# haystack whoosh
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog_articles.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
+# haystack自动更新索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

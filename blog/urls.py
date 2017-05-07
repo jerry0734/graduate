@@ -24,5 +24,6 @@ urlpatterns = [
                   url(r'^draceditor/', include('draceditor.urls')),
                   url(r'^board/', include('msb.urls', namespace='msb')),
                   url(r'^account/', include('myuser.urls', namespace='account')),
+                  url(r'^haystacksearch/', include('haystack.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,
                                                                                          document_root=settings.STATIC_ROOT)

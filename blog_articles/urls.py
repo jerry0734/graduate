@@ -16,4 +16,5 @@ urlpatterns = [
         views.archive, name='archive'),
     url(r'^article/(?P<article_id>\d+)/comment/$',
         views.write_comments, name='comment'),
+    url(r'^search/$', views.search_article, name='search'),
 ]

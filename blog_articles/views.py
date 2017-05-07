@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from myuser.models import allUser
 from .models import Article, Category, Aboutme, Tag, Comments
 from .forms import CommentForm
+from haystack.forms import SearchForm
 
 
 class IndexView(ListView):
@@ -146,3 +147,16 @@ def write_comments(request, article_id):
             return redirect('blog:detail', article_id=article_id)
 
     return redirect('blog:detail', article_id=article_id)
+
+
+def search_article(request):
+    """搜索"""
+    keyword = request.GET['q']
+    form = SearchForm(request.GET)
+    articles = form.search()
+    messages = '关键字 \'{}\' 搜索结果'.format(keyword)
+    context = {
+        'articles': articles,
+        'messages': messages,
+    }
+    return render(request, 'blog_articles/article_search.html', context)

@@ -1,0 +1,43 @@
+{% extends 'blog_articles/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}搜索{% endblock %}</title>
+    {% load markdown_deux_tags %}
+</head>
+<body>
+{% block content %}
+    <br>
+    <div class="am-g am-g-fixed" style="min-height: 500px; height: 100%">
+        <div class="am-u-md-8 am-u-md-centered">
+            <h2>{{ messages }}</h2>
+            <br>
+            <ol>
+                {% for article in articles %}
+                    <li>
+                        <article class="am-article">
+                            <div class="am-article-hd">
+                                <h1 class="am-article-title">
+                                    <a href="{% url 'blog:detail' article.pk %}"> {{ article.title }}</a></h1>
+                                <div class="am-article-meta">
+                                    <p>
+                                        作者:{{ article.author }}&nbsp;&nbsp;
+                                        创建时间{{ article.create_time }}&nbsp;&nbsp;
+                                        修改时间{{ article.modified_time }}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </li>
+                    <br>
+                {% empty %}
+                    <h1>没有更多了。。。</h1>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>

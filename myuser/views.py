@@ -18,6 +18,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
+                return HttpResponseRedirect(reverse('blog:index'))
             else:
                 return HttpResponse("您的账号已被停用，请联系管理员")
         else:

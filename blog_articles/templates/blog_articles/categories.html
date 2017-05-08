@@ -32,7 +32,7 @@
                     <li>
                             {% with category.article_set.count as count %}
                                 {% if count == 0 %}
-                                    {#                                    <!--不显示文章数为零的分类-->
+                                    <!--不显示文章数为零的分类-->
                                 {% elif count <= 1 %}
                                     <a href="{% url 'blog:category' category.id %}" style="text-align: center">
                                     {{ category.name }}

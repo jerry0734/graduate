@@ -137,6 +137,12 @@ class Comments(models.Model):
     related = models.ForeignKey('self', default=None, blank=True, null=True,
                                 verbose_name='引用')
 
+    def __str__(self):
+        if (len(self.content) <= 20):
+            return self.content
+        else:
+            return self.content[:20] + '...'
+
     class Meta:
         verbose_name_plural = '评论'
         ordering = ['-published_time']

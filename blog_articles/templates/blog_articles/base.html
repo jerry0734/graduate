@@ -119,9 +119,10 @@
             <li><a href="{% url "blog:aboutme" %}">关于我</a></li>
         </ul>
 
-        <form class="am-topbar-form am-topbar-left am-form-inline" role="search">
+        <form class="am-topbar-form am-topbar-left am-form-inline" action="{% url 'blog:search' %}" method="get"
+              role="search">
             <div class="am-form-group">
-                <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
+                <input type="text" name="q" class="am-form-field am-input-sm" placeholder="搜索">
             </div>
             <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
         </form>

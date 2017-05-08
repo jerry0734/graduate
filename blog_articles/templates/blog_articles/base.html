@@ -64,10 +64,10 @@
         }
 
         #navbc {
-            background-color: #004aa2;
-            filter: alpha(opacity=80);
-            -moz-opacity: 0.80;
-            opacity: 0.80;
+            background-color: #4e4e4e;
+            filter: alpha(opacity=90);
+            -moz-opacity: 0.90;
+            opacity: 0.90;
         }
 
         .right-text {
@@ -129,12 +129,6 @@
 
         <div class="am-topbar-right">
             {% if user.is_authenticated %}
-                {#                <ul class="am-nav am-nav-pills am-topbar-nav">#}
-                {#                    <li class="right-text">您好, {{ user.username }}</li>#}
-                {#                    <li class="right-text">#}
-                {#                        <a href="{% url 'account:logout' %}">注销</a>#}
-                {#                    </li>#}
-                {#                </ul>#}
                 <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
                     <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle"
                             data-am-dropdown-toggle>您好, {{ user.username }}<span class="am-icon-caret-down"></span>
@@ -144,6 +138,7 @@
                         <li><a href="#">个人资料</a></li>
                         {% if user.is_superuser %}
                             <li><a href="/admin/">管理界面</a></li>
+                            <li><a href="{% url 'blog:new_article' %}">写文章</a></li>
                         {% endif %}
                     </ul>
                 </div>

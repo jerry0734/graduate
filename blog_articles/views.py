@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.db.models import Count
@@ -5,8 +6,9 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from myuser.models import allUser
 from .models import Article, Category, Aboutme, Tag, Comments
-from .forms import CommentForm
+from .forms import CommentForm, ArticleForm
 from haystack.forms import SearchForm
+from django.core.urlresolvers import reverse
 
 
 class IndexView(ListView):
@@ -160,3 +162,17 @@ def search_article(request):
         'messages': messages,
     }
     return render(request, 'blog_articles/article_search.html', context)
+
+
+@login_required
+def new_article(request):
+    """添加新文章"""
+    form = ArticleForm()
+    if request.method == 'POST':
+        form = ArticleForm(data=request.POST)
+        if form.is_valid():
+            new_article = form.save()
+            return HttpResponseRedirect(reverse('blog:index'))
+
+    context = {'form': form}
+    return render(request, 'blog_articles/new_article.html', context)

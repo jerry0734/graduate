@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^article/(?P<article_id>\d+)/comment/$',
         views.write_comments, name='comment'),
     url(r'^search/$', views.search_article, name='search'),
+    url(r'^new_article/$', views.new_article, name='new_article'),
 ]

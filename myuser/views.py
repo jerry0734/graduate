@@ -10,6 +10,7 @@ from .models import allUser
 # Create your views here.
 def user_login(request):
     """用户登录"""
+    error = ''
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -20,12 +21,13 @@ def user_login(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse('blog:index'))
             else:
-                return HttpResponse("您的账号已被停用，请联系管理员")
+                error = '您的账号已被停用，请联系<a href="mailto:admin@hellojerry.cn">管理员</a>'
         else:
+            error = '请检查您的用户名或者密码是否正确！'
             print('Wrong account: {0},{1}'.format(username, password))
-            return HttpResponse("请检查您的用户名或者密码是否正确！")
-    else:
-        return render(request, 'myuser/login.html', {})
+
+    context = {'error': error}
+    return render(request, 'myuser/login.html', context)
 
 
 # 限制修饰符

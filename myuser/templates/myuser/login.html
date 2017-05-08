@@ -4,34 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}用户登录{% endblock %}</title>
+    {% block extrastyle %}
+        <style>
+            #minheight {
+                min-height: 550px;
+                height: 100%;
+            }
 
+            #form-top {
+                padding-top: 100px;
+            }
+        </style>
+    {% endblock %}
 </head>
 <body>
 {% block content %}
-    <div class="am-g am-g-fixed" align="center">
-        <br><br>
-        <h1>登录</h1>
-        <form id="login_form" class="am-form" method="post" action="{% url 'account:login' %}" style="width: 70%">
-            {% csrf_token %}
-            <div class="am-input-group">
-                <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
-                <input type="text" name="username" class="am-form-field" placeholder="用户名">
+    <div id="minheight">
+        <div class="am-g am-g-fixed">
+            <div class="am-u-lg-8 am-u-md-10 am-u-sm-10 am-u-lg-centered am-u-md-centered am-u-sm-centered"
+                 id="form-top">
+                <div class="am-panel am-panel-default ">
+                    <div class="am-panel-hd">
+                        登录
+                    </div>
+                    <div class="am-panel-bd">
+                        {% if error %}
+                            <div class="am-alert am-alert-danger am-text-xs" data-am-alert>
+                                <button type="button" class="am-close">&times;</button>
+                                <p>{{ error }}</p>
+                            </div>
+                        {% endif %}
+                        <form id="login_form" class="am-form" method="post" action="{% url 'account:login' %}">
+                            {% csrf_token %}
+                            <div class="am-input-group">
+                                <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                                <input type="text" name="username" class="am-form-field" placeholder="用户名">
+                            </div>
+                            <br>
+                            <div class="am-input-group">
+                                <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
+                                <input type="password" name="password" class="am-form-field" placeholder="密码">
+                            </div>
+
+                            <br>
+
+                            <button type="submit" class="am-btn am-btn-secondary">登录</button>
+                            <button type="reset" class="am-btn am-btn-danger">重新填写</button>
+
+
+                        </form>
+                    </div>
+                </div>
             </div>
-            <br>
-            <div class="am-input-group">
-                <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
-                <input type="password" name="password" class="am-form-field" placeholder="密码">
-            </div>
-
-            <br>
-
-            <button type="submit" class="am-btn am-btn-default">登录</button>
-            <button type="reset" class="am-btn am-btn-danger">重新填写</button>
 
 
-        </form>
+        </div>
     </div>
-    <br><br><br><br><br><br><br><br>
 {% endblock %}
 </body>
 </html>

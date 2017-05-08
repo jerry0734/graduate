@@ -11,6 +11,10 @@
                 font-weight: bold;
                 color: rgba(35, 51, 51, 0.73);
             }
+
+            #just-bigger {
+                font-size: 110%;
+            }
         </style>
     {% endblock extrastyle %}
     {% block extrahead %}
@@ -22,8 +26,13 @@
 {% block content %}
     <br>
     <div class="am-g am-g-fixed">
-        <h2>标签:{{ tag }}</h2>
-        <div class="am-u-md-8">
+
+        <div class="am-u-md-10 am-u-lg-12 am-u-sm-10 am-u-sm-centered am-u-md-centered">
+            <ol class="am-breadcrumb" id="just-bigger">
+                <li><a href="{% url 'blog:index' %}" class="am-icon-home">首页</a></li>
+                <li>标签</li>
+                <li class="am-active">{{ tag }}</li>
+            </ol>
             {% for article in article_list %}
                 <article class="am-article">
                     <div class="am-article-hd">

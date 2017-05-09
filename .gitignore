@@ -91,3 +91,4 @@ ENV/
 .idea/
 migrations/
 /whoosh_index/
+!/blog_articles/static/editormd/lib/

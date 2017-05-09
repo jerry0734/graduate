@@ -63,12 +63,15 @@
             <div class="articlefont" style="font-family: NotoSans, SansSerif" id="mainbody">
                 {{ article.body | safe_markdown }}
             </div>
+            {% if user.is_superuser %}
             <div align="center">
                 <a href="{% url 'blog:edit_article' article.id %}"
                    style="color: inherit">
                     <button class="am-btn am-btn-warning">编辑文章</button>
                 </a>
             </div>
+            {% endif %}
+
             <hr>
 
             <div style="display:inline">

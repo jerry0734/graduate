@@ -176,3 +176,18 @@ def new_article(request):
 
     context = {'form': form}
     return render(request, 'blog_articles/new_article.html', context)
+
+
+@login_required
+def edit_article(request, article_id):
+    article = Article.objects.get(id=article_id)
+    if request.method != 'POST':
+        form = ArticleForm(instance=article)
+    else:
+        form = ArticleForm(instance=article)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('blog:article', args=[article_id]))
+    context = {'form': form, 'article': article}
+
+    return render(request, 'blog_articles/new_article.html', context)

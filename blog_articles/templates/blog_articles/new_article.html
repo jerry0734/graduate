@@ -9,7 +9,7 @@
     {% block extrastyle %}
         <style>
             #minheight {
-                min-height: 525px;
+                min-height: 1000px;
                 height: 100%;
             }
 
@@ -23,8 +23,9 @@
         <link rel="stylesheet" href="/static/editormd/css/editormd.min.css">
     {% endblock %}
 </head>
-<body>
 {% block content %}
+    <body onload="testEditor.unwatch();testEditor.previewing()">
+
     <div id="minheight">
         {% if user.is_superuser %}
             <div class="am-g am-g-fixed">
@@ -45,15 +46,15 @@
                             {{ form.category }}
                         </div>
                         <div class="am-form-group">
-                            <label>文章标签</label>
-                            {{ form.tag }}
-                        </div>
-                        <div class="am-form-group">
                             <label>文章摘要</label>
                             {{ form.abstract }}
                         </div>
                         <label>正文</label>
                         <div id="editormd">{{ form.body }}</div>
+                        <div class="am-form-group">
+                            <label>文章标签</label>
+                            {{ form.tag }}
+                        </div>
                         <div class="am-form-group">
                             <label>发布状态</label>
                             {{ form.status }}
@@ -62,7 +63,8 @@
                     </form>
                 </div>
 
-                <br>
+                <br><br><br>
+
             </div>
             <script src="/static/editormd/src/editormd.js"></script>
             <script>
@@ -83,6 +85,7 @@
             <h2>你走错地方了</h2>
         {% endif %}
     </div>
+
+    </body>
 {% endblock content %}
-</body>
 </html>

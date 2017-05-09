@@ -64,8 +64,10 @@
                 {{ article.body | safe_markdown }}
             </div>
             <div align="center">
-                <button class="am-btn am-btn-warning"><a href="{% url 'blog:edit_article' article.id %}"
-                                                         style="color: inherit">编辑文章</a></button>
+                <a href="{% url 'blog:edit_article' article.id %}"
+                   style="color: inherit">
+                    <button class="am-btn am-btn-warning">编辑文章</button>
+                </a>
             </div>
             <hr>
 

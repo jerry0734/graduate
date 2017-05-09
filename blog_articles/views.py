@@ -184,10 +184,10 @@ def edit_article(request, article_id):
     if request.method != 'POST':
         form = ArticleForm(instance=article)
     else:
-        form = ArticleForm(instance=article)
+        form = ArticleForm(instance=article, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('blog:article', args=[article_id]))
+            return HttpResponseRedirect(reverse('blog:detail', args=[article_id]))
     context = {'form': form, 'article': article}
 
-    return render(request, 'blog_articles/new_article.html', context)
+    return render(request, 'blog_articles/edit_article.html', context)

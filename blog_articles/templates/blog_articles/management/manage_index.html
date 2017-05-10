@@ -1,0 +1,32 @@
+{% extends 'blog_articles/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}后台管理索引{% endblock %}</title>
+    {% block extrastyle %}
+        <style>
+            #minheight {
+                min-height: 525px;
+                height: 100%;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+
+    <div id="minheight">
+        <table class="am-table am-table-striped am-table-hover">
+            <tr></tr>
+        </table>
+        <a href="/admin/">Django Admin</a>
+        <a href="/admin/blog_articles/article/">文章批量管理</a>
+        <a href="/admin/blog_articles/comments/">评论批量管理</a>
+        <a href="/admin/blog_articles/category/">分类批量管理</a>
+        <a href="/admin/blog_articles/tag/">标签批量管理</a>
+        <a href="{% url 'blog:new_article' %}">撰写新文章</a>
+    </div>
+{% endblock %}
+</body>
+</html>

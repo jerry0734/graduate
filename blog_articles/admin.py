@@ -20,7 +20,7 @@ class CatrgoryAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['article', 'user', 'published_time']
+    list_display = ['article', 'content', 'user', 'published_time']
 
 
 admin.site.register(Article, ArticleAdmin)

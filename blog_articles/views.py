@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.db.models import Count
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -165,6 +165,14 @@ def search_article(request):
 
 
 @login_required
+def management_index(request):
+    """后台管理索引主页，用于引导管理界面"""
+    if allUser.is_superuser:
+        return render(request, 'blog_articles/management/manage_index.html', {})
+    else:
+        raise Http404
+
+@login_required
 def new_article(request):
     """添加新文章"""
     form = ArticleForm()
@@ -180,6 +188,7 @@ def new_article(request):
 
 @login_required
 def edit_article(request, article_id):
+    """编辑文章"""
     article = Article.objects.get(id=article_id)
     if request.method != 'POST':
         form = ArticleForm(instance=article)

@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^search/$', views.search_article, name='search'),
     url(r'^new_article/$', views.new_article, name='new_article'),
     url(r'^edit_article/(?P<article_id>\d+)$', views.edit_article, name='edit_article'),
+    url(r'^management/$', views.management_index, name='management'),
 ]

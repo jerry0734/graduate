@@ -151,8 +151,37 @@ def write_comments(request, article_id):
     return redirect('blog:detail', article_id=article_id)
 
 
+def edit_comment(request):
+    """修改评论"""
+    # todo:修改评论
+    pass
+
+
+def delete_comment(request):
+    """删除评论"""
+    # todo:删除评论
+    pass
+
+
+def add_category(request):
+    """添加分类"""
+    # todo：添加分类
+    pass
+
+
+def add_tag(request):
+    """添加标签"""
+    # todo：添加标签
+    pass
+
+
+def edit_category(request):
+    """修改分类"""
+    # todo:修改分类
+    pass
+
 def search_article(request):
-    """搜索"""
+    """文章搜索"""
     keyword = request.GET['q']
     form = SearchForm(request.GET)
     articles = form.search()
@@ -171,6 +200,7 @@ def management_index(request):
         return render(request, 'blog_articles/management/manage_index.html', {})
     else:
         raise Http404
+
 
 @login_required
 def new_article(request):

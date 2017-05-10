@@ -6,9 +6,14 @@
     <title>{% block title %}分类{% endblock title %}</title>
     {% block extrastyle %}
         <style>
+            body {
+                background-color: #f5f6fa;
+            }
+
             div#border {
                 width: 80%;
                 margin: 0 auto;
+                background-color: transparent;
             }
 
             h1#titlefont {
@@ -16,12 +21,17 @@
                 text-align: center;
                 font-size: 300%;
             }
+
+            #minheight {
+                min-height: 550px;
+                height: 100%;
+            }
         </style>
     {% endblock %}
 </head>
 <body>
 {% block content %}
-    <div class="">
+    <div id="minheight">
         <br>
         <div class="am-g am-g-fixed">
             <h1 class="am-u-sm-12 am-u-md-12 am-u-lg-12" id="titlefont">分类归档</h1>
@@ -29,7 +39,7 @@
         <div class="am-g am-g-fixed">
             <ul class="am-list am-u-sm-12 am-u-md-12 am-u-lg-12" id="border">
                 {% for category in category_list %}
-                    <li>
+                    <li style="background-color: inherit;border: inherit">
                             {% with category.article_set.count as count %}
                                 {% if count == 0 %}
                                     <!--不显示文章数为零的分类-->

@@ -4,6 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}留言板{% endblock %}</title>
+    {% block extrastyle %}
+        <style>
+            body {
+                background-color: #f5f6fa;
+            }
+        </style>
+    {% endblock %}
     {% load dractags %}
 </head>
 <body>

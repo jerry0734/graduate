@@ -16,13 +16,15 @@ class CommentForm(forms.ModelForm):
 class ArticleForm(forms.ModelForm):
     """文章表单"""
     title = forms.CharField(max_length=70)
-    author = forms.ModelChoiceField(queryset=allUser.objects.filter(is_superuser=True))
-    category = forms.ModelChoiceField(queryset=Category.objects.all())
-    tag = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
+    author = forms.ModelChoiceField(queryset=allUser.objects.filter(is_superuser=True),
+                                    widget=forms.Select(attrs={'data-am-selected': None}))
+    category = forms.ModelChoiceField(queryset=Category.objects.all(),
+                                      widget=forms.Select(attrs={'data-am-selected': None}))
+    tag = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(),
+                                         widget=forms.SelectMultiple(
+                                             attrs={'multiple': None, 'data-am-selected': "{btnWidth: '50%'}"}))
     abstract = forms.CharField(widget=forms.TextInput, max_length=50, empty_value=None)
     body = forms.CharField(widget=forms.Textarea)
-
-    # body = DraceditorFormField(widget=DraceditorWidget)
 
     class Meta:
         model = Article

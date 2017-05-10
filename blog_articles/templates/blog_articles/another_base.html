@@ -112,7 +112,7 @@
     {% block extrahead %}{% endblock %}
 </head>
 <body>
-<nav class="am-topbar-inverse am-topbar-fixed-top" id="navbc">
+<nav class="am-topbar-inverse" id="navbc">
 
     <h1 class="am-topbar-brand modfont" style="font-size: 150%">
         <a href="{% url "blog:index" %}"><img src="/static/amaze-assets/i/favicon.png"></a>
@@ -171,29 +171,6 @@
 <div>
     {% block content %}
     {% endblock content %}
-
-    <!--回到顶部按钮，浮动的-->
-    <!--侧边栏按钮-->
-    <div class="amz-toolbar" style="right: 10px;">
-        <a href="#off-canvas" data-am-offcanvas title="侧边栏" class="am-icon-btn am-icon-navicon"
-           style="background-color: transparent"></a>
-        <br>
-        <a href="#top" data-am-widget="gotop" title="回到顶部" class="am-icon-btn am-icon-chevron-up"
-           style="background-color: transparent"></a>
-    </div>
-
-    <!--侧边栏，与顶栏有相同的功能-->
-    <div id="off-canvas" class="am-offcanvas">
-        <div class="am-offcanvas-bar">
-            <div class="am-offcanvas-content">
-                <p>
-                    我不愿让你一个人 <br/>
-                    承受这世界的残忍 <br/>
-                    我不愿眼泪陪你到 永恒
-                </p>
-            </div>
-        </div>
-    </div>
 
 </div>
 <!--底部-->

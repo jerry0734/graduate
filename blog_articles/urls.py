@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^new_article/$', views.new_article, name='new_article'),
     url(r'^edit_article/(?P<article_id>\d+)$', views.edit_article, name='edit_article'),
     url(r'^management/$', views.management_index, name='management'),
+    url(r'^category_list/$', views.manage_category, name='category_list'),
+    url(r'^tag_list/$', views.manage_tags, name='tag_list'),
 ]

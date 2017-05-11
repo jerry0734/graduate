@@ -1,0 +1,15 @@
+{% extends 'blog_articles/another_base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}标签列表管理{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+    {% for tag in tag_list %}
+        <p>{{ tag }}</p>
+    {% endfor %}
+{% endblock %}
+</body>
+</html>

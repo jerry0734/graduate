@@ -151,16 +151,33 @@ def write_comments(request, article_id):
     return redirect('blog:detail', article_id=article_id)
 
 
-def edit_comment(request):
+def manage_category(request):
+    """分类列表"""
+    category_list = Category.objects.all().order_by('name')
+    context = {'category_list': category_list}
+    return render(request, 'blog_articles/management/category_manage.html', context)
+
+
+def manage_tags(request):
+    """分类列表"""
+    tag_list = Tag.objects.all().order_by('name')
+    context = {'tag_list': tag_list}
+    return render(request, 'blog_articles/management/tag_manage.html', context)
+
+
+def edit_comment(request, comment_id):
     """修改评论"""
     # todo:修改评论
     pass
 
 
-def delete_comment(request):
+def delete_comment(request, article_id, comment_id):
     """删除评论"""
     # todo:删除评论
-    pass
+    # article_id = Article.objects.get(id=article_id)
+    # comment = Comments.objects.get(id=comment_id)
+    # comment.delete()
+    # return reverse('blog:detail', article_id)
 
 
 def add_category(request):
@@ -196,7 +213,7 @@ def search_article(request):
 @login_required
 def management_index(request):
     """后台管理索引主页，用于引导管理界面"""
-    if allUser.is_superuser:
+    if allUser.is_superuser == True:
         return render(request, 'blog_articles/management/manage_index.html', {})
     else:
         raise Http404

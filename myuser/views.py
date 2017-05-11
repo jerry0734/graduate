@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from .forms import BlogUserCreationForm
 from .models import allUser
@@ -11,6 +11,7 @@ from .models import allUser
 def user_login(request):
     """用户登录"""
     error = ''
+    redirect_field_name = REDIRECT_FIELD_NAME
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')

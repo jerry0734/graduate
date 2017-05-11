@@ -207,6 +207,11 @@ def edit_category(request):
     pass
 
 
+def edit_tag(request):
+    """修改标签"""
+    # todo:修改标签
+    pass
+
 def search_article(request):
     """文章搜索"""
     keyword = request.GET['q']

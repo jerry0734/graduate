@@ -171,13 +171,13 @@ def edit_comment(request, comment_id):
     pass
 
 
-def delete_comment(request, article_id, comment_id):
+def delete_comment(request, comment_id):
     """删除评论"""
     # todo:删除评论
-    # article_id = Article.objects.get(id=article_id)
-    # comment = Comments.objects.get(id=comment_id)
-    # comment.delete()
-    # return reverse('blog:detail', article_id)
+    comment = Comments.objects.get(id=comment_id)
+    article_id = comment.article_id
+    comment.delete()
+    return redirect('blog:detail', article_id=article_id)
 
 
 def add_category(request):

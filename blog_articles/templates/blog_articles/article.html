@@ -64,12 +64,12 @@
                 {{ article.body | safe_markdown }}
             </div>
             {% if user.is_superuser %}
-            <div align="center">
-                <a href="{% url 'blog:edit_article' article.id %}"
-                   style="color: inherit">
-                    <button class="am-btn am-btn-warning">编辑文章</button>
-                </a>
-            </div>
+                <div align="center">
+                    <a href="{% url 'blog:edit_article' article.id %}"
+                       style="color: inherit">
+                        <button class="am-btn am-btn-warning">编辑文章</button>
+                    </a>
+                </div>
             {% endif %}
 
             <hr>
@@ -142,12 +142,12 @@
                                         {{ comment.user }}
                                         评论于
                                         {{ comment.published_time }}
+                                        {% if user.id == comment.user.id %}
+                                            <a href="{% url 'blog:delete_comment' comment.id %}" style="float: right">
+                                                <i class="am-icon-close am-icon-sm" title="删除评论"></i>
+                                            </a>
+                                        {% endif %}
                                     </div>
-                                    {#                                    <div class="am-comment-meta">#}
-                                    {#                                        <a href="{% url 'blog:delete_comment' article.id comment.pk %}">#}
-                                    {#                                            <i class="am-icon-close"></i>#}
-                                    {#                                        </a>#}
-                                    {#                                    </div>#}
                                 </header>
                                 <div class="am-comment-bd"
                                      style="background-color: rgba(211,255,245,0.12)">{{ comment.content }}</div>

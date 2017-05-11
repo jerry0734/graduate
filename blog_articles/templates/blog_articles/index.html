@@ -27,6 +27,10 @@
                 font-family: NotoSans, SansSerif;
                 font-size: 250%;
             }
+
+            #noborder {
+                border: hidden;
+            }
         </style>
     {% endblock extrastyle %}
     {% block extrahead %}
@@ -44,7 +48,7 @@
         <div class="am-u-md-8">
             {% paginate article_list %}
             {% for article in article_list %}
-                <article class="am-article">
+                <article class="am-article" style="background-color: ghostwhite">
                     <div class="am-article-hd">
                         <h1 class="am-article-title" id="title">
                             <a href="{% url 'blog:detail' article.pk %}"> {{ article.title }}</a></h1>
@@ -101,9 +105,9 @@
         <!--侧边栏-->
         <div class="am-u-md-4">
             <!--文章热门分类面板-->
-            <div class="am-panel am-panel-default">
+            <div class="am-panel am-panel-default" id="noborder">
                 <!--只显示新增加的前5个分类，其他的要点击查看更多进入到分类页面去看-->
-                <div class="am-panel-hd" style="background-color: #edfff4">热门分类</div>
+                <div class="am-panel-hd" style="background-color: #edfff4; border: hidden">热门分类</div>
                 <div class="am-panel-bd">
                     <ul>
                         {% for category in category_list %}
@@ -120,7 +124,7 @@
 
             <div class="am-panel-group color-panel-group" id="accordation">
                 <!--文章标签面板-->
-                <div class="am-panel am-panel-default color-panel-border">
+                <div class="am-panel am-panel-default color-panel-border" id="noborder">
                     <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#tags'}">文章标签</div>
                     <div class="am-panel-bd am-collapse" id="tags">
                         {% for tag in tag_list %}
@@ -144,7 +148,7 @@
                 </div>
 
                 <!--文章归档面板-->
-                <div class="am-panel am-panel-default color-panel-border">
+                <div class="am-panel am-panel-default color-panel-border" id="noborder">
                     <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#archive'}">文章归档
                     </div>
                     <div class="am-panel-bd am-collapse" id="archive">
@@ -160,7 +164,7 @@
                 </div>
 
                 <!--联系我面板-->
-                <div class="am-panel am-panel-default color-panel-border">
+                <div class="am-panel am-panel-default color-panel-border" id="noborder">
                     <div class="am-panel-hd" data-am-collapse="{parent: '#accordion', target: '#contact'}">
                         联系我
                     </div>

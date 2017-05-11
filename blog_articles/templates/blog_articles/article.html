@@ -143,6 +143,11 @@
                                         评论于
                                         {{ comment.published_time }}
                                     </div>
+                                    {#                                    <div class="am-comment-meta">#}
+                                    {#                                        <a href="{% url 'blog:delete_comment' article.id comment.pk %}">#}
+                                    {#                                            <i class="am-icon-close"></i>#}
+                                    {#                                        </a>#}
+                                    {#                                    </div>#}
                                 </header>
                                 <div class="am-comment-bd"
                                      style="background-color: rgba(211,255,245,0.12)">{{ comment.content }}</div>

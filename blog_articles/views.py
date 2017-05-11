@@ -151,6 +151,30 @@ def write_comments(request, article_id):
     return redirect('blog:detail', article_id=article_id)
 
 
+def edit_comment(request, comment_id):
+    """修改评论"""
+    # todo:修改评论
+    comment = Comments.objects.get(id=comment_id)
+    article_id = comment.article_id
+    if request.method != "POST":
+        form = CommentForm(instance=comment)
+    else:
+        form = CommentForm(instance=comment, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('blog:detail', article_id=article_id)
+    context = {'comment_form': form, 'comment': comment, 'article': article_id}
+    return render(request, 'blog_articles/edit_comment.html', context)
+
+
+def delete_comment(request, comment_id):
+    """删除评论"""
+    comment = Comments.objects.get(id=comment_id)
+    article_id = comment.article_id
+    comment.delete()
+    return redirect('blog:detail', article_id=article_id)
+
+
 def manage_category(request):
     """分类列表"""
     category_list = Category.objects.all().order_by('name')
@@ -163,21 +187,6 @@ def manage_tags(request):
     tag_list = Tag.objects.all().order_by('name')
     context = {'tag_list': tag_list}
     return render(request, 'blog_articles/management/tag_manage.html', context)
-
-
-def edit_comment(request, comment_id):
-    """修改评论"""
-    # todo:修改评论
-    pass
-
-
-def delete_comment(request, comment_id):
-    """删除评论"""
-    # todo:删除评论
-    comment = Comments.objects.get(id=comment_id)
-    article_id = comment.article_id
-    comment.delete()
-    return redirect('blog:detail', article_id=article_id)
 
 
 def add_category(request):
@@ -196,6 +205,7 @@ def edit_category(request):
     """修改分类"""
     # todo:修改分类
     pass
+
 
 def search_article(request):
     """文章搜索"""

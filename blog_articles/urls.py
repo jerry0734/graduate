@@ -21,6 +21,8 @@ urlpatterns = [
     # 删除评论
     url(r'^delete_comment/(?P<comment_id>\d+)/$',
         views.delete_comment, name='delete_comment'),
+    url(r'^edit_comment/(?P<comment_id>\d+)/$',
+        views.edit_comment, name='edit_comment'),
     url(r'^search/$', views.search_article, name='search'),
     url(r'^new_article/$', views.new_article, name='new_article'),
     url(r'^edit_article/(?P<article_id>\d+)$',

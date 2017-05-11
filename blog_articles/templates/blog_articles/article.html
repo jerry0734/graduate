@@ -142,11 +142,17 @@
                                         {{ comment.user }}
                                         评论于
                                         {{ comment.published_time }}
-                                        {% if user.id == comment.user.id %}
-                                            <a href="{% url 'blog:delete_comment' comment.id %}" style="float: right">
-                                                <i class="am-icon-close am-icon-sm" title="删除评论"></i>
-                                            </a>
-                                        {% endif %}
+                                        <div style="float: right">
+                                            {% if user.id == comment.user.id %}
+                                                <a href="{% url 'blog:edit_comment' comment.id %}">
+                                                    <i class="am-icon-edit am-icon-sm" title="编辑评论"></i>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'blog:delete_comment' comment.id %}">
+                                                    <i class="am-icon-close am-icon-sm" title="删除评论"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </header>
                                 <div class="am-comment-bd"

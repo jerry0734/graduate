@@ -41,10 +41,10 @@ class Article(models.Model):
                               choices=PUBLISH_STATUS_CHOICES,
                               default=DRAFT)
 
-    # 文章摘要,长度50个字符
+    # 文章摘要,长度100个字符
     # null 是针对数据库的，当null=True, 表示数据库的该字段可以为空。
     # blank 是针对表单的，当blank=True，表示你的表单填写该字段的时候可以不填
-    abstract = models.CharField('文章摘要', max_length=50, blank=True, null=True,
+    abstract = models.CharField('文章摘要', max_length=100, blank=True, null=True,
                                 help_text='摘要，可填选项')
     # 文章被浏览次数
     # PositiveIntegerField，指定这个数必须为0以上的正整数，范围from 0 to 2147483647

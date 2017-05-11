@@ -129,6 +129,10 @@ USE_L10N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'myuser.allUser'
+
+# 设定登录时的跳转路径
+LOGIN_URL = '/account/login'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 

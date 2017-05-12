@@ -29,3 +29,23 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ['title', 'author', 'category', 'tag', 'abstract', 'body', 'status']
+
+
+class CategoryForm(forms.ModelForm):
+    """分类表单"""
+    name = forms.CharField(max_length=20,
+                           widget=forms.TextInput(attrs={'class': 'am-form-field am-round'}))
+
+    class Meta:
+        model = Category
+        fields = ['name']
+
+
+class TagForm(forms.ModelForm):
+    """标签表单"""
+    name = forms.CharField(max_length=20,
+                           widget=forms.TextInput(attrs={'class': 'am-form-field am-round'}))
+
+    class Meta:
+        model = Tag
+        fields = ['name']

@@ -215,6 +215,7 @@ def edit_tag(request):
 def search_article(request):
     """文章搜索"""
     keyword = request.GET['q']
+    # haystack.SearchForm
     form = SearchForm(request.GET)
     articles = form.search()
     messages = '关键字 \'{}\' 搜索结果'.format(keyword)

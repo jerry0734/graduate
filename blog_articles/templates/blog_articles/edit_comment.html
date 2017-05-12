@@ -1,0 +1,39 @@
+{% extends 'blog_articles/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}修改评论{% endblock %}</title>
+    {% block extrastyle %}
+        <style>
+            div#minheight {
+                height: 100%;
+                min-height: 525px;
+            }
+
+            div#pdtop {
+                padding-top: 50px;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <div id="minheight" class="am-g am-g-fixed">
+        <div id="pdtop">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="am-form-group">
+                    <label>请修改您的评论</label><br>
+                    {{ comment_form.content }}
+                </div>
+                <a href="{% url 'blog:detail' article %}">
+                    <button class="am-btn am-btn-danger">不改了,回去吧</button>
+                </a>
+                <button class="am-btn am-btn-success" type="submit">修改评论</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

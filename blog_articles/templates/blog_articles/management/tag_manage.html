@@ -7,9 +7,39 @@
 </head>
 <body>
 {% block content %}
-    {% for tag in tag_list %}
-        <p>{{ tag }}</p>
-    {% endfor %}
+    <div class="am-g am-g-fixed" style="min-height: 525px; height: 100%">
+    <div style="padding-top: 25px">
+        <p><b>快速添加标签名称</b></p>
+        <form action="{% url 'blog:tag_list' %}" method="post">
+            {% csrf_token %}
+            {{ tagform.name }}
+            <br>
+            <button class="am-btn am-btn-secondary" type="submit">增加分类</button>
+        </form>
+    </div>
+
+    <div class=" am-u-lg-12 am-u-md-12" style="padding-top: 25px">
+        <p><b>分类列表</b></p>
+        <table class="am-table am-table-hover">
+            <thead>
+            <tr>
+                <th>标签名</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tag in tag_list %}
+                <tr>
+                    <td>{{ tag.name }}</td>
+                    <td>
+                        <a href="#">编辑</a>&nbsp;
+                        <a href="#">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 </body>
 </html>

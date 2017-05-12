@@ -6,7 +6,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from myuser.models import allUser
 from .models import Article, Category, Aboutme, Tag, Comments
-from .forms import CommentForm, ArticleForm
+from .forms import CommentForm, ArticleForm, CategoryForm, TagForm
 from haystack.forms import SearchForm
 from django.core.urlresolvers import reverse
 
@@ -177,29 +177,33 @@ def delete_comment(request, comment_id):
 
 def manage_category(request):
     """分类列表"""
-    category_list = Category.objects.all().order_by('name')
-    context = {'category_list': category_list}
+    category_list = Category.objects.all().order_by('modified_time')
+
+    if request.method != 'POST':
+        form = CategoryForm()
+    else:
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('blog:category_list'))
+    context = {'category_list': category_list,
+               'form': form, }
     return render(request, 'blog_articles/management/category_manage.html', context)
 
 
 def manage_tags(request):
     """分类列表"""
     tag_list = Tag.objects.all().order_by('name')
-    context = {'tag_list': tag_list}
+    if request.method != 'POST':
+        form = TagForm()
+    else:
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('blog:tag_list'))
+
+    context = {'tag_list': tag_list, 'tagform': form}
     return render(request, 'blog_articles/management/tag_manage.html', context)
-
-
-def add_category(request):
-    """添加分类"""
-    # todo：添加分类
-    pass
-
-
-def add_tag(request):
-    """添加标签"""
-    # todo：添加标签
-    pass
-
 
 def edit_category(request):
     """修改分类"""
@@ -211,6 +215,7 @@ def edit_tag(request):
     """修改标签"""
     # todo:修改标签
     pass
+
 
 def search_article(request):
     """文章搜索"""
@@ -229,7 +234,7 @@ def search_article(request):
 @login_required
 def management_index(request):
     """后台管理索引主页，用于引导管理界面"""
-    if allUser.is_superuser == True:
+    if request.user.is_superuser:
         return render(request, 'blog_articles/management/manage_index.html', {})
     else:
         raise Http404

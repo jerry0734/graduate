@@ -7,9 +7,47 @@
 </head>
 <body>
 {% block content %}
-    {% for category in category_list %}
-        <p>{{ category }}</p>
-    {% endfor %}
+    <div class="am-g am-g-fixed" style="min-height: 525px; height: 100%">
+        <div style="padding-top: 25px">
+            <p><b>快速添加分类名称</b></p>
+            <form action="{% url 'blog:category_list' %}" method="post">
+                {% csrf_token %}
+                {{ form.name }}
+                <br>
+                <button class="am-btn am-btn-primary" type="submit">增加分类</button>
+            </form>
+        </div>
+
+        <div class=" am-u-lg-12 am-u-md-12" style="padding-top: 25px">
+            <p><b>分类列表</b></p>
+            <table class="am-table am-table-hover">
+                <thead>
+                <tr>
+                    <th>分类名</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in category_list %}
+                    <tr>
+                        <td>{{ category }}</td>
+                        <td>{{ category.create_time }}</td>
+                        <td>{{ category.modified_time }}</td>
+                        <td>
+                            <a href="#">编辑</a>&nbsp;
+                            <a href="#">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
 {% endblock %}
 </body>
 </html>

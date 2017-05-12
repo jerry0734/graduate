@@ -15,7 +15,6 @@
 </head>
 <body>
 {% block content %}
-
     <div id="minheight">
         <table class="am-table am-table-striped am-table-hover">
             <tr></tr>
@@ -26,6 +25,9 @@
         <a href="/admin/blog_articles/category/">分类批量管理</a>
         <a href="/admin/blog_articles/tag/">标签批量管理</a>
         <a href="{% url 'blog:new_article' %}">撰写新文章</a>
+        <br>
+        <a href="{% url 'blog:category_list' %}">简易分类管理</a>
+        <a href="{% url 'blog:tag_list' %}">简易标签管理</a>
     </div>
 {% endblock %}
 </body>

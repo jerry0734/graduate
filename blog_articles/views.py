@@ -217,6 +217,10 @@ def edit_tag(request):
     pass
 
 
+def edit_aboutme(request):
+    """修改关于博客信息"""
+    pass
+
 def search_article(request):
     """文章搜索"""
     keyword = request.GET['q']

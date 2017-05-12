@@ -205,21 +205,41 @@ def manage_tags(request):
     context = {'tag_list': tag_list, 'tagform': form}
     return render(request, 'blog_articles/management/tag_manage.html', context)
 
-def edit_category(request):
+
+def edit_category(request, category_id):
     """修改分类"""
-    # todo:修改分类
-    pass
+    category = Category.objects.get(id=category_id)
+    if request.method != "POST":
+        form = CategoryForm(instance=category)
+    else:
+        form = CategoryForm(instance=category, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('blog:category_list'))
+
+    context = {'form': form, 'category': category}
+    return render(request, 'blog_articles/management/edit_category.html', context)
 
 
-def edit_tag(request):
+def edit_tag(request, tag_id):
     """修改标签"""
-    # todo:修改标签
-    pass
+    tag = Tag.objects.get(id=tag_id)
+    if request.method != "POST":
+        form = TagForm(instance=tag)
+    else:
+        form = TagForm(instance=tag, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('blog:tag_list'))
+
+    context = {'form': form, 'tag': tag}
+    return render(request, 'blog_articles/management/edit_tag.html', context)
 
 
 def edit_aboutme(request):
     """修改关于博客信息"""
     pass
+
 
 def search_article(request):
     """文章搜索"""

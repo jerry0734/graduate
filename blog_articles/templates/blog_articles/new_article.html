@@ -46,15 +46,16 @@
                             {{ form.category }}
                         </div>
                         <div class="am-form-group">
+                            <label>文章标签</label>
+                            {{ form.tag }}
+                        </div>
+                        <div class="am-form-group">
                             <label>文章摘要</label>
                             {{ form.abstract }}
                         </div>
                         <label>正文</label>
                         <div id="editormd">{{ form.body }}</div>
-                        <div class="am-form-group">
-                            <label>文章标签</label>
-                            {{ form.tag }}
-                        </div>
+
                         <div class="am-form-group">
                             <label>发布状态</label>
                             {{ form.status }}

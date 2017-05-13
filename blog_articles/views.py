@@ -153,7 +153,6 @@ def write_comments(request, article_id):
 
 def edit_comment(request, comment_id):
     """修改评论"""
-    # todo:修改评论
     comment = Comments.objects.get(id=comment_id)
     article_id = comment.article_id
     if request.method != "POST":
@@ -234,6 +233,18 @@ def edit_tag(request, tag_id):
 
     context = {'form': form, 'tag': tag}
     return render(request, 'blog_articles/management/edit_tag.html', context)
+
+
+def delete_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    category.delete()
+    return HttpResponseRedirect('blog:category_list')
+
+
+def delete_tag(request, tag_id):
+    tag = Tag.objects.get(id=tag_id)
+    tag.delete()
+    return HttpResponseRedirect('blog:tag_list')
 
 
 def edit_aboutme(request):

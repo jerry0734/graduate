@@ -20,3 +20,8 @@ def MessageBoard(request):
 
     context = {'form': form, 'messages': messages}
     return render(request, 'msb/board.html', context)
+
+
+def msb_manage(request):
+    """管理留言板"""
+    pass

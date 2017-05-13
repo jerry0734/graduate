@@ -30,4 +30,8 @@ urlpatterns = [
     url(r'^management/$', views.management_index, name='management'),
     url(r'^category_list/$', views.manage_category, name='category_list'),
     url(r'^tag_list/$', views.manage_tags, name='tag_list'),
+    url(r'^edit_category/(?P<category_id>\d+)', views.edit_category, name='edit_category'),
+    url(r'^edit_tag/(?P<tag_id>\d+)', views.edit_tag, name='edit_tag'),
+    url(r'^delete_category/(?P<category_id>\d+)', views.delete_category, name='delete_category'),
+    url(r'^delete_tag/(?P<tag_id>\d+)', views.delete_tag, name='delete_tag'),
 ]

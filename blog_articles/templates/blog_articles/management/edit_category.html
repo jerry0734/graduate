@@ -1,10 +1,39 @@
+{% extends 'blog_articles/another_base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}修改分类{% endblock %}</title>
+    {% block extrastyle %}
+        <style>
+            div#minheight {
+                height: 100%;
+                min-height: 525px;
+            }
+
+            div#pdtop {
+                padding-top: 50px;
+            }
+        </style>
+    {% endblock %}
 </head>
 <body>
-
+{% block content %}
+    <div id="minheight" class="am-g am-g-fixed">
+        <div id="pdtop">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="am-form-group">
+                    <label>请修改分类</label><br>
+                    {{ form }}
+                </div>
+                <a href="{% url 'blog:category_list' %}">
+                    <button class="am-btn am-btn-warning" type="button">撤销修改</button>
+                </a>
+                <button class="am-btn am-btn-success" type="submit">修改分类</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
 </body>
 </html>

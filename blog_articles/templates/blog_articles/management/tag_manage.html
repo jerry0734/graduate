@@ -32,8 +32,8 @@
                 <tr>
                     <td>{{ tag.name }}</td>
                     <td>
-                        <a href="#">编辑</a>&nbsp;
-                        <a href="#">删除</a>
+                        <a href="{% url 'blog:edit_tag' tag.id %}">编辑</a>&nbsp;
+                        <a href="{% url 'blog:delete_tag' tag.id %}">删除</a>
                     </td>
                 </tr>
             {% endfor %}

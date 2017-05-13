@@ -36,8 +36,8 @@
                         <td>{{ category.create_time }}</td>
                         <td>{{ category.modified_time }}</td>
                         <td>
-                            <a href="#">编辑</a>&nbsp;
-                            <a href="#">删除</a>
+                            <a href="{% url 'blog:edit_category' category.id %}">编辑</a>&nbsp;
+                            <a href="{% url 'blog:delete_category' category.id %}">删除</a>
                         </td>
                     </tr>
                 {% endfor %}

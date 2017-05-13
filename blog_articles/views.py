@@ -238,13 +238,13 @@ def edit_tag(request, tag_id):
 def delete_category(request, category_id):
     category = Category.objects.get(id=category_id)
     category.delete()
-    return HttpResponseRedirect('blog:category_list')
+    return redirect('blog:category_list')
 
 
 def delete_tag(request, tag_id):
     tag = Tag.objects.get(id=tag_id)
     tag.delete()
-    return HttpResponseRedirect('blog:tag_list')
+    return redirect('blog:tag_list')
 
 
 def edit_aboutme(request):

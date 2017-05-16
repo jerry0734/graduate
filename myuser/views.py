@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
-from .forms import BlogUserCreationForm
+from .forms import BlogUserCreationForm, ProfileForm
 from .models import allUser
 from blog_articles.models import Comments
 
@@ -66,5 +66,22 @@ def user_register(request):
 def profile(request, user_id):
     user = allUser.objects.get(id=user_id)
     comments = Comments.objects.filter(user=user_id).order_by('-published_time')
-    context = {'myuser': user, 'comments': comments}
+    form = ProfileForm()
+    context = {'myuser': user, 'comments': comments, 'form': form}
     return render(request, 'myuser/profile.html', context)
+
+
+@login_required
+def change_avatar(request, user_id):
+    error = None
+    if request.method != 'POST':
+        form = ProfileForm()
+    else:
+        user = allUser.objects.get(id=user_id)
+        form = ProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('account:profile', args=[user_id]))
+        else:
+            error = '您上传的头像出了问题了'
+            return HttpResponseRedirect(reverse('account:profile', args=[user_id]))

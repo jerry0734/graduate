@@ -135,3 +135,11 @@ class BlogUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class ProfileForm(forms.ModelForm):
+    avatar = forms.ImageField(widget=forms.ClearableFileInput())
+
+    class Meta:
+        model = allUser
+        fields = ('avatar',)

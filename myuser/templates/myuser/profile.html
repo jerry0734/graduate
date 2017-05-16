@@ -48,7 +48,7 @@
                             {% for comment in comments %}
                                 <li>
                                     <p>于{{ comment.published_time }}发表了:</p>
-                                    <p>{{ comment.content }}</p>
+                                    <p>{{ comment.content| truncatechars_html:15 }}</p>
                                     <p><a href="{% url 'blog:detail' comment.article_id %}">查看评论的文章</a></p>
                                 </li>
                             {% endfor %}

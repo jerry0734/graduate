@@ -131,6 +131,7 @@ def archive(request, year):
     return render(request, 'blog_articles/index.html', context)
 
 
+@login_required
 def write_comments(request, article_id):
     """评论"""
     if request.method != 'POST':
@@ -151,6 +152,7 @@ def write_comments(request, article_id):
     return redirect('blog:detail', article_id=article_id)
 
 
+@login_required
 def edit_comment(request, comment_id):
     """修改评论"""
     comment = Comments.objects.get(id=comment_id)
@@ -166,6 +168,7 @@ def edit_comment(request, comment_id):
     return render(request, 'blog_articles/edit_comment.html', context)
 
 
+@login_required
 def delete_comment(request, comment_id):
     """删除评论"""
     comment = Comments.objects.get(id=comment_id)
@@ -174,6 +177,7 @@ def delete_comment(request, comment_id):
     return redirect('blog:detail', article_id=article_id)
 
 
+@login_required
 def manage_category(request):
     """分类列表"""
     category_list = Category.objects.all().order_by('modified_time')
@@ -190,8 +194,9 @@ def manage_category(request):
     return render(request, 'blog_articles/management/category_manage.html', context)
 
 
+@login_required
 def manage_tags(request):
-    """分类列表"""
+    """标签列表"""
     tag_list = Tag.objects.all().order_by('name')
     if request.method != 'POST':
         form = TagForm()
@@ -205,6 +210,7 @@ def manage_tags(request):
     return render(request, 'blog_articles/management/tag_manage.html', context)
 
 
+@login_required
 def edit_category(request, category_id):
     """修改分类"""
     category = Category.objects.get(id=category_id)
@@ -220,6 +226,7 @@ def edit_category(request, category_id):
     return render(request, 'blog_articles/management/edit_category.html', context)
 
 
+@login_required
 def edit_tag(request, tag_id):
     """修改标签"""
     tag = Tag.objects.get(id=tag_id)
@@ -235,12 +242,14 @@ def edit_tag(request, tag_id):
     return render(request, 'blog_articles/management/edit_tag.html', context)
 
 
+@login_required
 def delete_category(request, category_id):
     category = Category.objects.get(id=category_id)
     category.delete()
     return redirect('blog:category_list')
 
 
+@login_required
 def delete_tag(request, tag_id):
     tag = Tag.objects.get(id=tag_id)
     tag.delete()

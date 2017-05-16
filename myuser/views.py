@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from .forms import BlogUserCreationForm
 from .models import allUser
+from blog_articles.models import Comments
 
 
 # Create your views here.
@@ -60,3 +61,10 @@ def user_register(request):
 
     context = {'form': form, 'errors': errors}
     return render(request, 'myuser/register.html', context)
+
+
+def profile(request, user_id):
+    user = allUser.objects.get(id=user_id)
+    comments = Comments.objects.filter(user=user_id).order_by('-published_time')
+    context = {'myuser': user, 'comments': comments}
+    return render(request, 'myuser/profile.html', context)

@@ -1,0 +1,63 @@
+{% extends 'blog_articles/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ myuser.username }}的资料{% endblock title %}</title>
+    {% block extrastyle %}
+        <style>
+            div#minheight {
+                min-height: 525px;
+                height: 100%;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <div id="minheight">
+        <div class="am-g am-g-fixed" style="padding-top: 50px">
+            <div class="am-u-lg-6 am-u-md-4 am-u-sm-10 am-u-lg-centered am-u-sm-centered">
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd" style="background: inherit;border: hidden">
+                        <h3 class="am-panel-title">{{ myuser.username }}</h3>
+                    </div>
+                    <div class="am-panel-bd">
+                        <p align="center"><img src="{{ myuser.avatar.url }}" style="height: 60px; width: 60px;"></p>
+                        <table class="am-table">
+                            <tr style="border:inherit">
+                                <td>uid:</td>
+                                <td>{{ myuser.id }}</td>
+                            </tr>
+                            <tr>
+                                <td>姓名:</td>
+                                <td>{{ myuser.last_name }}{{ myuser.first_name }}</td>
+                            </tr>
+                            <tr></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="am-u-lg-10 am-u-md-10 am-u-sm-10 am-u-md-centered am-u-lg-centered am-u-sm-centered">
+                <div class="am-panel am-panel-primary">
+                    <div class="am-panel-hd">
+                        <h3 class="am-panel-title">{{ myuser.username }}发表过的评论</h3>
+                    </div>
+                    <div class="am-panel-bd">
+                        <ol>
+                            {% for comment in comments %}
+                                <li>
+                                    <p>于{{ comment.published_time }}发表了:</p>
+                                    <p>{{ comment.content }}</p>
+                                    <p><a href="{% url 'blog:detail' comment.article_id %}">查看评论的文章</a></p>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

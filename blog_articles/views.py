@@ -312,3 +312,16 @@ def edit_article(request, article_id):
     context = {'form': form, 'article': article}
 
     return render(request, 'blog_articles/edit_article.html', context)
+
+
+@login_required
+def myarticles(request):
+    articles = Article.objects.filter(author=request.user)
+    context = {'article_list': articles}
+    return render(request, 'blog_articles/management/myarticles.html', context)
+
+
+def delete_article(request, article_id):
+    article = Article.objects.get(id=article_id)
+    article.delete()
+    return redirect('blog:myarticles')

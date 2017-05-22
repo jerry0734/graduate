@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^tag/(?P<tag_id>\d+)$', views.Tagview.as_view(), name='tag'),
     url(r'^archives/(?P<year>[0-9]{4})/$',
         views.archive, name='archive'),
+    url(r'^myarticles/', views.myarticles, name='myarticles'),
+    url(r'^delete_article/(?P<article_id>\d+)$', views.delete_article, name='delete_article'),
     # 写评论
     url(r'^article/(?P<article_id>\d+)/comment/$',
         views.write_comments, name='comment'),

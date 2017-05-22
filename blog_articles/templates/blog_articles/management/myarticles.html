@@ -1,0 +1,41 @@
+{% extends 'blog_articles/another_base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}你的文章{% endblock %}</title>
+    {% block extrastyle %}
+
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <div class="minimalheight">
+        <div class="am-g am-g-fixed">
+            <div class=" am-u-lg-12 am-u-md-12" style="padding-top: 25px">
+                <p><b>文章列表</b></p>
+                <table class="am-table am-table-hover">
+                    <thead>
+                    <tr>
+                        <th>文章</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for article in article_list %}
+                        <tr>
+                            <td><a href="{% url 'blog:detail' article.id %}">{{ article.title }}</a></td>
+                            <td>
+                                <a href="{% url 'blog:edit_article' article.id %}">编辑</a>&nbsp;
+                                <a href="{% url 'blog:delete_article' article.id %}">删除</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

@@ -18,6 +18,7 @@
                     <thead>
                     <tr>
                         <th>文章</th>
+                        <th></th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -25,6 +26,7 @@
                     {% for article in article_list %}
                         <tr>
                             <td><a href="{% url 'blog:detail' article.id %}">{{ article.title }}</a></td>
+                            <td><a href="{% url 'blog:article_comment' article.id %}">评论管理</a></td>
                             <td>
                                 <a href="{% url 'blog:edit_article' article.id %}">编辑</a>&nbsp;
                                 <a href="{% url 'blog:delete_article' article.id %}">删除</a>

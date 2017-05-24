@@ -154,7 +154,7 @@ class Comments(models.Model):
         ordering = ['-published_time']
 
 
-class friends(models.Model):
+class Friends(models.Model):
     name = models.CharField(max_length=20, verbose_name='名称')
     links = models.URLField('友情链接')
 

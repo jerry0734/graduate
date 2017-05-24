@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Article, Category, Tag, Aboutme, Comments
+from .models import Article, Category, Tag, Aboutme, Comments, Friends
 from draceditor.widgets import AdminDraceditorWidget
 
 
@@ -28,3 +28,4 @@ admin.site.register(Category, CatrgoryAdmin)
 admin.site.register(Aboutme)
 admin.site.register(Tag)
 admin.site.register(Comments, CommentAdmin)
+admin.site.register(Friends)

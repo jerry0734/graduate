@@ -1,4 +1,4 @@
-from .models import Article, Category, Tag, Comments
+from .models import Article, Category, Tag, Comments, Friends
 from myuser.models import allUser
 from django import forms
 from draceditor.fields import DraceditorFormField, DraceditorWidget
@@ -23,13 +23,20 @@ class ArticleForm(forms.ModelForm):
     tag = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(),
                                          widget=forms.SelectMultiple(
                                              attrs={'multiple': None, 'data-am-selected': "{btnWidth: '50%'}"}))
-    abstract = forms.CharField(widget=forms.TextInput, max_length=50, empty_value=None)
+    abstract = forms.CharField(max_length=100)
     body = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Article
         fields = ['title', 'author', 'category', 'tag', 'abstract', 'body', 'status']
 
+
+class TitlePhoto(forms.ModelForm):
+    titlephoto = forms.ImageField()
+
+    class Meta:
+        model = Article
+        fields = ['titlephoto']
 
 class CategoryForm(forms.ModelForm):
     """分类表单"""
@@ -51,3 +58,16 @@ class TagForm(forms.ModelForm):
         model = Tag
         fields = '__all__'
         labels = {'name': ''}
+
+
+class LinkForm(forms.ModelForm):
+    name = forms.CharField(max_length=20,
+                           label='名称',
+                           widget=forms.TextInput(attrs={'class': 'am-form-field am-round', 'style': 'width:50%'}))
+    links = forms.URLField(label='链接',
+                           widget=forms.URLInput(attrs={'class': 'am-form-field am-round', 'style': 'width:50%'}))
+
+    class Meta:
+        model = Friends
+        fields = ['name', 'links']
+        labels = {'name': '名称', 'links': '链接'}

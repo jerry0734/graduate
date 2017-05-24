@@ -74,6 +74,12 @@ class Article(models.Model):
     # limit_choice_to 控制只有超级管理员才能是作者，从而把评论者和撰文者分开
     author = models.ForeignKey(settings.AUTH_USER_MODEL, limit_choices_to={'is_superuser': 1})
 
+    titlephoto = models.ImageField(max_length=254, upload_to='photos', default='/default/img2.jpg')
+
+    def add_reading(self):
+        self.reading += 1
+        self.save(update_fields=['reading'])
+
     def __str__(self):
         # 显示文章的标题
         return self.title
@@ -146,3 +152,14 @@ class Comments(models.Model):
     class Meta:
         verbose_name_plural = '评论'
         ordering = ['-published_time']
+
+
+class friends(models.Model):
+    name = models.CharField(max_length=20, verbose_name='名称')
+    links = models.URLField('友情链接')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "友情链接"

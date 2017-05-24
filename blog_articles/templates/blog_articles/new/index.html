@@ -1,0 +1,259 @@
+{% extends 'blog_articles/base.html' %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}主页{% endblock %}</title>
+    {% load markdown_deux_tags %}
+    {% block extrastyle %}
+        <style>
+            .contactbtn {
+                width: 50px;
+                height: 50px;
+            }
+
+            body {
+
+            }
+
+            h5#bigger {
+                font-weight: bold;
+                color: rgba(35, 51, 51, 0.73);
+            }
+
+            .pag li {
+                float: left;
+                list-style: none;
+            }
+
+            #title {
+                text-align: center;
+                font-family: NotoSans, SansSerif;
+                font-size: 250%;
+            }
+
+            #noborder {
+                border: hidden;
+            }
+
+            .blog-sidebar-widget {
+                padding: 0 2rem;
+                margin-bottom: 4rem;
+                text-align: center;
+            }
+
+            .blog-bor {
+                border: 1px solid #e5e5e5;
+            }
+
+            .roundavatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 1px solid transparent;
+            }
+        </style>
+    {% endblock extrastyle %}
+    {% block extrahead %}
+        <link rel="stylesheet" href="">
+    {% endblock extrahead %}
+    {#draceditor的渲染标签#}
+    {% load dractags %}
+    {% load el_pagination_tags %}
+</head>
+<body>
+{% block content %}
+    <header class="am-g am-g-fixed blog-fixed blog-text-center blog-header">
+        <div class="am-u-sm-8 am-u-sm-centered">
+            <img width="100" src="/static/amaze-assets/i/hdIm.jpg" alt="Blog Logo"/>&nbsp;
+            <h2 class="modfont" style="font-size: 150%">My Blog</h2>
+        </div>
+    </header>
+    <hr>
+
+    <nav class="am-g am-g-fixed blog-fixed blog-nav">
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only blog-button"
+                data-am-collapse="{target: '#blog-collapse'}"><span class="am-sr-only">导航切换</span> <span
+                class="am-icon-bars"></span></button>
+
+        <div class="am-collapse am-topbar-collapse" id="blog-collapse">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li class="am-active"><a href="{% url 'blog:index' %}">首页</a></li>
+
+                <li><a href="{% url 'blog:categories' %}">分类</a></li>
+                <li><a href="{% url 'msb:board' %}">留言板</a></li>
+                <li><a href="{% url 'blog:aboutme' %}">关于博客</a></li>
+                {% if user.is_authenticated %}
+                    <li class="am-dropdown" data-am-dropdown="">
+                        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                            您好,{{ user.username }}<span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li><a href="{% url 'account:logout' %}">注销</a></li>
+                            <li><a href="{% url 'account:profile' user.id %}">个人资料</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'account:login' %}">登录</a></li>
+                {% endif %}
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'blog:management' %}">后台管理</a></li>
+                {% endif %}
+
+            </ul>
+            <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
+                <div class="am-form-group">
+                    <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="am-g">
+        <br>
+        <!--文章列表-->
+        <div class="am-u-md-8">
+            {% for article in article_list %}
+                <article class="am-g blog-entry-article">
+                    <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
+                        <img src="{{ article.titlephoto.url }}" alt="" class="am-u-sm-12">
+                    </div>
+                    <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
+                        <a href="{% url 'blog:category' article.category.id %}"
+                           class="blog-color">{{ article.category }} &nbsp;</a>
+                        <a href="{% url 'account:profile' article.author.id %}"> @{{ article.author }} &nbsp;</a>
+                        <span>{{ article.create_time|date:'Y-m-d' }}&nbsp;&nbsp;&nbsp;</span>
+                        <span class="am-icon-eye">&nbsp;{{ article.reading }}</span>
+                        <h1 style="font-size: xx-large"><a
+                                href="{% url 'blog:detail' article.id %}">{{ article.title }}</a></h1>
+                        <p>{{ article.abstract }}</p>
+                    </div>
+                </article>
+                <br>
+            {% endfor %}
+        </div>
+
+        <!--侧边栏-->
+        <div class="am-u-md-4">
+
+            <div class="blog-sidebar-widget blog-bor" align="center">
+                <h2 class="blog-text-center blog-title"><span>热门分类</span></h2>
+                <ul>
+                    {% for category in category_list %}
+                        <li style="list-style-type: none;text-align: justify"><h5><a
+                                href="{% url 'blog:category' category.id %}">{{ category.name }}</a></h5></li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'blog:categories' %}">查看更多>>></a>
+                <br><br>
+            </div>
+
+            <div>
+
+                <div class="blog-clear-margin blog-sidebar-widget blog-bor am-g ">
+                    <h2 class="blog-title"><span>文章标签</span></h2>
+                    <div class="am-u-sm-12 blog-clear-padding" id="tags">
+                        {% for tag in tag_list %}
+                            <a href="{% url 'blog:tag' tag.pk %}"
+                               id="tagcloud"
+                               class="blog-tag am-badge am-text-sm">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <!--随机颜色标签云-->
+                        <script>
+                            window.onload = function () {
+                                var tagcloud = document.getElementById('tags');
+                                var oa = tagcloud.getElementsByTagName('a');
+                                for (var i = 0; i < oa.length; i++) {
+                                    oa[i].style.background = "rgb(" + parseInt(Math.random() * 255) + ","
+                                        + parseInt(Math.random() * 255) + ","
+                                        + parseInt(Math.random() * 255) + ")";
+                                }
+                            }
+                        </script>
+                    </div>
+                </div>
+
+
+                <br>
+
+                <!--联系我面板-->
+                <div class="blog-sidebar-widget blog-bor" id="content">
+                    <h2 class="blog-text-center blog-title"><span>Contact ME</span></h2>
+                    <p>
+                        <a href="https://github.com/jerry0734" target="_blank"
+                        >
+                            <button class="am-btn am-icon-github" style="width: 50px;height: 50px;"></button>
+                        </a>
+                        <a href="http://weibo.com/jerryxjy" target="_blank"
+                        >
+                            <button class="am-btn am-icon-weibo" style="width: 50px;height: 50px;"></button>
+                        </a>
+                        <button class="am-btn contactbtn am-icon-wechat" data-am-modal="{target: '#mywechat'}"></button>
+                        <button class="am-btn contactbtn am-icon-qq" data-am-modal="{target: '#qq'}"></button>
+                        <a href="mailto:jerry34@foxmail.com">
+                            <button class="am-btn am-icon-envelope-o" style="width: 50px;height: 50px;"></button>
+                        </a>
+                    </p>
+                </div>
+
+                <div class="blog-sidebar-widget blog-bor" align="center">
+                    <h2 class="blog-text-center blog-title"><span>最新评论</span></h2>
+                    <ul>
+                        {% for comment in comment_list %}
+                            <li style="list-style-type: none;">
+                                <p align="left"><img src="{{ comment.user.avatar.url }}"
+                                                     class="roundavatar">&nbsp;<a
+                                        href="{% url 'account:profile' comment.user.id %}">{{ comment.user }}:</a>
+                                    <a href="{% url 'blog:detail' comment.article.id %}">{{ comment.content }}</a>
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--点击联系我-微信图标弹出的遮罩层-->
+    <div class="am-modal am-modal-alert" tabindex="-1" id="mywechat">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">Wechat
+                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <p>Wechat ID: xjy_jerry</p>
+                <img src="https://jerry002-1252474564.cosgz.myqcloud.com/mmqrcode1492430307368.png" height="50%"
+                     width="50%">
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn">确定</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!--点击联系我-QQ图标弹出的遮罩层-->
+    <div class="am-modal am-modal-alert" tabindex="-1" id="qq">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">QQ
+                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <p>QQ: 891192183</p>
+                <img src="https://jerry002-1252474564.cosgz.myqcloud.com/qrcode.jpg" height="50%" width="50%">
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn">确定</span>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+</body>
+</html>
+
+
+

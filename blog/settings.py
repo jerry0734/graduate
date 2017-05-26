@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     # 留言板应用
     'msb',
     'myuser',
+    'question',
     # 加入通过pip安装的包
     # 分别有markdown2,markdown_deux,pagedown
     'markdown2',

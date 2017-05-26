@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import Message
@@ -24,4 +24,12 @@ def MessageBoard(request):
 
 def msb_manage(request):
     """管理留言板"""
-    pass
+    message_list = Message.objects.all().order_by('-published_time')
+    context = {'message_list': message_list}
+    return render(request, 'msb/msb_manage.html', context)
+
+
+def delete_message(request, message_id):
+    message = Message.objects.get(id=message_id)
+    message.delete()
+    return redirect(to='msb:manage')

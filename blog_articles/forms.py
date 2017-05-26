@@ -1,4 +1,4 @@
-from .models import Article, Category, Tag, Comments, Friends
+from .models import Article, Category, Tag, Comments, Friends, Aboutme
 from myuser.models import allUser
 from django import forms
 from draceditor.fields import DraceditorFormField, DraceditorWidget
@@ -71,3 +71,15 @@ class LinkForm(forms.ModelForm):
         model = Friends
         fields = ['name', 'links']
         labels = {'name': '名称', 'links': '链接'}
+
+
+class AboutForm(forms.ModelForm):
+    blog_name = forms.CharField(label='博客名称')
+    admin_email = forms.EmailField(label='你的邮箱')
+    other = forms.CharField(
+        label='其他信息',
+        widget=forms.Textarea(attrs={'rows': 3, 'cols': 80}))
+
+    class Meta:
+        model = Aboutme
+        fields = ['blog_name', 'admin_email', 'other']

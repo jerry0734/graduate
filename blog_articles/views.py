@@ -5,7 +5,7 @@ from django.db.models import Count
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from myuser.models import allUser
-from .models import Article, Category, Aboutme, Tag, Comments
+from .models import Article, Category, Aboutme, Tag, Comments, Friends
 from .forms import CommentForm, ArticleForm, CategoryForm, TagForm
 from haystack.forms import SearchForm
 from django.core.urlresolvers import reverse
@@ -13,13 +13,13 @@ from django.core.urlresolvers import reverse
 
 class IndexView(ListView):
     """博客主页文章列表"""
-    template_name = "blog_articles/index.html"
-
+    # template_name = "blog_articles/new/index.html"
+    template_name = 'blog_articles/new/index.html'
     context_object_name = "article_list"
 
-    # 返回文章
+    # 返回文章,前5篇
     def get_queryset(self):
-        article_list = Article.objects.filter(status='p').order_by('-create_time')
+        article_list = Article.objects.filter(status='p').order_by('-create_time')[0:5]
         return article_list
 
     def get_context_data(self, **kwargs):
@@ -28,6 +28,7 @@ class IndexView(ListView):
         kwargs['category_list'] = Category.objects.order_by('-modified_time')[0:5]
         # 标签列表
         kwargs['tag_list'] = Tag.objects.all().order_by('name')
+        kwargs['comment_list'] = Comments.objects.all().order_by('-published_time')[:5]
         return super(IndexView, self).get_context_data(**kwargs)
 
 
@@ -35,7 +36,7 @@ class ArticleDetailView(DetailView):
     """文章详情页视图"""
     model = Article
 
-    template_name = "blog_articles/article.html"
+    template_name = "blog_articles/new/detail.html"
 
     context_object_name = "article"
 
@@ -51,6 +52,19 @@ class ArticleDetailView(DetailView):
         kwargs['form'] = CommentForm()
         kwargs['comment_list'] = self.object.comments_set.all()
         return super(ArticleDetailView, self).get_context_data(**kwargs)
+
+
+def detail(request, article_id):
+    article = Article.objects.get(id=article_id)
+    article.add_reading()
+    category_list = Category.objects.all().order_by('name')
+    form = CommentForm()
+    comment_list = article.comments_set.all()
+    context = {'article': article,
+               'category_list': category_list,
+               'form': form,
+               'comment_list': comment_list}
+    return render(request, 'blog_articles/new/detail.html', context)
 
 
 class CategoryView(ListView):
@@ -107,28 +121,28 @@ def aboutme(request):
 
     # 只取第一条数据
     about = Aboutme.objects.all()[0]
-    context = {'about': about}
+    friend_link_list = Friends.objects.all()
+    context = {'about': about, 'friend_link_list': friend_link_list, }
     return render(request, 'blog_articles/aboutme.html', context)
 
 
 def showcategories(request):
     """分类主页面"""
     # 分类下没有文章不显示
-    category_list = Category.objects.all().annotate(num_articles=Count('article')).filter(num_articles__gt=0)
-    # count = Category.objects.annotate(num=Count('article'))
-    tag_list = Tag.objects.all()
-    context = {'category_list': category_list, 'tag_list': tag_list, }
-    return render(request, 'blog_articles/categories.html', context)
+    category_list = Category.objects.all()
+    context = {'category_list': category_list}
+    return render(request, 'blog_articles/new/categories.html', context)
 
 
-def archive(request, year):
+def archive(request, year, month):
     """日期归档视图函数"""
-    article_list = Article.objects.filter(create_time__year=year)
+    string = str(year) + '-' + str(month)
+    article_list = Article.objects.filter(create_time__startswith=string)
     category_list = Category.objects.all().order_by('-modified_time')[0:5]
     tag_list = Tag.objects.all().order_by('name')
     context = {'article_list': article_list, 'category_list': category_list,
                'tag_list': tag_list}
-    return render(request, 'blog_articles/index.html', context)
+    return render(request, 'blog_articles/new/index.html', context)
 
 
 @login_required
@@ -150,6 +164,11 @@ def write_comments(request, article_id):
             return redirect('blog:detail', article_id=article_id)
 
     return redirect('blog:detail', article_id=article_id)
+
+
+@login_required
+def reply_comment(request, article_id, comment_id):
+    pass
 
 
 @login_required
@@ -191,7 +210,7 @@ def manage_category(request):
             return HttpResponseRedirect(reverse('blog:category_list'))
     context = {'category_list': category_list,
                'form': form, }
-    return render(request, 'blog_articles/management/category_manage.html', context)
+    return render(request, 'blog_articles/newmanage/category_manage.html', context)
 
 
 @login_required
@@ -207,7 +226,7 @@ def manage_tags(request):
             return HttpResponseRedirect(reverse('blog:tag_list'))
 
     context = {'tag_list': tag_list, 'tagform': form}
-    return render(request, 'blog_articles/management/tag_manage.html', context)
+    return render(request, 'blog_articles/newmanage/tag_manage.html', context)
 
 
 @login_required
@@ -255,12 +274,6 @@ def delete_tag(request, tag_id):
     tag.delete()
     return redirect('blog:tag_list')
 
-
-def edit_aboutme(request):
-    """修改关于博客信息"""
-    pass
-
-
 def search_article(request):
     """文章搜索"""
     keyword = request.GET['q']
@@ -279,7 +292,7 @@ def search_article(request):
 def management_index(request):
     """后台管理索引主页，用于引导管理界面"""
     if request.user.is_superuser:
-        return render(request, 'blog_articles/management/manage_index.html', {})
+        return render(request, 'blog_articles/newmanage/index.html', {})
     else:
         raise Http404
 
@@ -318,10 +331,31 @@ def edit_article(request, article_id):
 def myarticles(request):
     articles = Article.objects.filter(author=request.user)
     context = {'article_list': articles}
-    return render(request, 'blog_articles/management/myarticles.html', context)
+    return render(request, 'blog_articles/newmanage/myarticles.html', context)
 
 
 def delete_article(request, article_id):
     article = Article.objects.get(id=article_id)
     article.delete()
     return redirect('blog:myarticles')
+
+
+def article_comment(request, article_id):
+    comments = Comments.objects.filter(article_id=article_id)
+    context = {'comment_list': comments}
+    return render(request, 'blog_articles/management/article_comment.html', context)
+
+
+def edit_comment(request, comment_id):
+    """管理界面修改评论"""
+    comment = Comments.objects.get(id=comment_id)
+    article_id = comment.article_id
+    if request.method != "POST":
+        form = CommentForm(instance=comment)
+    else:
+        form = CommentForm(instance=comment, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('blog:detail', article_id=article_id)
+    context = {'comment_form': form, 'comment': comment, 'article': article_id}
+    return render(request, 'blog_articles/edit_comment.html', context)

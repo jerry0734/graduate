@@ -11,7 +11,7 @@ class ArticleAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': AdminDraceditorWidget},
     }
-    fields = ['category', 'tag', 'author', 'title', 'abstract', 'status', 'body', 'reading', 'likes']
+    fields = ['titlephoto', 'category', 'tag', 'author', 'title', 'abstract', 'status', 'body', 'reading', 'likes']
     list_display = ['title', 'category', 'create_time', 'modified_time', 'status', ]
 
 

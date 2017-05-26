@@ -27,8 +27,8 @@
     <meta name="msapplication-TileColor" content="#0e90d2">
 
     <!--amazeui.flat.min.css：圆角版 Amaze UI CSS-->
-    {#    <link rel="stylesheet" href="/static/amaze-assets/css/amazeui.flat.min.css">#}
-    <link href="//cdn.bootcss.com/amazeui/2.7.2/css/amazeui.flat.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/amaze-assets/css/amazeui.flat.min.css">
+    {#    <link href="//cdn.bootcss.com/amazeui/2.7.2/css/amazeui.flat.min.css" rel="stylesheet">#}
     <link rel="stylesheet" href="/static/amaze-assets/css/app2.css">
     <link rel="stylesheet" href="/static/amazeui-color/color.min.css">
 
@@ -192,9 +192,10 @@
     <div id="off-canvas" class="am-offcanvas">
         <div class="am-offcanvas-bar">
             <div class="am-offcanvas-content">
-                <p align="center">
-                    <a href="{% url 'blog:index' %}"><span class="am-icon-home am-icon-sm">主页</span></a>
-                </p>
+                <ul align="center" style="list-style-type: none">
+                    <li><a href="{% url 'blog:index' %}"><span class="am-icon-home am-icon-sm">主页</span></a></li>
+                    <li><a href="{% url 'blog:categories' %}"><span class="am-icon-star am-icon-sm">分类</span></a></li>
+                </ul>
             </div>
         </div>
     </div>

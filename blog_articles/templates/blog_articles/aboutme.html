@@ -10,7 +10,6 @@
         <style>
             /*设置信息的div宽度*/
             div.owidth {
-                width: 75%;
                 text-align: center;
                 margin: 0 auto;
             }
@@ -27,69 +26,111 @@
                 text-align: center;
             }
 
-            body {
-                background-color: #f5f6fa;
-            }
         </style>
     {% endblock %}
 </head>
 <body>
 {% block content %}
-    <div class="am-g am-g-fixed">
-        <h1 class="am-u-sm-12 titlefont">About Me</h1>
-    </div>
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6" style="padding-top: 50px">
+            <h1 class="am-u-sm-12 titlefont">About Me</h1>
+            <div>
+                <figure data-am-widget="figure" class="am am-figure am-figure-default "
+                        data-am-figure="{  pureview: 'true' }">
+                    <img src="//upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg"
+                         data-rel="https://upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg"
+                         alt="Tom & Jerry"/>
+                </figure>
+            </div>
+        </div>
 
-    <div style="text-align: center;">
+        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+            <div class="am-panel-group" style="padding-top: 50px">
+                <div class="am-panel am-panel-default am-panel-warning rb">
+                    <header class="am-panel-hd">
+                        <h3 class="am-panel-title">
+                            Blog name
+                        </h3>
+                    </header>
+                    <div id="blog-name-1" class="am-panel-collapse am-collapse am-in">
+                        <div class="am-panel-bd">
+                            <p>{{ about.blog_name }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-panel am-panel-default am-panel-primary rb">
+                    <header class="am-panel-hd">
+                        <h3 class="am-panel-title">
+                            Email
+                        </h3>
+                    </header>
+                    <div id="blog-email-2" class="">
+                        <div class="am-panel-bd">
+                            <p><a href="mailto:{{ about.admin_email }}">{{ about.admin_email }}</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-panel am-panel-default am-panel-secondary rb">
+                    <header class="am-panel-hd">
+                        <h3 class="am-panel-title">
+                            Description
+                        </h3>
+                    </header>
+                    <div id="blog-other-3" class="">
+                        <div class="am-panel-bd">
+                            <p>{{ about.other }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-panel am-panel-default am-panel-success rb">
+                    <header class="am-panel-hd" style="background-color: rgba(152,251,152,0.51)">
+                        <h3 class="am-panel-title">
+                            友情链接
+                        </h3>
+                    </header>
+                    <div id="blog-links-4" class="">
+                        <div class="am-panel-bd" id="links">
+                            {% for friend_link in friend_link_list %}
+                                <a href="{{ friend_link.links }}"><span
+                                        class="am-badge am-text-default">{{ friend_link.name }}</span></a>
+                            {% endfor %}
+                        </div>
+                        <div>
+                            <!--随机颜色标签云-->
+                            <script>
+                                window.onload = function () {
+                                    var tagcloud = document.getElementById('links');
+                                    var oa = tagcloud.getElementsByTagName('span');
+                                    for (var i = 0; i < oa.length; i++) {
+                                        oa[i].style.background = "rgb(" + parseInt(Math.random() * 255) + ","
+                                            + parseInt(Math.random() * 255) + ","
+                                            + parseInt(Math.random() * 255) + ")";
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <div>
-            <figure data-am-widget="figure" class="am am-figure am-figure-default "
-                    data-am-figure="{  pureview: 'true' }">
-                <img src="//upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg"
-                     data-rel="https://upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg"
-                     alt="Tom & Jerry"/>
-            </figure>
+            <div class="am-u-sm-12 am-u-md-4 am-u-lg-4">
+                {% for friend_link in friend_link_list %}
+
+                {% endfor %}
+
+            </div>
+            <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+
+
+            </div>
         </div>
 
-        <div class="am-panel-group owidth" id="accordion">
-            <div class="am-panel am-panel-default am-panel-warning rb">
-                <header class="am-panel-hd">
-                    <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-name-1'}">
-                        Blog name
-                    </h3>
-                </header>
-                <div id="blog-name-1" class="am-panel-collapse am-collapse am-in">
-                    <div class="am-panel-bd">
-                        <p>{{ about.blog_name }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="am-panel am-panel-default am-panel-primary rb">
-                <header class="am-panel-hd">
-                    <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-email-2'}">
-                        Email
-                    </h3>
-                </header>
-                <div id="blog-email-2" class="am-panel-collapse am-collapse">
-                    <div class="am-panel-bd">
-                        <p><a href="mailto:{{ about.admin_email }}">{{ about.admin_email }}</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="am-panel am-panel-default am-panel-secondary rb">
-                <header class="am-panel-hd">
-                    <h3 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#blog-other-3'}">
-                        Description
-                    </h3>
-                </header>
-                <div id="blog-other-3" class="am-panel-collapse am-collapse">
-                    <div class="am-panel-bd">
-                        <p>{{ about.other }}</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
 
     </div>
 

@@ -1,0 +1,19 @@
+{% extends 'blog_articles/new/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}日期归档{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+    <div class="am-g am-g-fixed blog-fixed blog-content">
+        <div class="am-u-sm-12">
+            <div class="timeline-year">
+                <ul></ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+</body>
+</html>

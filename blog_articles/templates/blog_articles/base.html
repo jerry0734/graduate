@@ -29,7 +29,7 @@
     <!--amazeui.flat.min.css：圆角版 Amaze UI CSS-->
     {#    <link rel="stylesheet" href="/static/amaze-assets/css/amazeui.flat.min.css">#}
     <link href="//cdn.bootcss.com/amazeui/2.7.2/css/amazeui.flat.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/amaze-assets/css/app.css">
+    <link rel="stylesheet" href="/static/amaze-assets/css/app2.css">
     <link rel="stylesheet" href="/static/amazeui-color/color.min.css">
 
     <!--改一个字体在顶栏-->
@@ -42,7 +42,7 @@
             src: url('//at.alicdn.com/t/f34h5b7keayycik9.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/f34h5b7keayycik9.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/f34h5b7keayycik9.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/f34h5b7keayycik9.svg#NotoSansHans-DemiLight') format('svg'); /* iOS 4.1- */
         }
 
-        h1.modfont {
+        .modfont {
             font-family: 'Raleway9ee1fb22818a77', serif;
         }
 
@@ -98,18 +98,18 @@
 
     <!--[if (gte IE 9)|!(IE)]><!-->
     <script src="/static/js/jquery-3.2.0.min.js"></script>
-    <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    {#    <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>#}
     <!--<![endif]-->
     <!--[if lt IE 9 ]>
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.js"></script>
+{#    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>#}
+{#    <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.js"></script>#}
     <script src="/static/amaze-assets/js/amazeui.ie8polyfill.min.js"></script>
-    <script src="//cdn.bootcss.com/amazeui/2.7.2/js/amazeui.ie8polyfill.js"></script>
+{#    <script src="//cdn.bootcss.com/amazeui/2.7.2/js/amazeui.ie8polyfill.js"></script>#}
     <![endif]-->
     <script src="/static/amaze-assets/js/amazeui.min.js"></script>
-    <script src="//cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+    {#    <script src="//cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script>#}
     <script src="/static/amaze-assets/js/amazeui.widgets.helper.min.js"></script>
-    <script src="//cdn.bootcss.com/amazeui/2.7.2/js/amazeui.widgets.helper.min.js"></script>
+    {#    <script src="//cdn.bootcss.com/amazeui/2.7.2/js/amazeui.widgets.helper.min.js"></script>#}
     <script src="/static/amazeui-color/color.min.js"></script>
     <script src="/static/amaze-assets/js/app.js"></script>
 
@@ -118,62 +118,62 @@
 </head>
 <body>
 <!--顶栏-->
-<nav class="am-topbar-inverse am-topbar-fixed-top" id="navbc">
-
-    <h1 class="am-topbar-brand modfont" style="font-size: 150%">
-        <a href="{% url "blog:index" %}"><img src="/static/amaze-assets/i/favicon.png"></a>
-        <a href="{% url "blog:index" %}">Jerry's Blog</a>
-    </h1>
-
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-            data-am-collapse="{target: '#doc-topbar-collapse'}">
-        <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span>
-    </button>
-
-    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-        <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li><a href="{% url "blog:index" %}">首页</a></li>
-            <li><a href="{% url 'blog:categories' %}">分类</a></li>
-            <li><a href="{% url 'msb:board' %}">留言</a></li>
-            <li><a href="{% url "blog:aboutme" %}">关于我</a></li>
-        </ul>
-
-        <form class="am-topbar-form am-topbar-left am-form-inline" action="{% url 'blog:search' %}" method="get"
-              role="search">
-            <div class="am-form-group">
-                <input type="text" name="q" class="am-form-field am-input-sm" placeholder="搜索">
-            </div>
-            <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
-        </form>
-
-        <div class="am-topbar-right">
-            {% if user.is_authenticated %}
-                <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
-                    <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle"
-                            data-am-dropdown-toggle>您好, {{ user.username }}<span class="am-icon-caret-down"></span>
-                    </button>
-                    <ul class="am-dropdown-content">
-                        <li><a href="{% url 'account:logout' %}">注销</a></li>
-                        <li><a href="{% url 'account:profile' user.id %}">个人资料</a></li>
-                        {% if user.is_superuser %}
-                            <li><a href="{% url 'blog:management' %}">后台管理导航</a></li>
-                            <li><a href="{% url 'blog:new_article' %}">写文章</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            {% else %}
-                <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
-                    <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm am-dropdown-toggle"
-                            data-am-dropdown-toggle>来点评论？<span class="am-icon-caret-down"></span></button>
-                    <ul class="am-dropdown-content">
-                        <li><a href="{% url 'account:login' %}">登录</a></li>
-                        <li><a href="{% url 'account:register' %}">注册</a></li>
-                    </ul>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-</nav>
+{#<nav class="am-topbar-inverse am-topbar-fixed-top" id="navbc">#}
+{##}
+{#    <h1 class="am-topbar-brand modfont" style="font-size: 150%">#}
+{#        <a href="{% url "blog:index" %}"><img src="/static/amaze-assets/i/favicon.png"></a>#}
+{#        <a href="{% url "blog:index" %}">Jerry's Blog</a>#}
+{#    </h1>#}
+{##}
+{#    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"#}
+{#            data-am-collapse="{target: '#doc-topbar-collapse'}">#}
+{#        <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span>#}
+{#    </button>#}
+{##}
+{#    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">#}
+{#        <ul class="am-nav am-nav-pills am-topbar-nav">#}
+{#            <li><a href="{% url "blog:index" %}">首页</a></li>#}
+{#            <li><a href="{% url 'blog:categories' %}">分类</a></li>#}
+{#            <li><a href="{% url 'msb:board' %}">留言</a></li>#}
+{#            <li><a href="{% url "blog:aboutme" %}">关于我</a></li>#}
+{#        </ul>#}
+{##}
+{#        <form class="am-topbar-form am-topbar-left am-form-inline" action="{% url 'blog:search' %}" method="get"#}
+{#              role="search">#}
+{#            <div class="am-form-group">#}
+{#                <input type="text" name="q" class="am-form-field am-input-sm" placeholder="搜索">#}
+{#            </div>#}
+{#            <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>#}
+{#        </form>#}
+{##}
+{#        <div class="am-topbar-right">#}
+{#            {% if user.is_authenticated %}#}
+{#                <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">#}
+{#                    <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle"#}
+{#                            data-am-dropdown-toggle>您好, {{ user.username }}<span class="am-icon-caret-down"></span>#}
+{#                    </button>#}
+{#                    <ul class="am-dropdown-content">#}
+{#                        <li><a href="{% url 'account:logout' %}">注销</a></li>#}
+{#                        <li><a href="{% url 'account:profile' user.id %}">个人资料</a></li>#}
+{#                        {% if user.is_superuser %}#}
+{#                            <li><a href="{% url 'blog:management' %}">后台管理导航</a></li>#}
+{#                            <li><a href="{% url 'blog:new_article' %}">写文章</a></li>#}
+{#                        {% endif %}#}
+{#                    </ul>#}
+{#                </div>#}
+{#            {% else %}#}
+{#                <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">#}
+{#                    <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm am-dropdown-toggle"#}
+{#                            data-am-dropdown-toggle>来点评论？<span class="am-icon-caret-down"></span></button>#}
+{#                    <ul class="am-dropdown-content">#}
+{#                        <li><a href="{% url 'account:login' %}">登录</a></li>#}
+{#                        <li><a href="{% url 'account:register' %}">注册</a></li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    </div>#}
+{#</nav>#}
 <div>
     {% block content %}
     {% endblock content %}
@@ -182,20 +182,18 @@
     <!--侧边栏按钮-->
     <div class="amz-toolbar" style="right: 10px;">
         <a href="#off-canvas" data-am-offcanvas title="侧边栏" class="am-icon-btn am-icon-navicon"
-           style="background-color: transparent"></a>
-        <br>
+           style=""></a>
+        <br><br>
         <a href="#top" data-am-smooth-scroll title="回到顶部" class="am-icon-btn am-icon-chevron-up"
-           style="background-color: transparent"></a>
+           style=""></a>
     </div>
 
     <!--侧边栏，与顶栏有相同的功能-->
     <div id="off-canvas" class="am-offcanvas">
         <div class="am-offcanvas-bar">
             <div class="am-offcanvas-content">
-                <p>
-                    我不愿让你一个人 <br/>
-                    承受这世界的残忍 <br/>
-                    我不愿眼泪陪你到 永恒
+                <p align="center">
+                    <a href="{% url 'blog:index' %}"><span class="am-icon-home am-icon-sm">主页</span></a>
                 </p>
             </div>
         </div>
@@ -203,13 +201,30 @@
 
 </div>
 <!--底部-->
-<div class="am-footer am-footer-default foot">
-    <div class="am-g am-g-fixed">
-        <div class="am-footer-miscs am-u-sm-12 am-u-md-12 am-u-lg-12" id="mainfooter">
-            <p><a href="https://hellojerry.cn"><img src="/static/amaze-assets/i/favicon.png"></a>
-                CopyRight©2017 <a href="https://hellojerry.cn">hellojerry.cn</a>
-            </p>
-            <p>参考：
+{#<div class="am-footer am-footer-default foot">#}
+{#    <div class="am-g am-g-fixed">#}
+{#        <div class="am-footer-miscs am-u-sm-12 am-u-md-12 am-u-lg-12" id="mainfooter">#}
+{#            <p><a href="https://hellojerry.cn"><img src="/static/amaze-assets/i/favicon.png"></a>#}
+{#                CopyRight©2017 <a href="https://hellojerry.cn">hellojerry.cn</a>#}
+{#            </p>#}
+{#            <p>参考：#}
+{#                <a href="https://www.djangoproject.com/"><img#}
+{#                        src="https://jerry002-1252474564.cosgz.myqcloud.com/django.jpg"#}
+{#                        style="height: 30px; width: 80px">&nbsp;</a>#}
+{#                <a href="http://amazeui.org"><img#}
+{#                        src="https://raw.githubusercontent.com/allmobilize/amazeui/master/vendor/amazeui/amazeui-b.png"#}
+{#                        style="height: 20px; width: 100px">&nbsp;</a>#}
+{#                <a href="https://github.com/zmrenwu/django-blog-tutorial">django-blog-tutorial</a>#}
+{#            </p>#}
+{#            <p><a href="http://www.miitbeian.gov.cn">粤ICP备16074515</a></p>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+<footer class="blog-footer" style="background-color: #545454">
+    <div class="am-g am-g-fixed blog-fixed am-u-sm-centered blog-footer-padding">
+        <div class="am-u-sm-12 am-u-md-4 am-u-lg-4">
+            <h3>参考来源</h3>
+            <p>
                 <a href="https://www.djangoproject.com/"><img
                         src="https://jerry002-1252474564.cosgz.myqcloud.com/django.jpg"
                         style="height: 30px; width: 80px">&nbsp;</a>
@@ -218,11 +233,27 @@
                         style="height: 20px; width: 100px">&nbsp;</a>
                 <a href="https://github.com/zmrenwu/django-blog-tutorial">django-blog-tutorial</a>
             </p>
+        </div>
+
+        <div class="am-u-sm-12 am-u-md-4 am-u-lg-4">
+            <h3>联系我</h3>
+            <p>
+                <a href=""><span class="am-icon-qq am-icon-fw am-primary blog-icon blog-icon"></span></a>
+                <a href=""><span class="am-icon-github am-icon-fw blog-icon blog-icon"></span></a>
+                <a href=""><span class="am-icon-weibo am-icon-fw blog-icon blog-icon"></span></a>
+                <a href=""><span class="am-icon-reddit am-icon-fw blog-icon blog-icon"></span></a>
+                <a href=""><span class="am-icon-weixin am-icon-fw blog-icon blog-icon"></span></a>
+            </p>
+        </div>
+
+        <div class="am-u-sm-12 am-u-md-4 am-u-lg-4">
+            <h3>备案信息</h3>
             <p><a href="http://www.miitbeian.gov.cn">粤ICP备16074515</a></p>
         </div>
     </div>
-</div>
-
+    <div class="blog-text-center"><a href="http://d.hellojerry.cn">©Jerry's Blog</a> &nbsp;<img
+            src="/static/amaze-assets/i/favicon.png"></div>
+</footer>
 
 </body>
 </html>

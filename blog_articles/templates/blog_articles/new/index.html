@@ -14,7 +14,7 @@
             }
 
             body {
-
+                background-color: rgba(225, 225, 225, 0.23);
             }
 
             h5#bigger {
@@ -53,6 +53,8 @@
                 border-radius: 50%;
                 border: 1px solid transparent;
             }
+
+
         </style>
     {% endblock extrastyle %}
     {% block extrahead %}
@@ -62,29 +64,28 @@
     {% load dractags %}
     {% load el_pagination_tags %}
 </head>
-<body>
 {% block content %}
+    <body>
     <header class="am-g am-g-fixed blog-fixed blog-text-center blog-header">
         <div class="am-u-sm-8 am-u-sm-centered">
-            <img width="100" src="/static/amaze-assets/i/hdIm.jpg" alt="Blog Logo"/>&nbsp;
-            <h2 class="modfont" style="font-size: 150%">My Blog</h2>
+            {#            <img width="100" src="/static/amaze-assets/i/hdIm.jpg" alt="Blog Logo" style="vertical-align: middle"/>&nbsp;#}
+            <h2 class="modfont" style="font-size: 200%">My Blog</h2>
         </div>
     </header>
     <hr>
 
-    <nav class="am-g am-g-fixed blog-fixed blog-nav">
+    <nav class="am-g am-g-fixed">
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only blog-button"
                 data-am-collapse="{target: '#blog-collapse'}"><span class="am-sr-only">导航切换</span> <span
                 class="am-icon-bars"></span></button>
 
         <div class="am-collapse am-topbar-collapse" id="blog-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav">
-                <li class="am-active"><a href="{% url 'blog:index' %}">首页</a></li>
-
+                <li class="am-active"><a href="{% url 'blog:index' %}">最新文章</a></li>
                 <li><a href="{% url 'blog:categories' %}">分类</a></li>
                 <li><a href="{% url 'msb:board' %}">留言板</a></li>
                 <li><a href="{% url 'blog:aboutme' %}">关于博客</a></li>
-                <li><a href="{% url 'blog:rss' %}"><span class="am-icon-rss"></span>RSS Feed</a></li>
+                {#                <li><a href="{% url 'blog:rss' %}"><span class="am-icon-rss"></span>RSS Feed</a></li>#}
                 {% if user.is_authenticated %}
                     <li class="am-dropdown" data-am-dropdown="">
                         <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="">
@@ -115,7 +116,7 @@
         </div>
     </nav>
 
-    <div class="am-g">
+    <div class="am-g am-g-fixed">
         <br>
         <!--文章列表-->
         <div class="am-u-md-8">
@@ -143,11 +144,11 @@
         <div class="am-u-md-4">
 
             <div class="blog-sidebar-widget blog-bor" align="center">
-                <h2 class="blog-text-center blog-title"><span>热门分类</span></h2>
+                <h2 class="blog-text-center blog-title" style="background-color: "><span>热门分类</span></h2>
                 <ul>
                     {% for category in category_list %}
-                        <li style="list-style-type: none;text-align: justify"><h5><a
-                                href="{% url 'blog:category' category.id %}">{{ category.name }}</a></h5></li>
+                        <li style="list-style-type: none;text-align: justify"><h3 style="font-size: 2rem"><a
+                                href="{% url 'blog:category' category.id %}">{{ category.name }}</a></h3></li>
                     {% endfor %}
                 </ul>
                 <a href="{% url 'blog:categories' %}">查看更多>>></a>
@@ -172,9 +173,9 @@
                                 var tagcloud = document.getElementById('tags');
                                 var oa = tagcloud.getElementsByTagName('a');
                                 for (var i = 0; i < oa.length; i++) {
-                                    oa[i].style.background = "rgb(" + parseInt(Math.random() * 255) + ","
-                                        + parseInt(Math.random() * 255) + ","
-                                        + parseInt(Math.random() * 255) + ")";
+                                    oa[i].style.background = "rgb(" + parseInt(Math.random() * 205) + ","
+                                        + parseInt(Math.random() * 205) + ","
+                                        + parseInt(Math.random() * 205) + ")";
                                 }
                             }
                         </script>
@@ -190,17 +191,14 @@
                     <p>
                         <a href="https://github.com/jerry0734" target="_blank"
                         >
-                            <button class="am-btn am-icon-github" style="width: 50px;height: 50px;"></button>
+                            <button class="am-btn am-icon-github"></button>
                         </a>
                         <a href="http://weibo.com/jerryxjy" target="_blank"
                         >
-                            <button class="am-btn am-icon-weibo" style="width: 50px;height: 50px;"></button>
+                            <button class="am-btn am-icon-weibo"></button>
                         </a>
-                        <button class="am-btn contactbtn am-icon-wechat" data-am-modal="{target: '#mywechat'}"></button>
-                        <button class="am-btn contactbtn am-icon-qq" data-am-modal="{target: '#qq'}"></button>
-                        <a href="mailto:jerry34@foxmail.com">
-                            <button class="am-btn am-icon-envelope-o" style="width: 50px;height: 50px;"></button>
-                        </a>
+                        <button class="am-btn am-icon-wechat" data-am-modal="{target: '#mywechat'}"></button>
+                        <button class="am-btn am-icon-qq" data-am-modal="{target: '#qq'}"></button>
                     </p>
                 </div>
 
@@ -256,8 +254,8 @@
             </div>
         </div>
     </div>
-{% endblock content %}
 </body>
+{% endblock %}
 </html>
 
 

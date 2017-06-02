@@ -9,6 +9,9 @@ urlpatterns = [
                   url(r'^register/$', views.user_register, name='register'),
                   url(r'^profile/(?P<user_id>\d+)$', views.profile, name='profile'),
                   url(r'^avatar/(?P<user_id>\d+)$', views.change_avatar, name='change_avatar'),
+                  # 私信
+                  url(r'^post_private/(?P<receiver_id>\d+)/$', views.send_messages, name='send_private'),
+                  # 用户管理
                   url(r'^userlist/$', views.userlist, name='userlist'),
                   url(r'^disable/(?P<user_id>\d+)/$', views.disabled_user, name='disable'),
                   url(r'^able/(?P<user_id>\d+)/$', views.abled_user, name='able'),

@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth import authenticate, password_validation, get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
-from .models import allUser
+from .models import allUser, Private
 
 
 class BlogUserCreationForm(forms.ModelForm):
@@ -143,3 +143,11 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = allUser
         fields = ('avatar',)
+
+
+class PrivateForm(forms.ModelForm):
+    content = forms.TextInput()
+
+    class Meta:
+        model = Private
+        fields = ('content',)

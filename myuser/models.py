@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
 
@@ -13,3 +14,16 @@ class allUser(AbstractUser):
     class Meta(AbstractUser.Meta):
         verbose_name = '用户管理'
         verbose_name_plural = '用户管理'
+
+
+class Private(models.Model):
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sender')
+    content = models.TextField()
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='receiver')
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        verbose_name_plural = '对话'

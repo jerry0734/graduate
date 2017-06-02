@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
-from .forms import BlogUserCreationForm, ProfileForm
+from .forms import BlogUserCreationForm, ProfileForm, PrivateForm
 from .models import allUser
 from blog_articles.models import Comments
 
@@ -85,3 +85,62 @@ def change_avatar(request, user_id):
         else:
             error = '您上传的头像出了问题了'
             return HttpResponseRedirect(reverse('account:profile', args=[user_id]))
+
+
+@login_required
+def userlist(request):
+    user_list = allUser.objects.all()
+    context = {
+        'user_list': user_list
+    }
+    return render(request, 'myuser/userlist.html', context)
+
+
+@login_required
+def disabled_user(request, user_id):
+    """禁用账户"""
+    user = allUser.objects.get(id=user_id)
+    if user.is_superuser == False:
+        user.is_active = False
+        user.save()
+    else:
+        return redirect('account:userlist')
+    return redirect('account:userlist')
+
+
+@login_required()
+def abled_user(request, user_id):
+    """启用账户"""
+    user = allUser.objects.get(id=user_id)
+    user.is_active = True
+    user.save()
+    return redirect('account:userlist')
+
+
+@login_required
+def send_messages(request, receiver_id):
+    form = PrivateForm()
+    receiver = allUser.objects.get(id=receiver_id)
+    user = request.user
+    if request.method != "POST":
+        form = PrivateForm()
+    else:
+        form = PrivateForm(data=request.POST)
+        form.save(commit=False)
+        form.sender = request.user
+        form.recevier = receiver_id
+        form.save(commit=True)
+        return redirect(to='blog:index')
+    context = {
+        'receiver': receiver,
+        'form': form,
+    }
+    return render(request, 'myuser/post_private.html', context)
+
+
+def message_user(request, receiver):
+    pass
+
+
+def message_list(request, sender, receiver):
+    pass

@@ -181,39 +181,41 @@ def write_comments(request, article_id):
         return HttpResponse('发送失败')
 
 
-# @login_required
-# def reply_comment(request, comment_id):
-#     """回复评论"""
-#     related = Comments.objects.get(id=comment_id)
-#     article = related.article
-#     article_id = article.id
-#     if request.method != "POST":
-#         form = ReplyForm()
-#     else:
-#         form = ReplyForm(data=request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             user = request.user
-#             comment.article = article
-#             comment.related = related
-#             comment.user = user
-#             form.save()
-#             return redirect(to='blog:detail', article_id=article_id)
-#     return redirect('blog:detail', article_id=article_id)
-
 @login_required
 def reply_comment(request, comment_id):
     """回复评论"""
-    if request.method == "POST":
-        related = Comments.objects.get(id=comment_id)
-        article = related.article
-        user = request.user
-        content = request.POST.get('content')
-        print(related, article, user, content)
-        Comments.objects.create(user=user, article=article, content=content, related=related)
-        return HttpResponse('ok')
+    related = Comments.objects.get(id=comment_id)
+    article = related.article
+    article_id = article.id
+    if request.method != "POST":
+        form = ReplyForm()
     else:
-        return None
+        form = ReplyForm(data=request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            user = request.user
+            comment.article = article
+            comment.related = related
+            comment.user = user
+            form.save()
+            return HttpResponse('<script>self.location=document.referrer;</script>')
+            # return redirect(to='blog:detail', article_id=article_id)
+    return HttpResponse('<script>history.back()</script>')
+
+
+# @login_required
+# def reply_comment(request, comment_id):
+#     """回复评论"""
+#     if request.method == "POST":
+#         related = Comments.objects.get(id=comment_id)
+#         article = related.article
+#         user = request.user
+#         content = request.POST['reply']
+#         print(related, article, user, content)
+#         Comments.objects.create(user=user, article=article, content=content, related=related)
+#         return HttpResponse('ok')
+#     else:
+#         return None
 
 
 @login_required

@@ -29,14 +29,12 @@
                                 <td>uid:</td>
                                 <td>{{ myuser.id }}</td>
                             </tr>
-                            {#                            <tr>#}
-                            {#                                <td>姓名:</td>#}
-                            {#                                <td>{{ myuser.last_name }}{{ myuser.first_name }}</td>#}
-                            {#                            </tr>#}
-                            {#                            <tr></tr>#}
                         </table>
                     </div>
                 </div>
+                {#                <div class="am=panel">#}
+                {#                    <p><a href="{% url 'account:send_private' myuser.id %}">给TA发私信</a></p>#}
+                {#                </div>#}
                 <div class="am-panel am-panel-default" style="border-color: transparent">
                     {% if myuser.id == user.id %}
                         <form action="{% url 'account:change_avatar' myuser.id %}" method="post"

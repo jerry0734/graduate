@@ -12,64 +12,69 @@
         </style>
     {% endblock %}
 </head>
-<body>
 {% block content %}
+    <body style="background-image: url('/static/img/img5.jpg')">
+
     <br>
     <br>
     <div class="am-container">
-    <div class="am-g am-g-fixed">
-        <div class="am-u-lg-8 am-u-lg-centered am-u-md-8 am-u-md-centered am-u-sm-10 am-u-sm-centered">
-            {% if errors %}
-                <div class="am-alert am-alert-danger am-text-xs" data-am-alert>
-                    <button type="button" class="am-close">&times;</button>
-                    <ul>
-                        {% for error in errors %}
-                            <li class="li-style">{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            <form action="{% url 'account:register' %}" method="post" class="form">
-                {% csrf_token %}
-                <div class="color-form-group color-form-line">
-                    {{ form.username }}
-                    <label class="color-form-control-label">用户名</label>
-                    <span class="color-form-control-help">{{ form.username.help_text }}</span>
-                </div>
+        <div class="am-g">
 
-                <div class="color-form-group color-form-line">
-                    {{ form.password1 }}
-                    <label class="color-form-control-label">密码</label>
-                    <span class="color-form-control-help">{{ form.password1.help_text }}</span>
-                </div>
+            <div class="am-u-lg-6 am-u-lg-centered am-u-md-6 am-u-md-centered am-u-sm-10 am-u-sm-centered"
+                 style="background-color: white">
+                <h3 align="center">注册账号</h3>
+                {% if errors %}
+                    <div class="am-alert am-alert-danger am-text-xs" data-am-alert>
+                        <button type="button" class="am-close">&times;</button>
+                        <ul>
+                            {% for error in errors %}
+                                <li class="li-style">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <form action="{% url 'account:register' %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="color-form-group color-form-line">
+                        {{ form.username }}
+                        <label class="color-form-control-label">用户名</label>
+                        <span class="color-form-control-help">{{ form.username.help_text }}</span>
+                    </div>
 
-                <div class="color-form-group color-form-line">
-                    {{ form.password2 }}
-                    <label class="color-form-control-label">密码确认</label>
-                    <span class="color-form-control-help">{{ form.password2.help_text }}</span>
-                </div>
+                    <div class="color-form-group color-form-line">
+                        {{ form.password1 }}
+                        <label class="color-form-control-label">密码</label>
+                        <span class="color-form-control-help">{{ form.password1.help_text }}</span>
+                    </div>
 
-                <div class="color-form-group color-form-line">
-                    {{ form.email }}
-                    <label class="color-form-control-label">电子邮箱</label>
-                    <span class="color-form-control-help">{{ form.email.help_text }}</span>
-                </div>
+                    <div class="color-form-group color-form-line">
+                        {{ form.password2 }}
+                        <label class="color-form-control-label">密码确认</label>
+                        <span class="color-form-control-help">{{ form.password2.help_text }}</span>
+                    </div>
 
-                <div class="color-form-group color-form-line">
-                    {{ form.phone }}
-                    <label class="color-form-control-label">电话</label>
-                    <span class="color-form-control-help">{{ form.phone.help_text }}</span>
-                </div>
+                    <div class="color-form-group color-form-line">
+                        {{ form.email }}
+                        <label class="color-form-control-label">电子邮箱</label>
+                        <span class="color-form-control-help">{{ form.email.help_text }}</span>
+                    </div>
 
-                <button class="am-btn am-btn-success" type="submit" name="submit">注册</button>
-                <button class="am-btn am-btn-warning" type="reset" name="submit">重新填写</button>
-            </form>
+                    <div class="color-form-group color-form-line">
+                        {{ form.phone }}
+                        <label class="color-form-control-label">电话</label>
+                        <span class="color-form-control-help">{{ form.phone.help_text }}</span>
+                    </div>
+
+                    <button class="am-btn am-btn-success" type="submit" name="submit">注册</button>
+                    <button class="am-btn am-btn-warning" type="reset" name="submit">重新填写</button>
+                </form>
+                <br>
+            </div>
         </div>
+
+        <br><br><br>
+
     </div>
-
-    <br><br><br>
-
-
+    </body>
 {% endblock content %}
-</body>
 </html>

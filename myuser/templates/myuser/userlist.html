@@ -1,0 +1,59 @@
+{% extends 'blog_articles/newmanage/index.html' %}
+{% block title %}
+    用户管理
+{% endblock %}
+{% block content %}
+    <div class="card-box">
+        <div class="content">
+            <div class="am-g">
+                <div class=" am-u-lg-12 am-u-md-12" style="padding-top: 25px">
+                    <p><b>用户列表</b></p>
+                    <table class="am-table am-table-hover">
+                        <thead>
+                        <tr>
+                            <th>头像</th>
+                            <th>用户名</th>
+                            <th>邮箱</th>
+                            <th>手机号</th>
+                            <th>是否活动状态</th>
+                            <th>管理员</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for users in user_list %}
+                            <tr>
+                                <td><img src="{{ users.avatar.url }}" width="35" height="35"></td>
+                                <td><a href="{% url 'account:profile' users.id %}">{{ users.username }}</a></td>
+                                <td>{{ users.email }}</td>
+                                <td>{{ users.phone }}</td>
+                                <td>
+                                    {% if users.is_active %}
+                                        Yes
+                                    {% else %}
+                                        No
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if users.is_superuser %}
+                                        Yes
+                                    {% else %}
+                                        No
+                                    {% endif %}</td>
+                                <td>
+                                    {% if users.is_active != True %}
+                                        <a href="{% url 'account:able' users.id %}">启用</a>&nbsp;
+                                    {% else %}
+                                        <a href="{% url 'account:disable' users.id %}">禁用</a>&nbsp;
+                                    {% endif %}
+                                    <a href="#">删除</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'blog_articles/newmanage/index.html' %}
+<title>{% block title %}友链管理{% endblock %}</title>
+{% block content %}
+    <div class="card-box">
+        <div class="content">
+            <div class="am-g am-g-fixed" style="min-height: 525px; height: 100%">
+                <div style="padding-top: 25px">
+                    <p><b>添加友情链接</b></p>
+                    <form class="am-form" action="" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br>
+                        <button class="am-btn am-btn-primary" type="submit">添加</button>
+                    </form>
+                </div>
+
+                <div class=" am-u-lg-12 am-u-md-12" style="padding-top: 25px">
+                    <p><b>链接列表</b></p>
+                    <table class="am-table am-table-hover">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>链接</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for link in link_list %}
+                            <tr>
+                                <td>{{ link.name }}</td>
+                                <td><a href="{{ link.links }}">{{ link.links }}</a></td>
+                                <td>
+                                    <a href="{% url 'blog:del_link' link.id %}">
+                                        <button class="am-btn am-btn-danger am-btn-xs">
+                                            <span class="am-icon-trash-o"></span> 删除
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+{% endblock %}

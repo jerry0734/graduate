@@ -1,0 +1,30 @@
+{% extends 'blog_articles/newmanage/index.html' %}
+{% block title %}修改博客信息{% endblock %}
+{% block content %}
+    <div class="card-box">
+        <div class="content">
+            <div class="am-g">
+                <div class="am-u-md-8 am-u-lg-8 am-u-md-centered">
+                    <form action="{% url 'blog:edit_aboutme' 1 %}" method="post">
+                        {% csrf_token %}
+                        <div class="am-form-group">
+                            <label>博客名称</label>
+                            <p>{{ form.blog_name }}</p>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label>你的邮箱</label>
+                            <p>{{ form.admin_email }}</p>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="doc-ta-1">其他信息</label>
+                            <p>{{ form.other }}</p>
+                        </div>
+                        <button type="submit" class="am-btn am-btn-primary">修改</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -174,7 +174,7 @@
             <br>
 
             <div class="am-g am-g-fixed">
-                <ul class="am-comments-list  am-u-md-10 am-u-lg-12 am-u-sm-10 am-u-sm-centered">
+                <ul class="am-comments-list  am-u-md-10 am-u-lg-12 am-u-sm-12 am-u-sm-centered">
                     {% for comment in comment_list %}
                         <li class="am-comment ">
                             <img class="am-comment-avatar" alt="" src="/media/{{ comment.user.avatar }}"/>
@@ -207,14 +207,14 @@
                                     {{ comment.content }}
                                     <br>
                                     <button class="am-btn am-btn-primary am-btn-xs"
-                                            data-am-collapse="{target: '#dialog{{ forloop.counter }}'}"
+                                            data-am-collapse="{target: '#dialog{{ comment.id }}'}"
                                             style="padding-top: 10px">
                                         回复 <i class="am-icon-reply"></i></button>
                                     <!--隐藏回复框-->
-                                    <div class="am-g am-g-fixed am-collapse" id="dialog{{ forloop.counter }}">
-                                        <form action="{% url 'blog:reply_comment' comment.id %}"
-                                              method="post"
-                                              class="am-form dialog am-u-md-10 am-u-lg-12 am-u-sm-10 am-u-sm-centered"
+                                    <div class="am-g am-g-fixed am-collapse" id="dialog{{ comment.id }}">
+                                        <form method="post"
+                                              action="{% url 'blog:reply_comment' comment.id %}"
+                                              class="am-form dialog am-u-md-12 am-u-lg-12 am-u-sm-12 am-u-sm-centered"
                                               style="padding-top: 5px">
                                             {% csrf_token %}
                                             <div class="am-form-group">
@@ -223,31 +223,8 @@
                                             <button class="am-btn am-btn-secondary" type="submit">回复</button>
                                         </form>
                                     </div>
-                                    <script>
-                                        $(document).ready(function () {
-                                            $.ajaxSetup({
-                                                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
-                                            });
-                                            $('#dialog{{ forloop.counter }}').submit(function () {
-                                                var content = $("#replycontent").val();
-                                                $.ajax({
-                                                    type: "POST",
-                                                    data: {content: content},
-                                                    url: "{% url 'blog:reply_comment' comment.id %}",
-                                                    cache: false,
-                                                    dataType: "html",
-                                                    success: function (result, statues, xml) {
-                                                        alert(result); //成功时弹出view传回来的结果
-                                                        location.reload()
-                                                    },
-                                                    error: function () {
-                                                        alert("发送失败");
-                                                    }
-                                                });
-                                                return false;
-                                            });
-                                        });
-                                    </script>
+
+
                                 </div>
 
 

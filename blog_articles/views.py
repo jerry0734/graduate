@@ -198,7 +198,7 @@ def reply_comment(request, comment_id):
             comment.related = related
             comment.user = user
             form.save()
-            return HttpResponse('<script>self.location=document.referrer;</script>')
+            return HttpResponse('<script>window.location=document.referrer;</script>')
             # return redirect(to='blog:detail', article_id=article_id)
     return HttpResponse('<script>history.back()</script>')
 
@@ -212,10 +212,9 @@ def reply_comment(request, comment_id):
 #         user = request.user
 #         content = request.POST['reply']
 #         print(related, article, user, content)
-#         Comments.objects.create(user=user, article=article, content=content, related=related)
-#         return HttpResponse('ok')
-#     else:
-#         return None
+#         # Comments.objects.create(user=user, article=article, content=content, related=related)
+#         # return HttpResponse('ok')
+
 
 
 @login_required

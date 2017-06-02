@@ -6,8 +6,7 @@ from draceditor.fields import DraceditorFormField, DraceditorWidget
 
 class ReplyForm(forms.ModelForm):
     """回复表单"""
-    content = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'color-form-control', 'rows': 3, 'id': 'replycontent'}))
+    content = forms.CharField()
 
     class Meta:
         model = Comments

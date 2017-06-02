@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.db.models import Count
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from myuser.models import allUser
 from .models import Article, Category, Aboutme, Tag, Comments, Friends
-from .forms import CommentForm, ArticleForm, CategoryForm, TagForm
+from .forms import CommentForm, ArticleForm, CategoryForm, TagForm, ReplyForm
 from haystack.forms import SearchForm
 from django.core.urlresolvers import reverse
 
@@ -59,10 +59,12 @@ def detail(request, article_id):
     article.add_reading()
     category_list = Category.objects.all().order_by('name')
     form = CommentForm()
+    replyform = ReplyForm()
     comment_list = article.comments_set.all()
     context = {'article': article,
                'category_list': category_list,
                'form': form,
+               'replyform': replyform,
                'comment_list': comment_list}
     return render(request, 'blog_articles/new/detail.html', context)
 
@@ -145,25 +147,39 @@ def archive(request, year, month):
     return render(request, 'blog_articles/new/index.html', context)
 
 
+# @login_required
+# def write_comments(request, article_id):
+#     """评论"""
+#     if request.method != 'POST':
+#         form = CommentForm()
+#
+#     else:
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             article = Article.objects.get(id=article_id)
+#             user = request.user
+#             comment = form.save(commit=False)
+#             comment.article = article
+#             comment.user = user
+#             form.save()
+#             # return redirect(to='article', id=article_id)
+#             return redirect('blog:detail', article_id=article_id)
+#
+#     return redirect('blog:detail', article_id=article_id)
+
 @login_required
 def write_comments(request, article_id):
     """评论"""
-    if request.method != 'POST':
-        form = CommentForm()
-
+    if request.method == 'POST':
+        user = request.user
+        content = request.POST['content']
+        article = Article.objects.get(id=article_id)
+        Comments.objects.create(user=user, content=content, article=article)
+        print(user, content, article_id)
+        return HttpResponse('发送成功')
     else:
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            article = Article.objects.get(id=article_id)
-            user = request.user
-            comment = form.save(commit=False)
-            comment.article = article
-            comment.user = user
-            form.save()
-            # return redirect(to='article', id=article_id)
-            return redirect('blog:detail', article_id=article_id)
+        return HttpResponse('发送失败')
 
-    return redirect('blog:detail', article_id=article_id)
 
 
 @login_required
@@ -172,9 +188,9 @@ def reply_comment(request, comment_id):
     article = related.article
     article_id = article.id
     if request.method != "POST":
-        form = CommentForm()
+        form = ReplyForm()
     else:
-        form = CommentForm(data=request.POST)
+        form = ReplyForm(data=request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             user = request.user

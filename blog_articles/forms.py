@@ -4,9 +4,19 @@ from django import forms
 from draceditor.fields import DraceditorFormField, DraceditorWidget
 
 
+class ReplyForm(forms.ModelForm):
+    """回复表单"""
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'color-form-control', 'rows': 3}))
+
+    class Meta:
+        model = Comments
+        fields = ['content']
+
+
 class CommentForm(forms.ModelForm):
     """评论表单"""
-    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'color-form-control', 'rows': 3}))
+    content = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'color-form-control', 'id': 'commentcontent', 'rows': 3}))
 
     class Meta:
         model = Comments
@@ -31,7 +41,7 @@ class ArticleForm(forms.ModelForm):
         fields = ['title', 'author', 'category', 'tag', 'abstract', 'body', 'status']
 
 
-class TitlePhoto(forms.ModelForm):
+class TitlePhotoForm(forms.ModelForm):
     titlephoto = forms.ImageField()
 
     class Meta:

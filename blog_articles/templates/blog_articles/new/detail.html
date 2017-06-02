@@ -4,12 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{{ article.title }}{% endblock %}</title>
+    {% block extrastyle %}
+        <style>
+            .am-article-meta {
+                font-size: 1.3rem;
+                line-height: 1.5;
+                color: #999999;
+            }
+        </style>
+    {% endblock %}
+    {% block extrahead %}
+        <script>
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                });
+                $('#comment').submit(function () {
+                    var content = $("#commentcontent").val();
+                    $.ajax({
+                        type: "POST",
+                        data: {content: content},
+                        url: "{% url 'blog:comment' article.id %}",
+                        cache: false,
+                        dataType: "html",
+                        success: function (result, statues, xml) {
+                            alert(result); //成功时弹出view传回来的结果
+                            location.reload()
+                        },
+                        error: function () {
+                            alert("发送失败");
+                        }
+                    });
+                    return false;
+                });
+
+            });
+        </script>
+    {% endblock %}
     {% load dractags %}
 </head>
 <body>
 {% block content %}
-    <div class="am-g am-g-fixed blog-fixed blog-content">
-        <div class="am-u-sm-12">
+    <div class="am-g am-g-fixed  blog-content">
+        <div class="am-u-sm-10 am-u-md-12 am-u-lg-12 am-u-sm-centered">
             <article class="am-article blog-article-p">
                 <div class="am-article-hd">
                     <h1 class="am-article-title blog-text-center">{{ article.title }}</h1>
@@ -109,17 +146,14 @@
                     with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '/static/api/js/share.js?v=89860593.js?'];
                 </script>
             </div>
-            {#            <ul class="am-pagination blog-article-margin">#}
-            {#                <li class="am-pagination-prev"><a href="#" class="">« 一切的回顾</a></li>#}
-            {#                <li class="am-pagination-next"><a href="">不远的未来 »</a></li>#}
-            {#            </ul>#}
 
             <hr>
             <br><br>
 
             {% if user.is_authenticated %}
-                <div>
-                    <form action="{% url 'blog:comment' article.id %}" method="post" class="am-form am-g">
+                <div class="am-g am-g-fixed">
+                    <form id="comment" method="post"
+                          class="am-form am-u-sm-10 am-u-md-12 am-u-lg-12 am-u-sm-centered">
                         {% csrf_token %}
                         <div class="am-form-group">
                             <label>请输入您的评论</label><br>
@@ -130,7 +164,7 @@
                 </div>
             {% else %}
                 <div class="am-panel am-panel-default">
-                    <div class="am-panel-bd">真正的粉丝，即使我什么也不说 ---->>&nbsp;
+                    <div class="am-panel-bd">登陆后才能评论文章哦 ---->>&nbsp;
                         <a href="{% url 'account:login' %}">登录</a>&nbsp;
                         <a href="{% url 'account:register' %}">注册</a>
                     </div>
@@ -139,8 +173,8 @@
 
             <br>
 
-            <div class="am-g">
-                <ul class="am-comments-list">
+            <div class="am-g am-g-fixed">
+                <ul class="am-comments-list  am-u-md-10 am-u-lg-12 am-u-sm-10 am-u-sm-centered">
                     {% for comment in comment_list %}
                         <li class="am-comment ">
                             <img class="am-comment-avatar" alt="" src="/media/{{ comment.user.avatar }}"/>
@@ -164,17 +198,48 @@
                                     </div>
                                 </header>
                                 <div class="am-comment-bd"
-                                     style="background-color: rgba(211,255,245,0.12)">{{ comment.content }}</div>
-                                <!-- 评论内容 -->
+                                     style="background-color: rgba(211,255,245,0.12)">
+                                    {% if  comment.related != None %}
+                                        <blockquote>
+                                            回复了{{ comment.related.user }}：{{ comment.related }}
+                                        </blockquote>
+                                    {% endif %}
+                                    {{ comment.content }}
+                                    <br>
+                                    <button class="am-btn am-btn-primary am-btn-xs"
+                                            data-am-collapse="{target: '#dialog{{ forloop.counter }}'}">
+                                        回复 <i class="am-icon-reply"></i></button>
+                                    <!--隐藏回复框-->
+                                    <div class="am-g am-g-fixed am-collapse" id="dialog{{ forloop.counter }}">
+                                        <form action="{% url 'blog:reply_comment' comment.id %}"
+                                              method="post"
+                                              class="am-form dialog am-u-md-10 am-u-lg-12 am-u-sm-10 am-u-sm-centered"
+                                              style="padding-top: 5px">
+                                            {% csrf_token %}
+                                            <div class="am-form-group">
+                                                {{ replyform.content }}
+                                            </div>
+                                            <button class="am-btn am-btn-secondary" type="submit">回复</button>
+                                        </form>
+                                    </div>
+
+
+                                </div>
+
+
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
 
+            <!---->
+
+
             <hr>
         </div>
     </div>
+
 {% endblock %}
 </body>
 </html>

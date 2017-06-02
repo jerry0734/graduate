@@ -28,6 +28,7 @@
 
         </style>
     {% endblock %}
+    {% load dractags %}
 </head>
 <body>
 {% block content %}
@@ -49,7 +50,7 @@
                 <div class="am-panel am-panel-default am-panel-warning rb">
                     <header class="am-panel-hd">
                         <h3 class="am-panel-title">
-                            Blog name
+                            Blogger
                         </h3>
                     </header>
                     <div id="blog-name-1" class="am-panel-collapse am-collapse am-in">
@@ -80,7 +81,7 @@
                     </header>
                     <div id="blog-other-3" class="">
                         <div class="am-panel-bd">
-                            <p>{{ about.other }}</p>
+                            <p>{{ about.other| safe_markdown }}</p>
                         </div>
                     </div>
                 </div>

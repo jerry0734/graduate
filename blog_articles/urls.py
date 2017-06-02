@@ -1,8 +1,10 @@
-from django.conf.urls import url
+from django.conf.urls import url, handler404, handler500
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views, rss
 from . import manage_views as manage
+
+handler404 = 'manage.page_not_found'
 
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),

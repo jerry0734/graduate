@@ -176,7 +176,7 @@
             <div class="am-g am-g-fixed">
                 <ul class="am-comments-list  am-u-md-10 am-u-lg-12 am-u-sm-12 am-u-sm-centered">
                     {% for comment in comment_list %}
-                        <li class="am-comment ">
+                        <li class="am-comment " id="commentboard{{ comment.id }}">
                             <img class="am-comment-avatar" alt="" src="/media/{{ comment.user.avatar }}"/>
                             <div class="am-comment-main ">
                                 <header class="am-comment-hd">

@@ -230,3 +230,7 @@ def change_titlephoto(request, article_id):
             form.save()
             return HttpResponseRedirect(reverse('blog:myarticles'))
     return None
+
+
+def page_not_found(request):
+    return render(request, 'blog_articles/404.html')

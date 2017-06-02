@@ -198,7 +198,9 @@ def reply_comment(request, comment_id):
             comment.related = related
             comment.user = user
             form.save()
-            return HttpResponse('<script>window.location=document.referrer;</script>')
+            realcomment = Comments.objects.filter(article=article).order_by('-published_time')[0]
+            url = "/article/" + str(article.id) + "#commentboard" + str(realcomment.id)
+            return HttpResponseRedirect(redirect_to=url)
             # return redirect(to='blog:detail', article_id=article_id)
     return HttpResponse('<script>history.back()</script>')
 

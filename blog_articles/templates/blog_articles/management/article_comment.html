@@ -1,4 +1,4 @@
-{% extends 'blog_articles/another_base.html' %}
+{% extends 'blog_articles/newmanage/index.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +7,12 @@
 </head>
 <body>
 {% block content %}
-    <div class="am-g">
-        <a href="{% url 'blog:myarticles' %}">返回文章列表</a>
+    <div class="am-g" style="background-color: white">
         <div class="am-u-md-12 am-u-lg-12">
+            <br>
+            <a href="{% url 'blog:myarticles' %}">
+                <button class="am-btn am-btn-primary">返回文章列表</button>
+            </a>
             <table class="am-table am-table-hover">
                 <thead>
                 <tr>
@@ -23,8 +26,16 @@
 
                         <td>{{ comment.content| truncatechars_html:50 }}</td>
                         <td>
-                            <a href="{% url 'blog:manage_c_edit' comment.id %}">编辑</a>&nbsp;
-                            <a href="{% url 'blog:manage_c_del' comment.id %}">删除</a>
+                            <a href="{% url 'blog:manage_c_edit' comment.id %}">
+                                <button class="am-btn am-btn-default am-btn-xs">
+                                    编辑
+                                </button>
+                            </a>&nbsp;
+                            <a href="{% url 'blog:manage_c_del' comment.id %}">
+                                <button class="am-btn am-btn-danger am-btn-xs">
+                                    删除
+                                </button>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

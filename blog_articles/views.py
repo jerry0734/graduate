@@ -181,25 +181,39 @@ def write_comments(request, article_id):
         return HttpResponse('发送失败')
 
 
+# @login_required
+# def reply_comment(request, comment_id):
+#     """回复评论"""
+#     related = Comments.objects.get(id=comment_id)
+#     article = related.article
+#     article_id = article.id
+#     if request.method != "POST":
+#         form = ReplyForm()
+#     else:
+#         form = ReplyForm(data=request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             user = request.user
+#             comment.article = article
+#             comment.related = related
+#             comment.user = user
+#             form.save()
+#             return redirect(to='blog:detail', article_id=article_id)
+#     return redirect('blog:detail', article_id=article_id)
 
 @login_required
 def reply_comment(request, comment_id):
-    related = Comments.objects.get(id=comment_id)
-    article = related.article
-    article_id = article.id
-    if request.method != "POST":
-        form = ReplyForm()
+    """回复评论"""
+    if request.method == "POST":
+        related = Comments.objects.get(id=comment_id)
+        article = related.article
+        user = request.user
+        content = request.POST.get('content')
+        print(related, article, user, content)
+        Comments.objects.create(user=user, article=article, content=content, related=related)
+        return HttpResponse('ok')
     else:
-        form = ReplyForm(data=request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            user = request.user
-            comment.article = article
-            comment.related = related
-            comment.user = user
-            form.save()
-            return redirect(to='blog:detail', article_id=article_id)
-    return redirect('blog:detail', article_id=article_id)
+        return None
 
 
 @login_required
@@ -239,7 +253,6 @@ def search_article(request):
         'messages': messages,
     }
     return render(request, 'blog_articles/article_search.html', context)
-
 
 
 def edit_comment(request, comment_id):

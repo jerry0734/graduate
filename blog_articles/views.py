@@ -167,8 +167,23 @@ def write_comments(request, article_id):
 
 
 @login_required
-def reply_comment(request, article_id, comment_id):
-    pass
+def reply_comment(request, comment_id):
+    related = Comments.objects.get(id=comment_id)
+    article = related.article
+    article_id = article.id
+    if request.method != "POST":
+        form = CommentForm()
+    else:
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            user = request.user
+            comment.article = article
+            comment.related = related
+            comment.user = user
+            form.save()
+            return redirect(to='blog:detail', article_id=article_id)
+    return redirect('blog:detail', article_id=article_id)
 
 
 @login_required
@@ -189,90 +204,12 @@ def edit_comment(request, comment_id):
 
 @login_required
 def delete_comment(request, comment_id):
-    """删除评论"""
+    """文章详情页删除评论"""
     comment = Comments.objects.get(id=comment_id)
     article_id = comment.article_id
     comment.delete()
     return redirect('blog:detail', article_id=article_id)
 
-
-@login_required
-def manage_category(request):
-    """分类列表"""
-    category_list = Category.objects.all().order_by('modified_time')
-
-    if request.method != 'POST':
-        form = CategoryForm()
-    else:
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('blog:category_list'))
-    context = {'category_list': category_list,
-               'form': form, }
-    return render(request, 'blog_articles/newmanage/category_manage.html', context)
-
-
-@login_required
-def manage_tags(request):
-    """标签列表"""
-    tag_list = Tag.objects.all().order_by('name')
-    if request.method != 'POST':
-        form = TagForm()
-    else:
-        form = TagForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('blog:tag_list'))
-
-    context = {'tag_list': tag_list, 'tagform': form}
-    return render(request, 'blog_articles/newmanage/tag_manage.html', context)
-
-
-@login_required
-def edit_category(request, category_id):
-    """修改分类"""
-    category = Category.objects.get(id=category_id)
-    if request.method != "POST":
-        form = CategoryForm(instance=category)
-    else:
-        form = CategoryForm(instance=category, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('blog:category_list'))
-
-    context = {'form': form, 'category': category}
-    return render(request, 'blog_articles/management/edit_category.html', context)
-
-
-@login_required
-def edit_tag(request, tag_id):
-    """修改标签"""
-    tag = Tag.objects.get(id=tag_id)
-    if request.method != "POST":
-        form = TagForm(instance=tag)
-    else:
-        form = TagForm(instance=tag, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('blog:tag_list'))
-
-    context = {'form': form, 'tag': tag}
-    return render(request, 'blog_articles/management/edit_tag.html', context)
-
-
-@login_required
-def delete_category(request, category_id):
-    category = Category.objects.get(id=category_id)
-    category.delete()
-    return redirect('blog:category_list')
-
-
-@login_required
-def delete_tag(request, tag_id):
-    tag = Tag.objects.get(id=tag_id)
-    tag.delete()
-    return redirect('blog:tag_list')
 
 def search_article(request):
     """文章搜索"""
@@ -288,66 +225,9 @@ def search_article(request):
     return render(request, 'blog_articles/article_search.html', context)
 
 
-@login_required
-def management_index(request):
-    """后台管理索引主页，用于引导管理界面"""
-    if request.user.is_superuser:
-        return render(request, 'blog_articles/newmanage/index.html', {})
-    else:
-        raise Http404
-
-
-@login_required
-def new_article(request):
-    """添加新文章"""
-    form = ArticleForm()
-    if request.method == 'POST':
-        form = ArticleForm(data=request.POST)
-        if form.is_valid():
-            new_article = form.save()
-            return HttpResponseRedirect(reverse('blog:index'))
-
-    context = {'form': form}
-    return render(request, 'blog_articles/new_article.html', context)
-
-
-@login_required
-def edit_article(request, article_id):
-    """编辑文章"""
-    article = Article.objects.get(id=article_id)
-    if request.method != 'POST':
-        form = ArticleForm(instance=article)
-    else:
-        form = ArticleForm(instance=article, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('blog:detail', args=[article_id]))
-    context = {'form': form, 'article': article}
-
-    return render(request, 'blog_articles/edit_article.html', context)
-
-
-@login_required
-def myarticles(request):
-    articles = Article.objects.filter(author=request.user)
-    context = {'article_list': articles}
-    return render(request, 'blog_articles/newmanage/myarticles.html', context)
-
-
-def delete_article(request, article_id):
-    article = Article.objects.get(id=article_id)
-    article.delete()
-    return redirect('blog:myarticles')
-
-
-def article_comment(request, article_id):
-    comments = Comments.objects.filter(article_id=article_id)
-    context = {'comment_list': comments}
-    return render(request, 'blog_articles/management/article_comment.html', context)
-
 
 def edit_comment(request, comment_id):
-    """管理界面修改评论"""
+    """文章详情页修改评论"""
     comment = Comments.objects.get(id=comment_id)
     article_id = comment.article_id
     if request.method != "POST":

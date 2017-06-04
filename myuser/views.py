@@ -116,31 +116,30 @@ def abled_user(request, user_id):
     user.save()
     return redirect('account:userlist')
 
+# @login_required
+# def send_messages(request, receiver_id):
+#     form = PrivateForm()
+#     receiver = allUser.objects.get(id=receiver_id)
+#     user = request.user
+#     if request.method != "POST":
+#         form = PrivateForm()
+#     else:
+#         form = PrivateForm(data=request.POST)
+#         form.save(commit=False)
+#         form.sender = request.user
+#         form.recevier = receiver_id
+#         form.save(commit=True)
+#         return redirect(to='blog:index')
+#     context = {
+#         'receiver': receiver,
+#         'form': form,
+#     }
+#     return render(request, 'myuser/post_private.html', context)
+#
+#
+# def message_user(request, receiver):
+#     pass
 
-@login_required
-def send_messages(request, receiver_id):
-    form = PrivateForm()
-    receiver = allUser.objects.get(id=receiver_id)
-    user = request.user
-    if request.method != "POST":
-        form = PrivateForm()
-    else:
-        form = PrivateForm(data=request.POST)
-        form.save(commit=False)
-        form.sender = request.user
-        form.recevier = receiver_id
-        form.save(commit=True)
-        return redirect(to='blog:index')
-    context = {
-        'receiver': receiver,
-        'form': form,
-    }
-    return render(request, 'myuser/post_private.html', context)
 
-
-def message_user(request, receiver):
-    pass
-
-
-def message_list(request, sender, receiver):
-    pass
+# def message_list(request, sender, receiver):
+#     pass
